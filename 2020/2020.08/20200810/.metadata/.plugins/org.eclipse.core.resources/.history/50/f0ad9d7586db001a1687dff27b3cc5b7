@@ -1,0 +1,12 @@
+package src1_20200810;
+
+import java.util.*;
+public class FoodInfo {
+	public static void main(String[] args) {
+		Food [] food = new Food[10];
+		int cnt = 0;
+		
+		food[cnt++] = new Melon()
+	}
+
+}

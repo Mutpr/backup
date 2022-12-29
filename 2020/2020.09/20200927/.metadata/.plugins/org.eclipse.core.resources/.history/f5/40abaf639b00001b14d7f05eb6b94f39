@@ -1,0 +1,25 @@
+package src0_20200927;
+
+public class Person {
+	protected String name;
+	protected String EmpNumber; 
+	
+	public Person(String na, String Emp) {
+		this.name = na;
+		this.EmpNumber = Emp;
+	}
+	
+	int computeSalary() {
+		return 1;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public String getEmpNumber() {
+		return EmpNumber;
+	}
+
+}
+

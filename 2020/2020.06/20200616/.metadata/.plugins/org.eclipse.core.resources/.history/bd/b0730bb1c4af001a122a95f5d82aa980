@@ -1,0 +1,25 @@
+package src1;
+
+public class Food {
+	//가격, 중량 정보
+	public int price;
+	public int weight;
+
+	
+	public void getPrice(int price) {
+		this.price = price;
+	}
+	
+	public int setPrice() {
+		return price;
+	}
+	
+	public void getWeight(int weight) {
+		this.weight = weight;
+	}
+	
+	public int setWeight() {
+		return weight;
+	}
+	
+}

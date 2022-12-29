@@ -1,0 +1,13 @@
+package src1_20200810;
+
+class Melon extends Food {
+	//경작 농원 정보
+	private String farm;
+	
+	public Melon(int pr, double wei) {
+		super(pr,wei);
+		farm = fa;
+	}
+	
+	
+}

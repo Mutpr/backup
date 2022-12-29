@@ -1,0 +1,17 @@
+package src2_20201012;
+
+public class Answer_02 {
+
+	public static void main(String[] args) {
+		Media media = new Media(){
+			void play(String instru) {
+				System.out.println(instru+" 재생합니당.");
+			}
+			
+			void stop(String instru) {
+				System.out.println(instru+" 중지합니당.");
+			}
+		};
+	}
+
+}

@@ -1,0 +1,12 @@
+package src2_20200927;
+
+import java.util.*;
+public class TrinangleTest {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		
+	}
+
+}

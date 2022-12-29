@@ -1,0 +1,20 @@
+package src1_20201011;
+
+import java.util.*;
+public class ShapeTest {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("1. ¿ø³ÐÀÌ 2. »ç°¢Çü³ÐÀÌ 3. Á¾·á>>");
+		
+		int select;
+		
+		switch(select = scan.nextInt()) {
+		case 1:
+			
+		case 2:
+		case 3:
+		}
+		
+	}
+
+}

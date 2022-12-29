@@ -1,0 +1,13 @@
+package src_0524;
+
+public class src1 {
+	public static void main(String [] args) {
+		int[] isource= {21, 34, 76, 38, 11, 8, 56, 98, 64};    
+				int m=max(isource);
+				System.out.println("MAX = " +m);
+	}
+	
+	public void max() {
+		
+	}
+}

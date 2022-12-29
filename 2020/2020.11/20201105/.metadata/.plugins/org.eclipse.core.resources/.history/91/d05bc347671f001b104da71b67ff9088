@@ -1,0 +1,26 @@
+package src1_20201105;
+
+import java.util.*;
+public class Answer_02 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		boolean decision = false;
+		String [] start = {"°³±¸¸®", "µÎ²¨ºñ", "ºÎ¾ûÀÌ"};
+		String str = null;
+		double index = (int)(Math.random()*start.length);
+		str = start[(int)index];
+		int length = str.length();
+		for(int i=length-1; i>=0; i--) {
+			System.out.println(start[(int)index].charAt(length));
+//		
+//		do {
+//			System.out.println("");
+//			
+//			}
+//			break;
+//		}while(true);
+		
+	}
+
+}
+}

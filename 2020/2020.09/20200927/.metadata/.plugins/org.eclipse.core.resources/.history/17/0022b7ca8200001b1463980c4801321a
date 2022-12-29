@@ -1,0 +1,33 @@
+package src1_20200927;
+
+public class HourEmployee extends Person{
+	//필드 추가, computeSalary()메소드 재정의
+	// toString() 메소드 재정의
+	//필드: 이름, 사번, 시간당 임금, 일한 시간 - 전용 멤버
+	
+	private String name;
+	private String EmpNumber;
+	private int income; //시간당 임금
+	private int workHour;
+	
+	HourEmployee(String name, String EmpNumber, int income, int workHour) {
+		this.name = name;
+	    this.EmpNumber = EmpNumber;
+	    this.income = income;
+	    this.workHour = workHour;
+	    }
+	
+	public int computeSalary(int hourIncome) { //임금 계산
+		//시간당 임금 * 일한 시간 반환
+		hourIncome = income*workHour;
+		return hourIncome;
+	}
+	
+	public String toString() {
+		return "이름> "+name+"\t"
+				+"사번> "+EmpNumber+"\t"
+				+"일한 시간> "+workHour+"\t"
+				+"시간당 임금> "+income+"\t";
+	}
+
+}

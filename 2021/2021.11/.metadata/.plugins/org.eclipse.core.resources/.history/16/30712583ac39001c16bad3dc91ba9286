@@ -1,0 +1,9 @@
+package ex1_pack;
+
+class solution {
+	public String solution(String [] participant, String [] completion){
+		boolean [] check = new boolean[participant.length]; 
+		String answer = "";
+        return answer;
+	}
+}

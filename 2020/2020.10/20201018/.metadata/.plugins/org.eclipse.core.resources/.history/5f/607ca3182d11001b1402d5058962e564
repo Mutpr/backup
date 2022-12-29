@@ -1,0 +1,13 @@
+package src1_20201018;
+
+import java.util.*;
+public class DistanceComp {
+	public void longDistance(Distance [] distance) {
+		Scanner scan = new Scanner(System.in);
+		distance = new Distance[scan.nextInt()];
+		Distance max = distance[0];
+		for(int i = 0; i<=distance.length; i++) {
+			
+		}
+	}
+}

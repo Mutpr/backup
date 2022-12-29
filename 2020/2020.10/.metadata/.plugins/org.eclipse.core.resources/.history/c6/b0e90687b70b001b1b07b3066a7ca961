@@ -1,0 +1,18 @@
+package src2_20201011;
+
+import java.util.*;
+public class RemoteTest {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		SmartTelevision rc = new SmartTelevision();
+			rc.turnOn();
+			rc.turnOff();
+			rc.setVolume(5);
+		
+		
+		
+		
+		
+	}
+}
+

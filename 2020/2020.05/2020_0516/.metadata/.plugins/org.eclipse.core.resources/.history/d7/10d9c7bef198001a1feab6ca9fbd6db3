@@ -1,0 +1,27 @@
+package src_0516;
+
+import java.util.*;
+public class src2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		int [] array1 = new int [5];
+		int i;
+		int max = -1;
+		
+		for(i = 0; i<array1.length; i++) {
+			array1[i] = (int)(Math.random()*100)+1;
+			if(array1[i]>max) {
+				max = array1[i];
+				System.out.println(max);
+			}
+		}
+		for(int k = 0; k<array1.length; k++) {
+			System.out.print(max+"\t");
+		}
+		
+		
+
+}
+}

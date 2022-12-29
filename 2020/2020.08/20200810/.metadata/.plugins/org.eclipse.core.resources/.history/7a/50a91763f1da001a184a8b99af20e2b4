@@ -1,0 +1,9 @@
+package src1_20200810;
+
+public class Melon extends Food {
+	
+	
+	public String FoodInfo() {
+		return "cost>> " + price+ "\t"+"kg>> "+ weight;
+	}
+}

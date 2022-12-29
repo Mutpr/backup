@@ -1,0 +1,19 @@
+package src0_20200927;
+
+public class HourEmployee extends Person{
+	
+	private int income;
+	private int workHour;
+	
+	public void SalariedEmployee(String name, String Emp, int income, int workHour) {
+		super(name, Emp);
+		this.income = income;
+		this.workHour = workHour; 
+	}
+	
+	public int computeSalary(int hourIncome) { //임금 계산
+		//시간당 임금 * 일한 시간 반환
+		hourIncome = income*workHour;
+		return hourIncome;
+	}
+}

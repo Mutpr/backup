@@ -1,0 +1,10 @@
+package src1_20200810;
+
+public class Melon extends Food {
+	//경작 농원 정보
+	private String farm;
+	
+	public void melonInfo(String pr, String We) {
+		
+	}
+}

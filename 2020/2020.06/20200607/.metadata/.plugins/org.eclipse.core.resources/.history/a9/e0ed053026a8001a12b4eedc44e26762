@@ -1,0 +1,16 @@
+package src1_20200607;
+
+import java.util.*;
+public class wordTest {
+	public static void main(String [] args) {
+		Scanner scan = new Scanner(System.in);
+		word word = new word();
+		
+		for(int i = 0; i<7; i++) {
+			System.out.print("영단어의 뜻을 입력하세요>>");
+			word.meaning = scan.nextLine();
+			word.word = scan.nextLine();
+		}
+	
+	}
+}

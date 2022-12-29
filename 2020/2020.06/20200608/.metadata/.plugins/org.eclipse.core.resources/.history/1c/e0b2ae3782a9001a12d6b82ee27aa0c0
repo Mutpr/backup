@@ -1,0 +1,23 @@
+package src2_20200608;
+
+public class person {
+	private String person;
+	private int year;
+	
+	public String getPerson() {
+		return person;
+		return year;
+	}
+
+	public void setPerson(String person) {
+		this.person = person;
+	}
+	
+	public void setYear(int year) {
+		this.year = year;
+	}
+	
+	void checkMask() {
+		
+	}
+}

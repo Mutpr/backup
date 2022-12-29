@@ -1,0 +1,12 @@
+package src1_20201018;
+
+public class DistanceComp {
+	public void longDistance(Distance [] distance) {
+		Distance max = distance[0];
+		for(int i = 0; i<=distance.length; i++) {
+			if() {
+				
+			}
+		}
+	}
+}

@@ -1,0 +1,10 @@
+package src1_210806;
+
+public class Add {
+	int a;
+	int b;
+
+	int setValue(){
+		return a+b;
+	}
+}

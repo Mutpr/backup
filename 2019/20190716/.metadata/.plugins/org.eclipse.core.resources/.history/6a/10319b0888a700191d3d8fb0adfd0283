@@ -1,0 +1,27 @@
+/*
+ * 실습 1의 프로그램을 while 문을 이용해서 출력.
+ * ㅋㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋfor문을 이용해서 받아버린거임~
+ */
+package pack1_0716;
+
+import java.util.*;
+public class src2 { 
+	public static void main(String args[]) {
+		Scanner scan = new Scanner(System.in); //Scanner 받아줌.
+		
+		int a;
+		a = scan.nextInt(); //A를 키보드로 입력받음.
+		int i=1;
+		
+//		for (int i = 1; i<=a; i++) { //증감식을 이용해서 i가 a보다 같거나 작은 만큼 증가하도록 함.
+//			System.out.println("["+i+"]");
+//		}
+		
+		while(i<=a) {
+			System.out.println("["+i+"]");
+			i++;
+		}
+		
+	}
+
+}

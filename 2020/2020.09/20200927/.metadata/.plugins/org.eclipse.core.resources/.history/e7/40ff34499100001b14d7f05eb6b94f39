@@ -1,0 +1,19 @@
+package src0_20200927;
+
+public class SalariedEmployee extends Person{
+	private int hourIncome; 
+	
+	public SalariedEmployee(String na, String Emp,int hourIncome) {
+		super(na, Emp);
+		this.hourIncome = hourIncome;
+	}
+	
+	@Override
+	public String toString() {
+		return "이름> "+name+"\t"
+				+"사번> "+EmpNumber+"\t"
+				+"시간당 임금> "+hourIncome+"\t";
+	}
+	
+	}
+

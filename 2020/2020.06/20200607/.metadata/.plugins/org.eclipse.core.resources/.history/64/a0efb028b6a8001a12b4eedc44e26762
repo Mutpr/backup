@@ -1,0 +1,24 @@
+package src1_20200607;
+
+public class word {
+	private String english;
+	private String meaning;
+
+	public void setString(String english, String meaning) {
+		this.english = english;
+		this.meaning = meaning;
+	}
+	
+	public void getEnglish() {
+		return;
+	}
+	
+	public void getMeaning() {
+		return;
+	}
+	
+	public String toString() {
+		return "word [word=" + english + ", meaning=" + meaning + "]";
+	}
+	
+}

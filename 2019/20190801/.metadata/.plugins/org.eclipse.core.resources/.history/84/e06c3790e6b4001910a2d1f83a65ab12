@@ -1,0 +1,32 @@
+package src_20190801;
+
+import java.util.*;  //Scanner를 사용하기 위함
+
+public class src2 {
+	public static void main(String[] args) {
+		int num1, num2, result = 0;  //입력받을 두 정수를 저장할 변수 num1, num2. num1%num2를 저장할 result. result의 초기값은 0
+		Scanner input = new Scanner(System.in);  // input에 입력받기 위함
+		
+		System.out.print("두 정수를 입력하세요 : ");
+		num1 = input.nextInt();  //input에 입력받은 첫번째 정수를 num1에 저장
+		num2 = input.nextInt();  //input에 입력받은 두번째 정수를 num2에 저장
+		
+		System.out.print(num1 + ", " + num2 + "의 최대 공약수는 ");
+		
+		do {
+			if (num1 < num2) {  //num1에 큰 수를 저장해야하기 때문에 num1<num2이면
+				int temp;       //temp라는 변수를 만들어
+				temp = num2;	//num2(큰 값)를 temp에,
+				num2 = num1;	//num1(작은 수)를 num2에,
+				num1 = temp;	//결과적으로 temp(큰 수)를 num1에 저장
+			}					//num1>num2이면 그냥 바로 아래 명령을 실행
+			
+			result = num1 % num2;  //result에 num1%num2 값을 저장
+			num1 = num2;		   //num1에 num2값을 저장하고
+			num2 = result;		   //num2에 result(나머지)를 저장
+			
+		}while(result != 0);  //result==0이 될 때까지 반복 실행
+		
+		System.out.println(num1 + "입니다.");
+	}
+}

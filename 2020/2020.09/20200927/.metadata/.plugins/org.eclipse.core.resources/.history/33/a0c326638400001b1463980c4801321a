@@ -1,0 +1,15 @@
+package src1_20200927;
+
+public class SalariedEmployee extends Person{
+	// computeSalary() 메소드 재정의
+	// toString() 메소드 재정의
+	
+	private String name;
+	private String Number;
+	private int hourIncome; //시간당 임금
+	
+	public int computeSalary(int hourIncome) {
+		
+		return hourIncome;
+	}
+}

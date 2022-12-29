@@ -1,0 +1,13 @@
+package src0_20200927;
+
+public class SalariedEmployee extends Person{
+	
+
+	private int hourIncome; 
+	public SalariedEmployee(String na, String Emp) {
+		super(na, Emp);
+		// TODO Auto-generated constructor stub
+	}
+	
+	}
+

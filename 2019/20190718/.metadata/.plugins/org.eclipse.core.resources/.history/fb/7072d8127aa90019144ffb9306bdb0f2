@@ -1,0 +1,43 @@
+package Pack_20190718;
+
+import java.util.*;
+
+public class src1 {
+	public static void main(String args[]) {
+		
+		//src1_2 src = new src1_2();
+		
+		Scanner sc = new Scanner(System.in);
+		
+		int a;
+		int b;
+		int sum=0;
+		String inputString;
+		
+		do { 
+			System.out.println("명령어를 입력해주세요."); 
+			System.out.println("p: 합산프로그램");
+			System.out.println("q: 프로그램 종료");
+			inputString = sc.nextLine();
+			//System.out.println(inputString);
+			
+			
+		} while(!inputString.equals("q"));
+			System.out.println();
+			System.out.println("프로그램 종료");
+			
+		do {
+			
+		} while(!inputString.equals("p")); {
+			System.out.println("시작숫자를 입력하시오:");
+			a = sc.nextInt();
+			System.out.println("종료숫자를 입력하시오:");
+			b = sc.nextInt();
+			
+			for(; a<=b; a++) {
+				sum += a;	
+			} System.out.println(sum);
+				
+		}
+	 }
+}	

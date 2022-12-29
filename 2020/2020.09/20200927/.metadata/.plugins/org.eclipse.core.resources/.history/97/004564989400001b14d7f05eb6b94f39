@@ -1,0 +1,29 @@
+package src0_20200927;
+
+public class Person {
+	protected String name;
+	private String EmpNumber; 
+	
+	public Person(String na, String Emp) {
+		this.setName(na);
+		this.setEmpNumber(Emp);
+	}
+	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmpNumber() {
+		return EmpNumber;
+	}
+
+	public void setEmpNumber(String empNumber) {
+		EmpNumber = empNumber;
+	}
+	
+}

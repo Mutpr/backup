@@ -1,0 +1,16 @@
+package src0_20200927;
+
+public class Person {
+	private String name;
+	private String EmpNumber; 
+	
+	public Person(String na, String Emp) {
+		this.name = na;
+		this.EmpNumber = Emp;
+	}
+	
+	public Person() {
+		this(null,null);
+	}
+	
+}

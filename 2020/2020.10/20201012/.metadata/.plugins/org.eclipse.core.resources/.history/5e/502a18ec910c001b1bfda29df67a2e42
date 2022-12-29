@@ -1,0 +1,26 @@
+package src3_20201012;
+
+public class Answer_03 {
+
+	public static void main(String[] args) {
+		Operation oper = null;
+		
+		Operation test = new Operation() {
+			void cut() {
+				System.out.println();
+			}
+			
+			void wash() {
+				System.out.println();
+			}
+
+		};
+			
+		
+		oper = new Hair("±ä¸Ó¸®");
+		run(oper);
+		oper = new Fruit(5);
+		run(oper);
+		
+	}
+	}

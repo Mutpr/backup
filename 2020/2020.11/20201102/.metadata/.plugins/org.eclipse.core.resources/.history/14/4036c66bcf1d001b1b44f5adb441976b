@@ -1,0 +1,19 @@
+package src2_20201102;
+
+public class Calculator {
+	static Control control;
+	
+	public void setControl(Control control) {
+		this.control = control;
+	}
+	
+	public void compute(int a, int b) {
+		control.run();
+	}
+	
+	static interface Control{
+		void run(int a, int b);
+	}
+
+}
+

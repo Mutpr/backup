@@ -1,0 +1,7 @@
+package src2_20200810;
+
+public class Magazine extends Book{
+	String release;
+	
+	
+}

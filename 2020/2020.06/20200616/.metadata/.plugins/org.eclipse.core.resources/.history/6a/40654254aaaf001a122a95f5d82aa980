@@ -1,0 +1,6 @@
+package src1;
+
+public class Melon extends Food{
+	//경작 농원 정보
+	
+}

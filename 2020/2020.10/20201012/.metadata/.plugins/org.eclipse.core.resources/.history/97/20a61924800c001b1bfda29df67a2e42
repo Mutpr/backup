@@ -1,0 +1,9 @@
+package src3_20201012;
+
+public class Fruit {
+	private String type;
+	
+	void pack(int cnt) {
+		System.out.println(cnt+"포장하다");
+	};
+}

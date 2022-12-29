@@ -1,0 +1,13 @@
+package src1_20200919;
+
+import java.util.*;
+public class DistanceExample {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		Distance distance = new Distance();
+		distance.getName();
+		distance.getDist();
+		
+				}
+
+}

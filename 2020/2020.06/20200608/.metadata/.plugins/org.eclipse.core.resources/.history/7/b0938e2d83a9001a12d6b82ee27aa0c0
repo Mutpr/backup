@@ -1,0 +1,15 @@
+package src2_20200608;
+
+import java.util.*;
+public class personTest {
+	
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		person person = new person();
+		
+		person.setPerson() = scan.hasNextLine();
+		person.getPerson();
+		
+	}
+
+}

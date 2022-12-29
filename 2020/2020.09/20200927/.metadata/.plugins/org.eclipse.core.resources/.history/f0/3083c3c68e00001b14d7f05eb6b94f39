@@ -1,0 +1,19 @@
+package src1_20200927;
+
+public class Person {
+	
+	private String name;
+	private String EmpNumber;
+	private int hourIncome; 
+	//공통되는 필드와 메소드를 작성
+	
+	Person(String name, String EmpNumber, int hourIncome){
+		this.name = name;
+		this.EmpNumber = EmpNumber;
+	}
+	
+	public int computeSalary(int hourIncome) {
+		hourIncome = hourIncome * 12;
+		return hourIncome;
+	}
+}

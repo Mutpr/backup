@@ -1,0 +1,8 @@
+package src4_20201011;
+
+public interface DataAccessObject {
+	void select();
+	void insert();
+	void update();
+	void delete();
+}

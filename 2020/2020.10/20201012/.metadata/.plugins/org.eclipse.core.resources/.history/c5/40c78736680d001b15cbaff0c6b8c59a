@@ -1,0 +1,22 @@
+package src3_20201012;
+
+public class Answer_03 {
+
+	public static void main(String[] args) {
+		Operation oper = null;
+		oper = new Hair("긴 머리");
+		Hair.tint("brown");
+		run(oper);
+		oper = new Fruit("사과");
+		run(oper);
+		Hair.tint("brown");
+	}
+
+	private static void run(Operation oper) {
+		oper.wash();
+		oper.cut();
+		
+	}
+	
+	
+	}

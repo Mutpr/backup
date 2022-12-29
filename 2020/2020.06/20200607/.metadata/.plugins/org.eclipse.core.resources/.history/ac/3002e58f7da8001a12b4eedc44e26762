@@ -1,0 +1,25 @@
+package src1_20200607;
+
+public class word {
+	private String word;
+	private String meaning;
+
+	private String getWord() {
+		
+		return word;
+	}
+	private void setWord(String word) {
+		this.word = word;
+	}
+
+	private String getMeaning() {
+		return meaning;
+	}
+	
+	private void setMeaning(String meaning) {
+		this.meaning = meaning;
+	}
+	
+	
+	
+}

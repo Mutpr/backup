@@ -1,0 +1,16 @@
+package src3_20200608;
+
+import java.util.*;
+public class bookTest {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		book book = new book();
+		
+		book.setAuthor(scan.nextLine());
+		book.setName(scan.nextLine());
+		book.toString();
+		
+	}
+
+}

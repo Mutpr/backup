@@ -1,0 +1,23 @@
+package src2_20200927;
+
+public class Shape {
+	protected int row;
+	protected char alpha;
+	
+	void Shape(int ro, char ap){
+		this.row = ro;
+		this.alpha = ap;
+	}
+	
+	public int getRow() {
+		return row;
+	}
+
+	public char getalpha() {
+		return alpha;
+	}
+	
+	public String toString() {
+		return "";
+	}
+}

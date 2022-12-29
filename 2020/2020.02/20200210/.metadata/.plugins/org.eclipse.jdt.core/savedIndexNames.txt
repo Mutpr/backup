@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+E:\Yehn\47\공부\자바\2020\2020.02\20200210\.metadata\.plugins\org.eclipse.jdt.core
+2384655776.index

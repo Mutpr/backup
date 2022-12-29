@@ -1,0 +1,11 @@
+package src1;
+
+public class Melon extends Food{
+	//경작 농원 정보
+	public static void main(String [] args) {
+		Food m1 = new Food();
+		Food m2 = new Food();
+		
+		
+	}
+}

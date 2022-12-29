@@ -1,0 +1,9 @@
+package src1_20200927;
+
+public class Person {
+	//공통되는 필드와 메소드를 작성
+	int computeSalary(){ 
+		return 1; 
+		}
+	
+}

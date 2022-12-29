@@ -1,0 +1,21 @@
+package src1_20200607;
+
+public class word {
+	private String word;
+	private String meaning;
+
+	private String getWord() {
+		this.word = word;
+		return word;
+	}
+
+	private String getMeaning() {
+		this.meaning = meaning;
+		return meaning;
+	}
+	
+	public String toString() {
+		return "word [word=" + word + ", meaning=" + meaning + "]";
+	}
+	
+}

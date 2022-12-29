@@ -1,0 +1,28 @@
+package src2;
+
+class Magazine extends Book {
+	private String info;
+	
+	public Magazine(String name, String page, String author, String info) {
+		super(name, page,author);
+		this.info = info;
+	}
+	
+	public Magazine() {
+		info = null;
+	}
+	
+	public void SetInfo(String info) {
+		this.info = info;
+	}
+	
+	public String getInfo() {
+		return info;
+	}
+	
+	public String toString() {
+		String str = super.toString(); 
+		str += this.info;
+		return str;
+}
+}

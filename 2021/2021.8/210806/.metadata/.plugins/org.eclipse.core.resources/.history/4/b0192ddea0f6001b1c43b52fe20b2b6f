@@ -1,0 +1,10 @@
+package src2_210806;
+
+public class Customer extends Person{
+	String number;
+	String mileage;
+	public Customer(String name, String address, String tel) {
+		super(name, address, tel);
+	}
+
+}

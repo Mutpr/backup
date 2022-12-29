@@ -1,0 +1,15 @@
+package src2_20201011;
+
+import java.util.*;
+public class RemoteTest {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		RemoteControl rc = new RemoteControl();
+		int volume;
+		
+		public void turnOn() {
+			System.out.println("TV turnOn()");
+		}
+	}
+
+}

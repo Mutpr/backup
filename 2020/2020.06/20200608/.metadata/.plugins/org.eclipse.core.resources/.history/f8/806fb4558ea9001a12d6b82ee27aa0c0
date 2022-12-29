@@ -1,0 +1,6 @@
+package lector1;
+
+public class information {
+	String id;
+	
+}

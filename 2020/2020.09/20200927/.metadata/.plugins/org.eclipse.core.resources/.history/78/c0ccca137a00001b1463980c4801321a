@@ -1,0 +1,7 @@
+package src1_20200927;
+
+public class SalariedEmployee {
+	// computeSalary() 메소드 재정의
+	// toString() 메소드 재정의
+
+}

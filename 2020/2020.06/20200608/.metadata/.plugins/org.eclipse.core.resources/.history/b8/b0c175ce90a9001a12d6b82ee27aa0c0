@@ -1,0 +1,8 @@
+package lecto2;
+
+public class EXTest {
+	public static void main(String[] args) {
+		GetterSetterEX c1 = new GetterSetterEX(100,50);
+		GetterSetterEX c2 = new GetterSetterEX();
+	}
+}

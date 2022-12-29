@@ -1,0 +1,6 @@
+package src3_20201012;
+
+public abstract interface Operation {
+	void cut();
+	void wash();
+}

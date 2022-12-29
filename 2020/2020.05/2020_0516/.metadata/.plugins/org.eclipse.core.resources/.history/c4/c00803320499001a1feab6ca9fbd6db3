@@ -1,0 +1,48 @@
+package src_0516;
+
+import java.util.*;
+public class src5 {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		// TODO Auto-generated method stub
+		int [] seat = new int [10];
+		int menu;
+		int select;
+		int status = 0;
+		int i;
+		
+		System.out.print("1) 대여 2) 대여현황 3) 종료>>");
+			menu = scan.nextInt();
+			switch(menu) {
+			case 1:
+				for(i =0; i<=seat.length; i++) {
+					seat[i] = status;
+					System.out.print("대여하고자 하는 사물함 번호를 입력하세요");
+					select = scan.nextInt();
+					if(select == i) {
+						System.out.println("대여완료");
+						status = 1;
+						break;
+					}if(status == 1) {
+						System.out.println("대여된 사물함");
+						break;
+					}
+				}
+				
+			case 2:
+				for(int j = 0; j<=seat.length-1; j++) {
+					if(status == 1) {
+					System.out.println("true");
+				}else if(status != 1) {
+					System.out.println("false");
+				}
+				}
+				
+			case 3:
+
+			}
+		
+	}
+
+}

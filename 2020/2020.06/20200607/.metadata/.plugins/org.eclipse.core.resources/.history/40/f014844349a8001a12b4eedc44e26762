@@ -1,0 +1,15 @@
+package src1_20200607;
+
+public class word {
+	String word;
+	String meaning;
+	
+	private void getWord(String word) {
+		return;
+	}
+	
+	private void getMeaning(String meaning) {
+		return;
+	}
+	
+}

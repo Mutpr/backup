@@ -1,0 +1,8 @@
+package src3_210806;
+
+public class MyInfo {
+	String name;
+	int age;
+	String number;
+	String school;
+}

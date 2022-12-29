@@ -1,0 +1,10 @@
+package src4;
+
+public class Info {
+	String id;
+	int pass;
+	
+	public void disPlay() {
+		System.out.println("id: "+id+"\t"+"password: "+pass);
+	}
+}

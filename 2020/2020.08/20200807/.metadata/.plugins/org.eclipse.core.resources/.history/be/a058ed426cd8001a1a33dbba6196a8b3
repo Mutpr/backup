@@ -1,0 +1,14 @@
+package src1;
+
+import java.util.*;
+public class ServiceTest {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		Service service = new Service();
+		
+		if(service.login(service.id, service.pass)==true) {
+			
+		}
+	}
+
+}

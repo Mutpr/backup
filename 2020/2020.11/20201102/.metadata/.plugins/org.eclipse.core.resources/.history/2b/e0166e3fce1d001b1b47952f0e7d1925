@@ -1,0 +1,24 @@
+package src1_20201102;
+
+import java.util.*;
+public class Answer_01 {
+	public static void main(String[] args) {
+		Tool [] tool = {n2ew Hair("Hair", "Wave"), new Paper("paper", "A3")};
+		run(tool);
+	}
+	
+	public static void run(Tool [] tool) {
+		Hair hair = new Hair("Hair","Wave");
+		Paper paper = new Paper("paper","A3");
+		for(int i =0; i<tool.length; i++) {
+			if(Thread.currentThread().getStackTrace()==hair) {
+				System.out.println();
+			}
+				tool[i].cut();
+				tool[i].dry();
+			}
+			
+		
+	}
+
+}

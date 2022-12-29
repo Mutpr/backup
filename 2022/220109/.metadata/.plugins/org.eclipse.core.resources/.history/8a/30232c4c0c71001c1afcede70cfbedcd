@@ -1,0 +1,19 @@
+package ex1_220109;
+
+public class ex1_method {
+	static void seqsearch(int[] a, int n, int key) {
+		int[] index = new int[100];
+		for (int i = 0; i < n; i++) {
+			if (a[i] == key) {
+				System.out.println(i + 1 + " ");
+				index[i] = 1;
+			}
+		for(int j = 0; j<n; j++) {
+			if(a[j] !=key) {
+				System.out.println("찾는 값이 아닙니다.");
+			}
+		}
+		}
+
+	}
+}

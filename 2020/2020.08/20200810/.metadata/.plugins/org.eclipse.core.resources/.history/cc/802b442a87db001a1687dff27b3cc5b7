@@ -1,0 +1,11 @@
+package src2_20200810;
+
+public class Book {
+	String title;
+	int page;
+	String author;
+	
+	public Book() {
+		
+	}
+}

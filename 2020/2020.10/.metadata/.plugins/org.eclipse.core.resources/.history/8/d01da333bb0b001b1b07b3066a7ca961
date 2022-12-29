@@ -1,0 +1,43 @@
+package src2_20201011;
+
+import java.util.*;
+public class RemoteTest {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		SmartTelevision remote1 = new SmartTelevision() {
+			int volume;
+			@Override
+			public void turnOn() {
+				System.out.println("TV를 켭니다");
+			}
+			@Override
+			public void turnOff() {
+				System.out.println("---TV볼륨을 10으로 합니다---");
+			}
+			@Override
+			public void setVolume(int volume) {
+				this.volume = volume;
+				System.out.println("현재 tv 볼륨: "+ this.volume);
+			}
+			};
+			
+			SmartPhone remote2 = new SmartPhone() {
+				int volume;
+				@Override
+				public void turnOn() {
+					System.out.println("");
+				}
+				@Override
+				public void turnOff() {
+					System.out.println("");
+				}
+				@Override
+				public void setVolume(int volume) {
+					this.volume = volume;
+					System.out.println("현재 tv 볼륨: "+ this.volume);
+				}
+		};
+}
+}
+

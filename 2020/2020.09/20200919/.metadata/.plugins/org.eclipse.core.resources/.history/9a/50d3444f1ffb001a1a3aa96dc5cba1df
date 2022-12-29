@@ -1,0 +1,20 @@
+package src1_20200919;
+
+import java.util.*;
+public class DistanceExample {
+	public static void main(String[] args) {
+		
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("배열의 길이를 입력해주세요.>");
+		Distance [] distance = new Distance[scan.nextInt()];
+		
+		for(int i=0; i<distance.length; i++) {
+			System.out.println((i+1)+"> 이름, 통학거리를 입력하세요.");
+			distance[i] = new Distance(scan.nextLine(),scan.nextInt());
+		
+		}	System.out.println(DistanceComp.longDistance(distance));
+			System.out.println(DistanceComp.shortDistance(distance));
+				}
+
+}

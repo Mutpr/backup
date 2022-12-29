@@ -1,0 +1,14 @@
+package src_0805;
+
+import java.util.*;
+
+public class src1 {
+	public static void main(String args[]) {
+		Scanner sc = new Scanner(System.in);
+		
+		double mother = 4.0;
+		double son = 1.0;
+		double sum = 0.0;
+	}
+
+}

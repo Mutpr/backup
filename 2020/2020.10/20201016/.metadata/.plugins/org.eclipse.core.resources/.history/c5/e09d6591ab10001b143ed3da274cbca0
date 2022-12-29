@@ -1,0 +1,26 @@
+package src4_20201016;
+
+public class Answer_04 {
+
+	public static void main(String[] args) {
+		String[] title= {"자바", "파이썬", "코딩", "자바스크립트","자료구조"};
+		int[] pages= {150, 100, 120, 200, 180};
+		int max_page=max_index(pages);
+		System.out.println("최대 페이지 수 : " + pages[max_page]);
+		System.out.println("최대 페이지수를 가진 책 : " + title[max_page]);
+
+	}
+	
+	private static int max_index(int [] arr) {
+		int a = 0,b = 0,c = 0,d = 0,e = 0;
+		int [] arr1 = {a, b, c, d, e};
+		arr1 = arr;
+		int max = 0;
+		for(int i =0; i<=arr1.length-1; i++) {
+			if(max<arr1[i]) {
+				max = arr1[i];
+			}
+		}return max;
+	}
+
+}

@@ -1,0 +1,13 @@
+package src1;
+
+public class Rectagle {
+	double length;
+	double height;
+	double area;
+	
+	public void Area() {
+		area = length * height;
+		System.out.println(area);
+		return;
+	}
+}

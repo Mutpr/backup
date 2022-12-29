@@ -1,0 +1,42 @@
+package src2_20200608;
+
+import java.util.*;
+public class personTest {
+	
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		person p = new person();
+		
+		System.out.println("이름과 출생 년도를 입력하세요.");
+		
+		p.setPerson(scan.nextLine());
+		p.getYear(scan.nextInt());
+		
+		p.getPerson();
+		p.checkMask();
+		
+		if(p.getYear(scan.nextInt())>2020) {
+			int year = p.getYear(year)%10;
+			System.out.println("잘못 입력 하셨습니다.");
+			} else{
+				if(week == 1 || week == 6) {
+					System.out.println("월");
+				}
+				if(week == 2 || week == 7) {
+					System.out.println("화");
+				}
+				if(week == 3 || week == 8) {
+					System.out.println("수");
+				}
+				if(week == 4 || week == 9) {
+					System.out.println("목");
+				}
+				if(week == 5 || week == 0) {
+					System.out.println("금");
+				}else {
+					System.out.println("오류입니다.");
+				}
+		}
+	}
+
+}

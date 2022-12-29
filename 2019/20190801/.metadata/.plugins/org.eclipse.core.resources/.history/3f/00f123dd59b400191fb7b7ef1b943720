@@ -1,0 +1,29 @@
+/*
+ * 최대공약수 찾기
+ * 1) 두 수 가운데 큰 수를 x, 작은 수를 y라 한다.
+ * 2) y가 0이면 공약수는 x와 같다
+ * 3) r <- x%y
+ * 4) x <- y
+ * 5) y <- r
+ * 6) 단계 2로 되돌아감.
+ */
+package src_20190801;
+
+import java.util.*;
+
+public class src2 {
+	public static void main(String args[]) {//메인 메소드
+		Scanner sc = new Scanner(System.in); // 스캐너 객체
+		int r;
+		//int uc;
+		int x = sc.nextInt();
+		int y = sc.nextInt();
+		
+		while(y!=0);{ //2) y가 0이면 공약수는 x와 같다. = 계산할 필요 없음
+			r = x % y;
+			x = y;
+			y = r;
+	} 
+		System.out.println(x);
+}
+}

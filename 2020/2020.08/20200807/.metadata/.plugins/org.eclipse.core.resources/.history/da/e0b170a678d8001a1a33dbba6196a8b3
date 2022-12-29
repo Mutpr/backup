@@ -1,0 +1,14 @@
+package src2;
+
+import java.util.*;
+public class PersonTest {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		Person per = new Person();
+		
+		per.getYear();
+		per.year = scan.nextInt();
+		per.checkMask();
+	}
+
+}

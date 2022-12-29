@@ -1,0 +1,19 @@
+package Pack_20190718;
+
+import java.util.*;
+
+public class src1_2 {
+	Scanner sc = new Scanner(System.in);
+	
+	int i = sc.nextInt();
+	String inputLine = sc.nextLine();
+
+	private void doIncrease(){
+		if (inputLine != "q") {
+			for (; i<=10; i++) {
+				System.out.println(i);
+			}
+		}
+	}
+}
+	

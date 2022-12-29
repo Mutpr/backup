@@ -1,0 +1,33 @@
+package src1_20201105;
+
+import java.util.*;
+public class Answer_02 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		String [] word = {"개구리", "생강","두꺼비"};
+		double index = (int)(Math.random()*word.length);
+		String start = word[(int)index];
+		int leng = word[(int)index].length()-1;
+		char ch = start.charAt(leng);
+		boolean do_while = false;
+		
+			System.out.println("시작 단어:"+ start);
+			System.out.println(ch+"으로 시작하는 단어를 입력하세요.");
+			
+		do {
+			String myWord = scan.nextLine();
+			int WordLeng = myWord.length()-1;
+			char Wordch = myWord.charAt(WordLeng);
+			char WordStart = myWord.charAt(0);
+			
+			if(ch == WordStart) {
+				System.out.println(Wordch+"자로 시작하는 말은");
+			}else {
+				System.out.println("틀렸습니다.");
+				do_while = true;
+				
+			}
+		}while(true);
+	}
+}

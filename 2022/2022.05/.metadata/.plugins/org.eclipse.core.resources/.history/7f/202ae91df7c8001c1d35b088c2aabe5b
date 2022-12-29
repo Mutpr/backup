@@ -1,0 +1,8 @@
+package ex1_20220501;
+
+public class Solution {
+	public String solution(int[] numbers, String hand) {
+        String answer = "";
+        return answer;
+    }
+}

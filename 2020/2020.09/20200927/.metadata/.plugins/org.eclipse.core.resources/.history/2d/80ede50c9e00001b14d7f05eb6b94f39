@@ -1,0 +1,29 @@
+package src0_20200927;
+
+class HourEmployee extends Person{
+	private int income;
+	private int workHour;
+	int totalIncome;
+	
+	@Override
+	public int computeSalary() { //임금 계산
+		//시간당 임금 * 일한 시간 반
+		totalIncome = income*workHour;
+		return totalIncome;
+	}
+	
+	public HourEmployee(String na, String emp, int in, int work, int total) {
+		super(na, emp);
+		// TODO Auto-generated constructor stub
+		income = in;
+		workHour = work; 
+		totalIncome = total;
+	}
+	
+	@Override
+	public String toString() {
+		return "일한 시간> "+workHour+"\t"
+				+"시간당 임금> "+income+"\t"
+				+"총 임금> "+totalIncome;
+	}
+}

@@ -1,0 +1,52 @@
+package src0_20200927;
+
+import java.util.*;
+public class EmployeeTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	
+	Scanner scan1 = new Scanner(System.in);
+	Scanner scan2 = new Scanner(System.in);
+	Person[] person=new Person[100];
+	boolean flag=true;
+	while (flag) {
+		
+		
+		System.out.print("1: Salaried 객체 생성, 2: Hour 객체 생성 3. 종료 --> ");
+		int menu = scan1.nextInt();
+		int cnt = 0;
+
+		switch (menu) {
+		case 1:
+			System.out.println("이름, 사번, 급여를 입력하세요");
+	            String na = scan1.nextLine();
+	            int number = scan2.nextInt();
+	            int income = scan2.nextInt();
+			person[cnt++] = new SalariedEmployee(na, number, income);
+			continue;
+			
+		case 2:
+			System.out.println("이름, 사번, 시간당임금, 시간을 입력하세요");
+				String na1 = scan1.nextLine();
+				int num1 = scan2.nextInt();
+				int income1 = scan1.nextInt();
+				int time = scan2.nextInt();
+			person[cnt++]= new HourEmployee(na1, num1, income1, time);
+			continue;
+			
+		case 3:
+			flag = false;
+			for(int i = 0; i<cnt; i++) {
+				person[i].toString();
+				break;
+			}break;
+			
+			
+		default:
+			System.out.println("잘못된 입력입니다");
+			}
+		    }
+	}
+
+}

@@ -1,0 +1,19 @@
+package src1_20200607;
+
+import java.util.*;
+public class wordTest {
+	public static void main(String [] args) {
+		Scanner scan = new Scanner(System.in);
+		word [] book =new word[3];
+		//word [] test1 = new word[2];
+		
+		
+		for(int i = 0; i<book.length; i++) {
+			String english = scan.nextLine();
+			String meaning = scan.nextLine();
+			book[i] = new word(english,meaning);
+		}
+
+
+	}
+}

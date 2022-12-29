@@ -1,0 +1,7 @@
+package src_20200803;
+
+public class Food {
+	double cost;
+	double weight;
+	
+}

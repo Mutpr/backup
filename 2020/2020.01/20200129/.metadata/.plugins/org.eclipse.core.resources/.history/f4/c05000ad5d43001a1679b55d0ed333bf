@@ -1,0 +1,12 @@
+
+public class src_20200129 {
+	public static void main(String arg[]) {
+		
+		week week1 = week.SUNDAY;
+		week week2 = week.SUNDAY;
+		System.out.println(week1 == week2);
+		
+		//today == week.SUNDAY;
+	}
+
+}

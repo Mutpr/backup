@@ -1,0 +1,44 @@
+package src2;
+
+public class Book {
+	private String name;
+	private String page;
+	private String author;
+	
+	public Book(String name, String page, String author) {
+		this.name = name;
+		this.page = page;
+		this.author = author;
+	}
+	
+	public Book() {
+		this(null, null, null);
+	}
+	
+	public void setName(String name) {
+		this.name=name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setPage(String page) {
+		this.page=page;
+	}
+	
+	public String getPage() {
+		return page;
+	}
+	
+	public void setAuthor(String author) {
+		this.author=author;
+	}
+	
+	public String getAuthor() {
+		return author;
+	}
+	
+	public String toString(){
+		return "도서 명:"+name+"\n페이지 수: "+page+"\n작가명: "+author;
+	}
+}

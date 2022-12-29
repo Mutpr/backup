@@ -1,0 +1,27 @@
+package src0_20200927;
+
+public class HourEmployee extends Person{
+	private int income;
+	private int workHour;
+	
+	
+	public int computeSalary(int hourIncome) { //임금 계산
+		//시간당 임금 * 일한 시간 반환
+		hourIncome = income*workHour;
+		return hourIncome;
+	}
+	
+	public HourEmployee(String name, int i, int income, int workHour) {
+		super(name, i);
+		// TODO Auto-generated constructor stub
+		this.income = income;
+		this.workHour = workHour; 
+	}
+	
+	public String toString() {
+		return "이름> "+name+"\t"
+				+"사번> "+EmpNumber+"\t"
+				+"일한 시간> "+workHour+"\t"
+				+"시간당 임금> "+income+"\t";
+	}
+}

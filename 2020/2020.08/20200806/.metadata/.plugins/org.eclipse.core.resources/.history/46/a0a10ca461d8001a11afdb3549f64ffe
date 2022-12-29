@@ -1,0 +1,17 @@
+package src4;
+
+import java.util.*;
+public class InfoTest2 {
+	public static void main(String [] args) {
+		Scanner scan = new Scanner(System.in);
+		Info info1 = new Info();
+		Info info2 = new Info();
+		
+		int pass [] = new int [4];
+		
+		for(int i = 0; i<4; i++) {
+			pass[i] = (int)(Math.random()*10);
+			
+		}
+	}
+}

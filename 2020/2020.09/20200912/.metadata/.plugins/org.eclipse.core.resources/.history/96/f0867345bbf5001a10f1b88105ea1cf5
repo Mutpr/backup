@@ -1,0 +1,8 @@
+package src2_20200912;
+
+public class Array_src2 {
+	static void max(double...doub) {
+		double max = doub[0];
+	}
+	
+}

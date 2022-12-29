@@ -1,0 +1,20 @@
+package src_0516;
+
+import java.util.*;
+public class src2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		int [] array1 = new int [5];
+		int i;
+		
+		for(i = 0; i<=5-1; i++) {
+			array1[i] = ((int)Math.random()*100+1);
+			for(int j=0; j<=array1.length; j++) {
+				System.out.println(array1[i]);
+			}
+		}
+	}
+
+}

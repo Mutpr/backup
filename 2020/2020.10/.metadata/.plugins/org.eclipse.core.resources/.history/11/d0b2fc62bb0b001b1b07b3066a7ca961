@@ -1,0 +1,25 @@
+package src2_20201011;
+
+public class SmartPhone implements RemoteControl{
+	
+	void method1(RemoteControl ac) {
+		ac.turnOn();
+		ac.turnOff();
+		ac.setVolume(0);
+	}
+	@Override
+	public void turnOn() {
+		
+	}
+	@Override
+	public void turnOff() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setVolume(int volume) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

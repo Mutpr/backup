@@ -1,0 +1,29 @@
+package src1_20201102;
+
+public abstract class Paper extends Tool{
+	private String size;
+	public Paper(String type, String size) {
+		super(type);
+		this.size = size;
+	}
+	
+	void draw() {
+		System.out.println(super.getType()+"에 그림을 그리다");
+	}
+	
+	@Override
+	public void write() {
+		super.write();
+		System.out.println("size>> "+size);
+	}
+	
+	@Override
+	public void cut() {
+		System.out.println("");
+	}
+	
+	@Override
+	public void dry() {
+		System.out.println();
+	}
+}

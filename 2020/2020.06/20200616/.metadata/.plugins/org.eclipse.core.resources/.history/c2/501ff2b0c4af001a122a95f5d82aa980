@@ -1,0 +1,12 @@
+package src1;
+
+public class Melon extends Food{
+	//경작 농원 정보
+	public String farm;
+	
+	public void setFarm(String farm, int price, int weight) {
+	
+}	
+
+	
+	}

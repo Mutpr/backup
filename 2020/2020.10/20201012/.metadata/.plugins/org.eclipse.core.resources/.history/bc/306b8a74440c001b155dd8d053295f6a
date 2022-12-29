@@ -1,0 +1,9 @@
+
+@FunctionalInterface
+interface Vehicle{
+	void run(int num);
+}
+
+public abstract class Person {
+
+}

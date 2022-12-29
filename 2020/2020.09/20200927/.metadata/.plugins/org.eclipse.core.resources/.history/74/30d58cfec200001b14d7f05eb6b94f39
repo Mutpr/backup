@@ -1,0 +1,11 @@
+package src2_20200927;
+
+public class Rectangle extends Shape{
+	public Shape(int ro, char ap){
+		super(row, alpha);
+	}
+	
+	char draw(){
+		
+	}
+}

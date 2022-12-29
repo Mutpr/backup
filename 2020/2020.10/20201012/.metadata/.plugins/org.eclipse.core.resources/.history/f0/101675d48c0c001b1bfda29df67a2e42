@@ -1,0 +1,28 @@
+package src3_20201012;
+
+public class Answer_03 {
+
+	public static void main(String[] args) {
+		Operation oper = null;
+		oper = new Hair("긴머리");
+		run(oper);
+		oper = new Fruit(5);
+		run(oper);
+		
+		Hair hair = new Hair() {
+			void cut() {
+				System.out.println("긴머리를 감다.");
+			}
+			void wash() {
+				System.out.println("긴머리를 자르다.");
+			}
+		};
+		
+		public void run(String test) {
+			System.out.println();
+		}
+	
+		
+
+	}
+	}

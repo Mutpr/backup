@@ -1,0 +1,14 @@
+package src1_20201105;
+
+import java.util.*;
+public class Answer_02 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		String [] word = {"개구리", "생강","두꺼비"};
+		double index = (int)(Math.random()*word.length);
+		String start = word[(int)index];
+		int leng = word[(int)index].length();
+			char ch = start.charAt(leng);
+			System.out.println(ch);
+	}
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;src_20200129&apos; to &apos;src1_20200129&apos;&#x0D;&#x0A;- Original project: &apos;20200129&apos;&#x0D;&#x0A;- Original element: &apos;src_20200129&apos;&#x0D;&#x0A;- Renamed element: &apos;src1_20200129&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;src_20200129&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{src_20200129.java[src_20200129" matchStrategy="1" name="src1_20200129" qualified="false" references="true" similarDeclarations="false" stamp="1580388904960" textual="false" version="1.0"/>
+</session>

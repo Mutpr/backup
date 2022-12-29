@@ -1,0 +1,11 @@
+package src2_20201011;
+
+public class RemoteTV {
+	
+	public void turnOn() {
+		
+	}
+	public void turnOff() {
+		
+	}
+}

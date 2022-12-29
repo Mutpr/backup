@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+C:\Users\palad\Documents\ÀÚ¹Ù\20190719\.metadata\.plugins\org.eclipse.jdt.core
+916774255.index
+789344348.index

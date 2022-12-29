@@ -1,0 +1,17 @@
+package src_20200803;
+
+public class Melon extends Food {
+	String farm;
+	
+	public void setFarm(String farm) {
+		this.farm = farm;
+	}
+	
+	public String getFarm() {
+		return farm;
+	}
+	
+	public String toString() {
+		return "°´Ã¼ Á¤º¸ [ cost= "+ cost + "kg = "+weight+" °æÀÛ³ó¿ø="+farm;
+	}
+}

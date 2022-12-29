@@ -1,0 +1,8 @@
+package src1_20201102;
+
+public abstract class Paper extends Tool{
+	public Paper(String type, String size) {
+		super(type);
+		this.size = size;
+	}
+}

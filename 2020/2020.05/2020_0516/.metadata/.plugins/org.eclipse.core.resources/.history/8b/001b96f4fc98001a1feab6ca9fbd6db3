@@ -1,0 +1,22 @@
+package src_0516;
+
+import java.util.*;
+public class src4 {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		int i = scan.nextInt();
+		int j = scan.nextInt();
+		int [][] array1 = new int [i][j];
+		
+		for(int l = 0; i<array1[i].length-1; i++) {
+			for(int k = 0; j<=array1[j].length-1; j++) {
+				System.out.println("*");
+			}
+		}
+		
+
+	}
+
+}

@@ -1,0 +1,16 @@
+package src2;
+
+class Magazine extends Book {
+	private String info;
+	
+	public Magazine(String name, String page, String author) {
+		super(name, page,author);
+		this.info = info;
+	}
+	
+	public Magazine() {
+		info = null;
+	}
+	
+	
+}

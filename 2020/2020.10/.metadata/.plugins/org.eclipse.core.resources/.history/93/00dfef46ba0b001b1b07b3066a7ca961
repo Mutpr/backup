@@ -1,0 +1,44 @@
+package src2_20201011;
+
+import java.util.*;
+public class RemoteTest {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		SmartTelevision remote = new SmartTelevision() {
+			int volume;
+			@Override
+			public void turnOn() {
+				System.out.println("");
+			}
+			@Override
+			public void turnOff() {
+				System.out.println("");
+			}
+			@Override
+			public void setVolume(int volume) {
+				this.volume = volume;
+				System.out.println("ÇöÀç tv º¼·ý: "+ this.volume);
+				
+			}
+			
+			SmartPhone remote = new SmartPhone() {
+				int volume;
+				@Override
+				public void turnOn() {
+					System.out.println("");
+				}
+				@Override
+				public void turnOff() {
+					System.out.println("");
+				}
+				@Override
+				public void setVolume(int volume) {
+					this.volume = volume;
+					System.out.println("ÇöÀç tv º¼·ý: "+ this.volume);
+					
+				}
+		};
+		}
+}
+

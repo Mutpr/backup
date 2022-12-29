@@ -1,0 +1,17 @@
+package src_20200203;
+
+public class Caarrr {
+	String company = "현대자동차";
+	String model;
+	String color;
+	int maxSpeed;
+	
+	Caarrr(){
+		
+	}
+	
+	Car(String model){
+		this(model,"은색", 250);
+	}
+
+}

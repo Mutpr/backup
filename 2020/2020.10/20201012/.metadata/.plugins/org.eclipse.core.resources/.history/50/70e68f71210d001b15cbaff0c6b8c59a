@@ -1,0 +1,18 @@
+package src3_20201012;
+
+public class Answer_03 {
+
+	public static void main(String[] args) {
+		
+		Operation oper = null;
+		oper = new Hair();
+		run(oper);
+		oper = new Fruit();
+		run(oper);
+		
+	}
+
+	private static void run(Operation oper) {
+		
+	}
+	}

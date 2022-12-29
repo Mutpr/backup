@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+E:\Yehn\47\study\java\2020\2020.06\20200607\.metadata\.plugins\org.eclipse.jdt.core
+3469434087.index

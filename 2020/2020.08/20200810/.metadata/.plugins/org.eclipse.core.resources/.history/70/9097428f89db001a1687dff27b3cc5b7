@@ -1,0 +1,19 @@
+package src2_20200810;
+
+public class Book {
+	String title;
+	int page;
+	String author;
+	
+	public Book(String ti, int pa, String aut, String re) {
+		title = ti;
+		page = pa;
+		author = aut;
+	}
+	
+	public void BookInfo() {
+		System.out.println("力格: "+title);
+		System.out.println("其捞瘤 荐:"+page);
+		System.out.println("历磊: "+author);
+	}
+}

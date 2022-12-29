@@ -1,0 +1,17 @@
+package src1_20200607;
+
+import java.util.*;
+public class wordTest {
+	public static void main(String [] args) {
+		
+		Scanner scan = new Scanner(System.in);
+		word test = new word();
+		int [] array1 = new int[7];
+		
+		for(int i = 0; i<7; i++) {
+			System.out.print(i+" :영단어와 뜻을 입력하세요>>");
+			
+		}
+	
+	}
+}

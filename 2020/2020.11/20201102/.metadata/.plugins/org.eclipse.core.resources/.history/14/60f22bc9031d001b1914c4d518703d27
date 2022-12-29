@@ -1,0 +1,28 @@
+package src1_20201102;
+
+public class Answer_01 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Tool [] tool = {new Hair("Hair", "Wave"), new Paper("paper", "A3")};
+		run(tool);
+	}
+	
+	public static void run(Tool [] tool) {
+		Hair hair = new Hair("Hair","Wave");
+		Paper paper = new Paper("paper","A3");
+		for(int i =0; i<tool.length; i++) {
+			if(i+1 == 1) {
+				System.out.println("=== Hair class ===");
+			if() {
+				
+			}
+				tool[i].cut();
+				tool[i].dry();
+			}
+			
+		
+	}
+
+}
+}

@@ -1,0 +1,20 @@
+package src_20200217;
+
+import java.util.*;
+public class src1_20200217 {
+	public static void main(String args[]) {
+		Scanner scan = new Scanner(System.in);
+		
+		int line1 = scan.nextInt();
+		int line2 = scan.nextInt();
+		
+		for(int i=5; i>=line1; i--) {
+			for(int j=1; j<=i; j++) {
+				System.out.print("*");
+			}
+			for(int k=1; i<=line2; k++) {
+				System.out.print("^");
+			}System.out.println();
+		}
+	}
+}

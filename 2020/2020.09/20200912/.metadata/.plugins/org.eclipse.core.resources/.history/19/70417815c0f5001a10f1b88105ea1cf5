@@ -1,0 +1,14 @@
+package src3_20200912;
+
+import java.util.*;
+public class SeatReservation {
+	
+	public void ReservationSet(int [] array) {
+		array = new int [10];
+		for(int i = 0; i<=array.length-1; i++) {
+			array[i] = 0;
+		}
+	}
+	
+	public void Reservation 
+}

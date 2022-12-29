@@ -1,0 +1,13 @@
+
+package src_20190802;
+
+public class prac0802_4 {
+	public static void main(String args[]) {
+		
+		for(int i=1; i<=5; i++) {
+			System.out.print("*");
+		}
+		System.out.println();
+	}
+
+}

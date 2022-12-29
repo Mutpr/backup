@@ -1,0 +1,25 @@
+package src_0516;
+
+import java.util.*;
+public class src1 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		int [] array1;
+		
+		//int line = scan.nextInt();
+		int n = scan.nextInt();
+		int hap=1;
+		int i;
+		int j;
+		
+		for (i = 1; i <= n; i++) {					// i행 (i = 1, 2, … ,n)				
+			for (j = 1; j <= n - i + 1; j++) {		// n-i+1개의 "*"를 나타냄
+				System.out.print(hap+1);					
+			}
+			System.out.println();						// 개행(줄변환)
+		}
+	}
+	}
+
+
+

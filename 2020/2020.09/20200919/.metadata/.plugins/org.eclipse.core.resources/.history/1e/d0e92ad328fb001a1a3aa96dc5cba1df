@@ -1,0 +1,13 @@
+package src2_20200919;
+
+public class Book {
+	
+	String Title;
+	int page;
+	int releaseDate;
+	
+	public Book(String Title, int page, int releaseDate) {
+		for()
+	}
+	
+}

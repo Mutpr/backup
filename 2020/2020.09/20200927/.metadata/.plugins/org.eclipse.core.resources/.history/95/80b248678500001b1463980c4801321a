@@ -1,0 +1,24 @@
+package src1_20200927;
+
+public class SalariedEmployee extends Person{
+	// computeSalary() 메소드 재정의
+	// toString() 메소드 재정의
+	
+	private String name;
+	private String Number;
+	private int hourIncome; 
+	
+	
+	@Override
+	public int computeSalary(int hourIncome) {
+		int totalIncome;
+		
+		totalIncome = hourIncome * 12;
+		return totalIncome;
+	}
+	
+	@Override
+	public String toString() {
+		return "";
+	}
+}

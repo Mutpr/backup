@@ -1,0 +1,12 @@
+package src1;
+
+import java.util.*;
+public class FoodTest {
+	public static void main(String [] args) {
+		
+		Food m1 = new Melon();
+		Food m2 = new Melon();
+		
+		m1.getFarm();
+	}
+}

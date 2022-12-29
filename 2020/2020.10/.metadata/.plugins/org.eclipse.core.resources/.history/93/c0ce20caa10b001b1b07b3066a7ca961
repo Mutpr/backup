@@ -1,0 +1,20 @@
+package src2_20201011;
+
+public class SmartPhone implements RemoteControl{
+
+	@Override
+	public void turnOn() {
+		
+	}
+
+	@Override
+	public void turnOff() {
+		
+	}
+
+	@Override
+	public void setVolume(int volume) {
+		
+	}
+
+}

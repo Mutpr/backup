@@ -1,0 +1,9 @@
+package src2;
+
+class Magazine extends Book {
+	private String info;
+	
+	public Magazine() {
+		
+	}
+}

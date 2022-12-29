@@ -1,0 +1,14 @@
+package src1_20200919;
+
+public class DistanceComp {
+
+	public void longdistance() {
+		//통학거리가 가장 긴 객체
+		int [] dist = new int [10];
+		
+	}	
+
+	public void shortdistance() {
+		//통학거리가 가장 짧은 객체
+	}
+}

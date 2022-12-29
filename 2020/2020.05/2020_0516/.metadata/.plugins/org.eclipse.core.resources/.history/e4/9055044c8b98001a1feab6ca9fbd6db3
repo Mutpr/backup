@@ -1,0 +1,25 @@
+package src_0516;
+
+import java.util.*;
+public class src1 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		int [] array1;
+		
+		//int line = scan.nextInt();
+		int n = scan.nextInt();
+		int hap=0;
+		int i;
+		int j;
+		
+		for (i = 1; i <= n; i++) {					
+			for (j = 1; j <= n - i + 1; j++) {			
+			}
+			System.out.print(hap+1);
+			System.out.println();						
+		}
+	}
+	}
+
+
+

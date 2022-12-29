@@ -1,0 +1,21 @@
+/*
+ * 두 정수 A와 B를 입력 받은 다음, A+B를 
+ */
+
+package Forsrc_20200212;
+
+import java.util.*;
+public class src_FOR_NO2 {
+	public static void main(String args[]) {
+		Scanner scan = new Scanner(System.in);
+		int number = scan.nextInt();
+		int i = 0, j=0;
+		
+		for(int k = 0; k<=number; k++) {
+			i = scan.nextInt();
+			j = scan.nextInt();
+			System.out.println(i+j);
+		}
+	}
+
+}

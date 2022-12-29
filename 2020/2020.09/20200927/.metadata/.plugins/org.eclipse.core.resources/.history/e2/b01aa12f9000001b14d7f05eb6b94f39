@@ -1,0 +1,12 @@
+package src0_20200927;
+
+public class SalariedEmployee extends Person{
+	private int hourIncome; 
+	
+	public Person(String na, String Emp, int in) {
+		this.setName(na);
+		this.setEmpNumber(Emp);
+		this.hourIncome = in;
+		
+	}
+}

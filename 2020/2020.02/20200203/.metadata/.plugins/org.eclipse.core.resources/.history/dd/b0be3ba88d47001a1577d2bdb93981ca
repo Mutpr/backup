@@ -1,0 +1,21 @@
+package src_20200203;
+
+public class CaarrrExample {
+	public static void main(String args[]) {
+		Caarrr car1 = new Caarrr();
+		System.out.println("car1.Company: "+car1.company);
+		System.out.println();
+		
+		Caarrr car2 = new Caarrr("자가용");
+		System.out.println("car2.Company: "+car2.company);
+		System.out.println("car2.model: "+car2.model);
+		System.out.println();
+		
+		Caarrr car3 = new Caarrr("자가용", "빨강");
+		System.out.println("car2.Company: "+car2.company);
+		System.out.println("car2.model: "+car2.model);
+		System.out.println("car2.color: "+car2.color);
+		System.out.println();
+	}
+
+}

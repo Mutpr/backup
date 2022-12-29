@@ -1,0 +1,24 @@
+package src2_20200608;
+
+public class person {
+	private String name;
+	private int year;
+	
+	public String getPerson() {
+		System.out.println("이름:"+name);
+		return name;
+	}
+
+	public void setPerson(String person) {
+		this.name =name;
+	}
+	
+	public int getYear(int year) {
+		System.out.println("출생년도"+year);
+		return year;
+	}
+	
+	void checkMask() {
+		int week = year % 1000 % 100 % 10;
+	}
+}

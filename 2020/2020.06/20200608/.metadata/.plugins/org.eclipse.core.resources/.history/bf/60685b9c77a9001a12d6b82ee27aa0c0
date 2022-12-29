@@ -1,0 +1,18 @@
+package src_20200608;
+
+import java.util.*;
+public class ServiceTest {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		Service service = new Service();
+		System.out.println("id 와 패스워드를 입력하세요.");
+		service.login(service.id, service.pass);
+		
+		service.id = scan.nextLine();
+		service.pass = scan.nextInt();
+		
+		service.logout(service.id);
+		
+	}
+
+}

@@ -1,0 +1,7 @@
+package src2_20200927;
+
+public class Shape {
+	void draw(int x, char ch){
+		
+	}
+}

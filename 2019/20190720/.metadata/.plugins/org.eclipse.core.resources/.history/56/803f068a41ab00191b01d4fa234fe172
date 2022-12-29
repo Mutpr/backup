@@ -1,0 +1,25 @@
+/*
+ * 소스의 목표: 별로 이등변삼각형을 찍어준다.
+ * 최초 입력: 2019-07-21
+ */
+package src;
+
+import java.util.*; 
+public class src2 {
+	public static void main(String args[]) {
+		Scanner sc = new Scanner(System.in); //스캐너 객체를 받아준다.
+		
+		int a = sc.nextInt(); //a를 입력받는다.
+		int b = sc.nextInt();
+		
+		for(int i=0; i<a; i++) { //왼쪽 별을 찍어주는 반복문 (입력한 밑변 a 만큼)
+			//왼쪽 별은 역직각삼각형
+			for(int j=0; j>i; j--) {//공백을 찍어주는 반복문
+				System.out.print(" ");
+				} for(int k=0; k<2*i+1; k++) {
+					System.out.println("*");
+				
+			}System.out.println();
+		}
+	}
+}

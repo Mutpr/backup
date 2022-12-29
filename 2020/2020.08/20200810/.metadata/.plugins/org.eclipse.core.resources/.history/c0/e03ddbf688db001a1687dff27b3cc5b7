@@ -1,0 +1,12 @@
+package src2_20200810;
+
+public class BookInfo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stu
+	
+		Book [] book = new Book[10];
+		int cnt = 0;
+	}
+
+}

@@ -1,0 +1,18 @@
+package src_20190802;
+
+import java.util.*;
+
+public class prac0802_2 {
+	public static void main(String args[]) {
+		double num1 = (int)(Math.random()*6)+1;
+		double num2 = (int)(Math.random()*6)+1;
+		
+		while(num1+num2!=5){
+			if(num1+num2==5) {
+				System.out.print("("+num1+","+num2+")");
+				break;
+				} System.out.print("("+num1+","+num2+")");
+			
+		}
+		}
+	}

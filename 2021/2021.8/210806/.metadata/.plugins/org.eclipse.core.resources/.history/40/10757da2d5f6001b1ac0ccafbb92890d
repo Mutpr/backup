@@ -1,0 +1,12 @@
+package src3_210806;
+
+public class MyDetailInfo extends MyInfo{
+	String number;
+	String univ;
+	public MyDetailInfo(String name, int age) {
+		super(name, age);
+		this.name = name;
+		this.age = age;
+	}
+	
+	}

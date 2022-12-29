@@ -1,0 +1,22 @@
+package src1_20200919;
+
+public class DistanceComp {
+	
+	Distance[] dist = new Distance [10];
+	public void longdistance() {
+		//통학거리가 가장 긴 객체
+		for(int i = 0; i<=dist.length-1; i++) {
+			dist[i] = new Distance();
+			dist[i].getDist();
+			if(dist[i]==null) {
+				toString();
+				break;
+			}
+		}
+	}	
+
+	public void shortdistance() {
+		//통학거리가 가장 짧은 객체
+		
+	}
+}

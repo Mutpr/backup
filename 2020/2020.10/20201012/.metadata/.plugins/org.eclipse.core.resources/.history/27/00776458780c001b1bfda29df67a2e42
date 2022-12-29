@@ -1,0 +1,39 @@
+package src2_20201012;
+
+
+import java.util.*;
+public class Answer_02 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		int select;
+		String song = null;
+		
+		Media media = new Media() {
+			void play(String instru) {
+				System.out.println(instru + " 재생합니당.");
+			}
+
+			void stop(String instru) {
+				System.out.println(instru + " 중지합니당.");
+			}
+		};
+		
+		System.out.println("메뉴를 선택해주세요.");
+		System.out.println("1> 재생 2> 정지");
+		
+		switch (select=scan.nextInt()) {
+		case 1:
+			System.out.println("재생을 선택하셨습니다.");
+			System.out.println("곡을 선택해주세요.");
+			song = scan.nextLine();
+			media.play(song);
+			break;
+		case 2:
+			System.out.println("중지를 선택하셨습니다.");
+			media.stop(song);
+			break;
+		}
+
+	}
+
+}

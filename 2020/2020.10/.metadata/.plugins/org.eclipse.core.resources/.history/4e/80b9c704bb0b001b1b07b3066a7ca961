@@ -1,0 +1,32 @@
+package src2_20201011;
+
+public abstract class SmartPhone implements RemoteControl{
+	
+	RemoteControl field = new RemoteControl() {
+	int volume;
+	@Override
+	public void turnOn() {
+		System.out.println("스마트폰을 끕니다");
+	}
+
+	@Override
+	public void turnOff() {
+		System.out.println("스마트폰을 끕니다");
+	}
+
+	@Override
+	public void setVolume(int volume) {
+		this.volume = volume;
+		System.out.println("현재 볼륨:"+volume);
+		if(volume >= 80) {
+			System.out.println("현재 볼륨이 위험 수치입니다.");
+		}
+	}
+	};
+	void method1(RemoteControl ac) {
+		ac.turnOn();
+		ac.turnOff();
+		ac.setVolume(0);
+	}
+
+}

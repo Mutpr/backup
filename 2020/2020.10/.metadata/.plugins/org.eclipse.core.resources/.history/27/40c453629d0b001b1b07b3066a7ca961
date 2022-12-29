@@ -1,0 +1,14 @@
+package src2_20201011;
+
+public class RemoteTV {
+	
+	@Override
+	public abstract void turnOn() {
+		return;
+	}
+	
+	@Override
+	public void turnOff() {
+		return;
+	}
+}

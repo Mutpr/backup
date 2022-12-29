@@ -1,0 +1,8 @@
+import java.util.*;
+public class src2_20200129 {
+	public static void main(String args[]) {
+		week Today = null;
+		
+		Calender CAL = Calendar.getInstance();
+	}
+}

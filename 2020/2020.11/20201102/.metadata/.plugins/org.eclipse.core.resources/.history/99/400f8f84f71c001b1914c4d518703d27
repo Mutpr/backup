@@ -1,0 +1,5 @@
+package src1_20201102;
+
+public abstract class Paper {
+
+}

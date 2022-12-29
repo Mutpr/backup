@@ -1,0 +1,8 @@
+package src2_210806;
+
+public class Person {
+	String name;
+	String address;
+	String tel;
+	
+}

@@ -1,0 +1,19 @@
+package src3_20201012;
+
+public class Answer_03 {
+
+	public static void main(String[] args) {
+		Operation oper = null;
+		oper = new Hair("긴 머리");
+		run(oper);
+		oper = new Fruit("사과");
+		run(oper);
+	}
+	private static void run(Operation oper) {
+		oper.cut();
+		oper.wash();
+		oper.pack(5);
+		oper.tint("brown");
+		
+	}
+	}

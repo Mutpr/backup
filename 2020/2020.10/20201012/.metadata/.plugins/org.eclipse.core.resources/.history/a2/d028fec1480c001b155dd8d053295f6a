@@ -1,0 +1,19 @@
+package src1_20201012;
+
+public class Answer_01 {
+
+	public static void main(String[] args) {
+		Action act = new Action() {
+			public void move() {
+				System.out.println("¸¸Å­ °È½À´Ï´Ù.");
+			} 
+		};
+		
+		Action Sing = () -> {
+			System.out.println("°È½À´Ï´Ù.");
+		};
+		
+		act.move();			
+	}
+	}
+

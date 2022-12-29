@@ -1,0 +1,28 @@
+package src1_20200607;
+
+public class Word {
+	private String english;
+	private String meaning;
+	
+	public void setWord(String english, String meaning) {
+		this.english = english;
+		this.meaning = meaning;
+	}
+	
+	public String getWord() {
+		return english;
+	}
+	
+	public String getMeaning() {
+		return meaning;
+	}
+	
+	public static void search(Word[] word, String english) {
+		
+	}
+	
+	
+	public String toString() {
+		return " "+english+" :"+meaning;
+	}
+}

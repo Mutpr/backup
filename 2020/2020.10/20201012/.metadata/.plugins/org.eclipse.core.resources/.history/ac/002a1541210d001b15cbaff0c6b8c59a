@@ -1,0 +1,21 @@
+package src3_20201012;
+
+public class Hair implements Operation{
+	private String type;
+	
+	void tint(String color) {
+		System.out.println(color+" 색으로 염색하다.");
+	}
+
+	@Override
+	public void cut() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void wash() {
+		// TODO Auto-generated method stub
+		
+	}
+}

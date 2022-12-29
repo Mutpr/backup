@@ -1,0 +1,22 @@
+package src1_20201012;
+
+public class Answer_01 {
+
+	public static void main(String[] args) {
+		Action act = new Action() {
+			public void Dance(String Song) {
+				System.out.print(Song+"ø° ∏¬√Á √„¿ª √‰¥œ¥Ÿ.");
+			}
+			public void Walk(int distance) {
+				System.out.println(distance+" ∏∏≈≠ ∞»Ω¿¥œ¥Ÿ.");
+			} 
+		};
+		
+		
+		
+		
+		
+
+	}
+
+}

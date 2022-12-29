@@ -1,0 +1,52 @@
+package src_0516;
+
+import java.util.*;
+public class src6 {
+	public static void main(String[] args) {
+		  final int SIZE = 10;
+		  int i, s;
+		  int seats[] = new int[SIZE];
+		  int cnt=0;
+		  
+		  while (true) {
+		   System.out.println("====================");
+		   
+		   for(i=0; i<SIZE; i++)
+		    System.out.printf("%d ", i+1);
+		   
+		   System.out.println("\n====================");
+		   
+		   for(i=0; i<SIZE; i++)
+		    System.out.printf("%d ", seats[i]);
+		   
+		   System.out.println("\n====================");
+		   System.out.print("원하시는 좌석번호를 입력하세요 (종료는 -1, 자리가 꽉차면 자동 종료): ");
+		   Scanner sc = new Scanner(System.in);
+		   s = sc.nextInt();
+		   
+		   if (s == -1)
+		    break;
+		   
+		   if (seats[s-1] == 0) {
+		    seats[s-1] = 1;
+		    System.out.println("예약되었습니다.");
+		   }
+		   else
+		    System.out.println("이미 예약된 자리입니다.");
+		   
+		   for (i=0; i<SIZE; i++)
+		    cnt += seats[i];
+		   
+		   if (cnt == SIZE)
+		    break;
+		   
+		   cnt = 0;
+		    
+		  }
+		  
+		 }
+
+		
+	}
+
+

@@ -1,0 +1,15 @@
+package src1_20200607;
+
+import java.util.*;
+public class WordTest {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		Word [] word;
+		word = new Word[4];
+		for(int i = 0; i<word.length; i++) {
+			word [i] = Word.getWord();
+		}
+	}
+
+}

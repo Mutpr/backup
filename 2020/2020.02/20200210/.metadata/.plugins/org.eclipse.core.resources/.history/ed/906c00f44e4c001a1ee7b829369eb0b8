@@ -1,0 +1,38 @@
+package kr.co.infopub.chapter.s082;
+
+public class BillboardImplementsSerializable {
+	private int rank;
+	private String song;
+	private int lastWeek;
+	private String imagesrc;
+	private String artistsrc;
+	private String artist;
+	
+	public Billboard() {
+		
+	}
+	public Billboard(int rank, String song, int lastWeek, String imagesrc,String artistsrc, String artist) {
+		super();
+		this.rank = rank;
+		this.song = song;
+		this.lastWeek = lastWeek;
+		this.imagesrc = imagesrc;
+		this.artistsrc = artistsrc;
+		this.artist = artist;
+	}
+	
+	public Billboard(int rank, String song, int lastWeek, String imagesrc, String artist) {
+		super();
+		this.rank = rank;
+		this.song = song;
+		this.lastWeek = lastWeek;
+		this.imagesrc = imagesrc;
+		this.artist = artist;
+	}
+	
+	@Override
+	public String toString() {
+		return "[rank ="+rank+" ,song"+song+" ,lastWeek"
+				"]";
+	}
+}

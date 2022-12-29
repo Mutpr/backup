@@ -1,0 +1,20 @@
+package src4;
+
+import java.util.*;
+public class InfoTest {
+	public static void main(String args[]) {
+		Scanner scan = new Scanner(System.in);
+		Info info1 = new Info();
+		Info info2 = new Info();
+		
+		System.out.println("아이디를 입력하세요>> ");
+		info1.id = scan.nextLine();
+		System.out.println("첫번째 객체 생성 완료");
+		
+		System.out.println("아이디를 입력하세요>> ");
+		info2.id = scan.nextLine();
+		System.out.println("두번째 객체 생성 완료");
+		
+		info1.pass = Math.random()*10000;
+	}
+}

@@ -1,0 +1,17 @@
+package pack1_0716;
+
+import java.util.*;
+public class src2 {
+	public static void main(String args[]) {
+		Scanner scan = new Scanner(System.in);
+		
+		int a;
+		a = scan.nextInt();
+		
+		for (int i = 0; i<=a; i++) {
+			System.out.println("["+i+"]");
+		}
+		
+	}
+
+}

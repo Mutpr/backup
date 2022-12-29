@@ -1,0 +1,5 @@
+package src2_20200927;
+
+public class Rectangle extends Shape{
+
+}

@@ -1,0 +1,26 @@
+package src0_20200927;
+
+class SalariedEmployee extends Person{
+	private int hourIncome; 
+	
+	@Override
+	public int computeSalary() { //임금 계산
+		//시간당 임금 * 일한 시간 반환
+		hourIncome = hourIncome*12;
+		return hourIncome;
+	}
+	
+	public SalariedEmployee(String name, String Emp, int hour) {
+		super(name, Emp);
+		this.hourIncome = hour;
+	}
+	
+	@Override
+	public String toString() {
+		return "이름> "+name+"\t"
+				+"사번> "+EmpNumber+"\t"
+				+"시간당 임금> "+hourIncome+"\t";
+	}
+	
+	}
+

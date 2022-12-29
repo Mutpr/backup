@@ -1,0 +1,10 @@
+package src1_20201102;
+
+public class Answer_01 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Tool [] tool = {new Hair("Hair", "Wave"), new Paper("paper", "A3")};
+	}
+
+}

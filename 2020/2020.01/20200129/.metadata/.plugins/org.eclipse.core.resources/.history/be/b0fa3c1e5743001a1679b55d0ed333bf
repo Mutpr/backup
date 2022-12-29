@@ -1,0 +1,8 @@
+
+public class src_20200129 {
+	public static void main(String arg[]) {
+		week today = week.SUNDAY;
+		week birthday = null;
+	}
+
+}

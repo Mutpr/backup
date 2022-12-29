@@ -1,0 +1,6 @@
+package src1_20200927;
+
+public class Snippet {
+	String name, String Emp, int income, int workHour
+}
+

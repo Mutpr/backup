@@ -1,0 +1,13 @@
+package src3;
+
+public class Circle {
+	double radius;
+	
+	public void getArea() {
+		
+	}
+	
+	public void getCircum() {
+		
+	}
+}

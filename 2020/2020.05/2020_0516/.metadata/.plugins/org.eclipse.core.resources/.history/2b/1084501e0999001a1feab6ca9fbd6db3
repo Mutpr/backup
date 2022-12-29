@@ -1,0 +1,27 @@
+package src_0516;
+
+import java.util.*;
+public class src5 {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		int menu;
+		int select;
+		boolean [] seat = new boolean[10];
+		
+		while(true) {
+			System.out.println("1) 대여 2) 대여현황 3) 종료");
+			menu = scan.nextInt();
+			switch(menu) {
+			case 1:
+				
+			case 2:
+				System.out.println(seat);
+			case 3:
+			}
+		}
+		
+	}
+
+}

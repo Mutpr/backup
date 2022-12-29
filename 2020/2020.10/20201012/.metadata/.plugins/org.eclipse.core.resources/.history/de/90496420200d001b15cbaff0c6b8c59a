@@ -1,0 +1,9 @@
+package src3_20201012;
+
+public class Hair {
+	private String type;
+	
+	void tint(String color) {
+		System.out.println(color+" 색으로 염색하다.");
+	}
+}
