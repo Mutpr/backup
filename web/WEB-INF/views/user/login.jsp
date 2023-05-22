@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <%@ taglib uri="http://www.springframework.org/security/tags" prefix="s" %>
     <title>index</title>
     <style>
         @font-face {
@@ -347,25 +348,13 @@
                     </div>
                 </div>
                 <div style="display: grid;">
-                    <form class="m-3" id="product-form" enctype="multipart/form-data">
-                        <input class="form-control mb-3" name="productName" id="productName" type="search"
-                               placeholder="새로운 이름을 입력해주세요"
+                    <form class="m-3" id="product-form" action = "/user/login" method="post">
+                        <input class="form-control mb-3" name="userName" id="userName" type="search"
+                               placeholder="아이디를 입력해주세요"
                                aria-label="Search">
-                        <input class="form-control mb-3" name="price" id="price" type="search"
-                               placeholder="새로운 가격을 입력해주세요"
+                        <input class="form-control mb-3" name="userPassword" id="userPassword" type="search"
+                               placeholder="비밀번호를 입력해주세요"
                                aria-label="Search">
-                        <input class="form-control mb-3" name="description" id="description" type="search"
-                               placeholder="새로운 설명을 입력해주세요"
-                               aria-label="Search">
-                        <div class="align-items-center" id="photo" style="display: grid; grid-auto-flow: column">
-                            <button type="button" class="btn btn-warning">
-                                이미지 등록
-                            </button>
-                            <h6 class="align-items-center m-3">파일 등록: </h6>
-                            <div class="justify-content-center">
-                                <input class="align-content-center" type="file" multiple="multiple" name="file">
-                            </div>
-                        </div>
                         <input class="btn btn-primary h-75" type="submit" value="전송">
                     </form>
                 </div>

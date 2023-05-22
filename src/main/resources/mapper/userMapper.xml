@@ -6,13 +6,12 @@
     <select id="selectAll" resultType="userDTO">
         SELECT * FROM user;
     </select>
-    <select id="selectOne" resultType="userDTO" parameterType="int">
-        SELECT * FROM user where userId = #{userId}
+    <select id="selectOne" resultType="userDTO" parameterType="userDTO">
+        SELECT userId, userName, userNickname, userRole FROM user where userName = #{userName} and userPassword = #{userPassword}
     </select>
 
     <insert id="insert" parameterType="userDTO">
-        insert into product(userName, userPassword, userNickname) value (#{userName}, #{userPassword}, #{userNickname})
-        ;
+        insert into product(userName, userPassword, userNickname) value (#{userName}, #{userPassword}, #{userNickname}) ;
     </insert>
 
     <delete id="delete" parameterType="int">

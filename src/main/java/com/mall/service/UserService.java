@@ -18,20 +18,20 @@ public class UserService {
         this.session = session;
     }
     private final String NAMESPACE = "mapper.userMapper";
-    public UserDTO selectOne(int id){
-        return session.selectOne(NAMESPACE+".selectOne", id);
+    public UserDTO selectOne(UserDTO user){
+       return session.selectOne(NAMESPACE+".selectOne", user);
     }
 
     public List<UserDTO> selectAll(){
         return session.selectList(NAMESPACE+".selectAll");
     }
-//
-//    public boolean insert(UserDTO userDTO){
-//        if(userDTO.getUserName()!= null){
-//            session.insert(NAMESPACE+".insert", userDTO);
-//            return true;
-//        }return false;
-//    }
+
+    public boolean insert(UserDTO userDTO){
+        if(userDTO.getUserName()!= null){
+            session.insert(NAMESPACE+".insert", userDTO);
+            return true;
+        }return false;
+    }
     public void delete(int id) {
         session.delete(NAMESPACE + ".delete", id);
     }
