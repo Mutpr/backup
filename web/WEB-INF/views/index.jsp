@@ -12,7 +12,7 @@
     <script>
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <style>
         @font-face {
             font-family: 'NeoDunggeunmoPro-Regular';
@@ -259,10 +259,12 @@
                         </form>
                         <div class="justify-content-center align-content-center" id="login-register-icon">
                             <i class="bi bi-person-fill m-2" id="login-icon" onclick="location.href = 'user/login'"></i>
-                            <i class="bi bi-list-check m-2" id="register-icon" onclick="location.href = 'user/register'"></i>
-                                <c:if test="${userRole eq 'market'}">
-                                    <i class="bi bi-plus-square-fill m-2" id="plus-icon" onclick = "location.href = 'product/create'"></i>
-                                </c:if>
+                            <i class="bi bi-list-check m-2" id="register-icon"
+                               onclick="location.href = 'user/register'"></i>
+                            <c:if test="${userRole eq 'market'}">
+                                <i class="bi bi-plus-square-fill m-2" id="plus-icon"
+                                   onclick="location.href = 'product/create'"></i>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -286,12 +288,13 @@
                          id="product-detail">
                         <div class="main-inner-grid">
                             <div></div>
-                            <a href="/product/item/${goods.productId}">
+                            <a href="/product/item/${goods.productId}/${userRole}">
                                 <img src="${pageContext.request.contextPath}/resources/img/2.png" alt="2"
                                 ></a>
                             <div></div>
                             <div></div>
-                            <h2><a href="/product/item/${goods.productId}">${goods.productName}</a></h2>
+                            <h2><a href="/product/item/${goods.productId}/${userRole}">${goods.productName}</a>
+                            </h2>
                             <div></div>
                             <div></div>
                             <p class="card-text">${goods.price}</p>

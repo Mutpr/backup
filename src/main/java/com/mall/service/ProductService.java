@@ -12,14 +12,11 @@ import java.util.List;
 @Service
 public class ProductService {
     SqlSession session;
-
     @Autowired
     public ProductService(SqlSession session) {
         this.session = session;
     }
-
     String NAMESPACE = "mapper.productMapper";
-
     public List<ProductDTO> selectAll() {
         System.out.printf("session: " + session);
         return session.selectList(NAMESPACE + ".selectAll");

@@ -328,25 +328,7 @@
         <div class="d-flex justify-content-center text-light align-self-center m-5" id="register"
              style="font-family: NeoDunggeunmoPro-Regular, serif, white">
             <div class="grid-container align-content-center justify-items-center" id="create-div">
-                <h1 class="m-3 justify-content-center grid">상품 수정</h1>
-                <div class="m-2 w-75" style="display: grid; grid-auto-flow: column; justify-self: center">
-                    <div class="form-check-inline form-switch" onclick="clickNameBox()">
-                        <input class="form-check-input h-75" type="checkbox" id="nameBox" checked>
-                        <label class="form-check-label" for="nameBox">이름</label>
-                    </div>
-                    <div class="form-check-inline form-switch" onclick="clickPriceBox()">
-                        <input class="form-check-input h-75" type="checkbox" id="priceBox" checked>
-                        <label class="form-check-label" for="priceBox">가격</label>
-                    </div>
-                    <div class="form-check-inline form-switch" onclick="clickDescriptionBox()">
-                        <input class="form-check-input h-75" type="checkbox" id="descriptionBox" checked>
-                        <label class="form-check-label" for="descriptionBox">설명</label>
-                    </div>
-                    <div class="form-check-inline form-switch" onclick="clickPhotoBox()">
-                        <input class="form-check-input h-75" type="checkbox" id="photoBox" checked>
-                        <label class="form-check-label" for="photoBox">사진</label>
-                    </div>
-                </div>
+                <h1 class="m-3 justify-content-center grid">로그인</h1>
                 <div style="display: grid;">
                     <form class="m-3" id="product-form" action = "/user/login" method="post">
                         <input class="form-control mb-3" name="userName" id="userName" type="search"

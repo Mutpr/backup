@@ -259,6 +259,10 @@
             font-family: NeoDunggeunmoPro-Regular, serif;
         }
 
+        #detail-description {
+            display: flow-root;
+        }
+
         img {
             width: 75%;
             height: 75%;
@@ -326,15 +330,35 @@
             <div id="detail-description" style="width: 400px">
                 <h6>${productDetail.description}</h6>
                 <div>
+                    <c:if test="${role eq 'general'}">
+                        <div class="input-group m-3">
+                            <label class="input-group-text" for="countOption">Options</label>
+                            <select class="form-select" id="countOption" name ="countOption">
+                                <option selected>수량</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                            <div>
+                                <i class="bi bi-plus-square-fill" type="submit" onclick="location.href = '/basket/showBasket'">
+                                </i>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
-                <i class = "bi bi-trash3-fill" style="color: white" onclick = "location.href = '/product/delete/${productDetail.productId}'">
-                </i>
-                <i class="bi bi-pencil-square" style="color: white" onclick = "location.href = '/product/update/${productDetail.productId}'">
-                </i>
+                <c:if test="${role eq 'market'}">
+                    <i class="bi bi-trash3-fill" style="color: white"
+                       onclick="location.href = '/product/delete/${productDetail.productId}'">
+                    </i>
+                    <i class="bi bi-pencil-square" style="color: white"
+                       onclick="location.href = '/product/update/${productDetail.productId}'">
+                    </i>
+                </c:if>
             </div>
-
             <div>
-
             </div>
         </main>
     </section>

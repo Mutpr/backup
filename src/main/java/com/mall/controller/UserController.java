@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping(value = "/user/", method = RequestMethod.POST)
 public class UserController {
@@ -30,12 +32,13 @@ public class UserController {
     }
 
    @GetMapping("login")
-    public String login(UserDTO user, RedirectAttributes redirectAttributes) {
+    public String login(UserDTO user, RedirectAttributes redirectAttributes, HttpSession session) {
        System.out.println("userDTO = " + user);
        UserDTO result = userService.selectOne(user);
        System.out.println("result = " + result);
        if (result != null){
            redirectAttributes.addAttribute("userRole", result.getUserRole());
+           session.setAttribute("userId", result.getUserId());
            return "redirect:/";
        }else{
            return "user/login";
