@@ -231,7 +231,6 @@
     </style>
 </head>
 <body>
-${userDTO}
 <div class="wrapper rounded-5" id="header">
     <div id="header-div">
         <div class="navbar navbar-dark bg-dark">
@@ -259,13 +258,11 @@ ${userDTO}
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                         <div class="justify-content-center align-content-center" id="login-register-icon">
-                            <c:if test="${}">
-                            <i class="bi bi-person-fill m-2" id="login-icon"></i>
-                            <i class="bi bi-list-check m-2" id="register-icon" onclick="location.href = 'user/login'"></i>
-                            </c:if>
-                            <sec:authorize access="hasRole('market')">
-                            <i class="bi bi-plus-square-fill m-2" id="plus-icon" onclick = "location.href = 'product/create'"></i>
-                            </sec:authorize>
+                            <i class="bi bi-person-fill m-2" id="login-icon" onclick="location.href = 'user/login'"></i>
+                            <i class="bi bi-list-check m-2" id="register-icon" onclick="location.href = 'user/register'"></i>
+                                <c:if test="${userRole eq 'market'}">
+                                    <i class="bi bi-plus-square-fill m-2" id="plus-icon" onclick = "location.href = 'product/create'"></i>
+                                </c:if>
                         </div>
                     </div>
                 </div>

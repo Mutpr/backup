@@ -1,17 +1,14 @@
 package com.mall.controller;
 
-import com.mall.model.ProductDTO;
 import com.mall.model.UserDTO;
 import com.mall.service.UserService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.*;
 
 @Controller
 @RequestMapping(value = "/user/", method = RequestMethod.POST)
@@ -23,17 +20,22 @@ public class UserController {
     }
 
     @GetMapping("register")
-    public String userRegister() {
-        return "user/register";
+    public String userRegister(UserDTO user) {
+        System.out.println("userDTO = " + user);
+        if(userService.insert(user)){
+            return "redirect:/";
+        }else{
+            return "user/register";
+        }
     }
 
    @GetMapping("login")
-    public String login(UserDTO user, RedirectAttributes redirectAttrs) {
-       System.out.println("userDTO = " + user;
+    public String login(UserDTO user, RedirectAttributes redirectAttributes) {
+       System.out.println("userDTO = " + user);
        UserDTO result = userService.selectOne(user);
        System.out.println("result = " + result);
        if (result != null){
-           redirectAttrs.addFlashAttribute("userDTO", result);
+           redirectAttributes.addAttribute("userRole", result.getUserRole());
            return "redirect:/";
        }else{
            return "user/login";
