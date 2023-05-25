@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.transactionMapper">
-    <select id = "selectAll" resultType="list">
-        select * from transaction;
-    </select>
-    <select id = "selectOne" parameterType="int" resultType="basketDTO">
-        select * from transaction where transactionId = #{transactionId}
+<mapper namespace="mapper.basketMapper">
+    <select id = "selectAll" resultType="basketDTO" parameterType="int">
+        select * from basket where userId = #{userId};
     </select>
     <insert id="insert" parameterType="basketDTO">
-        insert into basket(basketTime, userId, count, productId) value (#{basketTime}, #{userId}, #{count}, #{productId})
+        insert into basket(basketTime, userId, count, productId, totalPrice) value (#{basketTime}, #{userId}, #{count}, #{productId}, #{totalPrice})
     </insert>
+    <delete id="delete" parameterType="int">
+        delete from basket where basketId = #{basketId}
+    </delete>
 </mapper>

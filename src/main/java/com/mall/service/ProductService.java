@@ -45,4 +45,8 @@ public class ProductService {
     public int update(ProductDTO productDTO){
         return session.update(NAMESPACE+".update", productDTO);
     }
+
+    public List<ProductDTO> selectProductName(int userId){
+        return session.selectList(NAMESPACE+".selectName", userId);
+    }
 }

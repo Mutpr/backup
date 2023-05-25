@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 public class UserService {
     SqlSession session;
-
     @Autowired
     public UserService(SqlSession session){
         this.session = session;
@@ -32,12 +31,9 @@ public class UserService {
             return true;
         }return false;
     }
-    public void delete(int id) {
-        session.delete(NAMESPACE + ".delete", id);
-    }
 
-    public int update(ProductDTO productDTO){
-        return session.update(NAMESPACE+".update", productDTO);
+    public int findUserId(int userId){
+        return session.selectOne(NAMESPACE+".selectOneById", userId);
     }
 
 }

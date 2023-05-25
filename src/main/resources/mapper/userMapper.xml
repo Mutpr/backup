@@ -6,8 +6,11 @@
     <select id="selectAll" resultType="userDTO">
         SELECT * FROM user;
     </select>
+    <select id = "selectOneById" parameterType="int" resultType="int">
+        select userId from user where userId=#{userId};
+    </select>
     <select id="selectOne" resultType="userDTO" parameterType="String">
-        SELECT userId, userName, userNickname, userRole FROM user where userName = #{userName} and userPassword = #{userPassword}
+        SELECT userId, userName, userNickname, userRole, userPassword FROM user where userName = #{userName} and userPassword = #{userPassword}
     </select>
 
     <insert id="insert" parameterType="userDTO">

@@ -5,6 +5,7 @@ import com.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.*;
@@ -36,9 +37,11 @@ public class UserController {
        System.out.println("result = " + result);
        if (result != null){
            redirectAttributes.addAttribute("userRole", result.getUserRole());
+           redirectAttributes.addAttribute("userId", result.getUserId());
 
+           session.setAttribute("user", result);
            session.setAttribute("userRole", result.getUserRole());
-           session.setAttribute("userId", result);
+           session.setAttribute("userId", result.getUserId());
            return "redirect:/";
        }else{
            return "user/login";
@@ -48,5 +51,12 @@ public class UserController {
     @GetMapping("update")
     public String update() {
         return "user/update";
+    }
+
+    @GetMapping("find/{id}")
+    public String findById(@PathVariable int id, UserDTO user) {
+        UserDTO userDTO = userService.selectOne(user);
+        userService.findUserId(userDTO.getUserId());
+        return "redirect:/";
     }
 }

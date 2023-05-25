@@ -2,6 +2,7 @@ package com.mall.controller;
 
 
 import com.mall.model.ProductDTO;
+import com.mall.model.UserDTO;
 import com.mall.service.ProductService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +30,24 @@ public class ProductController {
     }
 
     @GetMapping(value = "item/{id}")
-    public String showOneProduct(HttpSession session, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request,
+    public String showOneProduct(HttpSession session, Model model,
                                  @PathVariable int id) {
         System.out.printf("dto:" + productService.selectOne(id));
         ProductDTO productDTO = productService.selectOne(id);
 
         String role = (String) session.getAttribute("userRole");
-
-        model.addAttribute("productDetail", productDTO);
+        if(session.getAttribute("userId")!= null){
+            int userId = (Integer)session.getAttribute("userId");
+            if(userId == 0){
+                String userIdToString = (String) session.getAttribute("userId");
+                String userIdToStringTrim = userIdToString.trim();
+                int userIdtoInt = Integer.parseInt(userIdToStringTrim);
+                model.addAttribute("userId", userIdtoInt);
+            }
+        }
         model.addAttribute("userRole", role);
+        model.addAttribute("productDetail", productDTO);
+
         session.setAttribute("productId", productDTO.getProductId());
         return "product/item";
     }

@@ -305,7 +305,8 @@
                         <div class="justify-content-center m" id="login-register-icon">
                             <i class="bi bi-person-fill m-2" id="login-icon"></i>
                             <i class="bi bi-list-check m-2" id="register-icon"></i>
-                            <i class = "bi bi-bag-fill" onclick="location.href = '/basket/showBasket'"></i>
+                            <i class = "bi bi-bag-fill" onclick="location.href='/basket/showBasket/${userId}'">
+                            </i>
                         </div>
                     </div>
                 </div>
@@ -360,7 +361,7 @@
                     </div>
                     </c:if>
                 </div>
-                <c:if test="${role eq 'market'}">
+                <c:if test="${userRole eq 'market'}">
                     <i class="bi bi-trash3-fill" style="color: white"
                        onclick="location.href = '/product/delete/${productDetail.productId}'">
                     </i>

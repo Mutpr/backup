@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -125,7 +125,6 @@
             grid-auto-rows: minmax(50px, auto);
             grid-auto-columns: minmax(50px, auto);
             grid-template-rows: 1fr 1fr;
-            grid-template-columns:
         }
 
         .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
@@ -238,6 +237,18 @@
             display: flex;
         }
 
+        #basket-grid {
+            display: grid;
+            height: 100%;
+            width: 100%;
+            grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr;
+            align-content: center;
+            justify-items: center;
+        }
+
+        #productName {
+            font-size: 30px;
+        }
     </style>
 </head>
 <body>
@@ -268,9 +279,10 @@
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                         <div class="justify-content-center align-content-center" id="login-register-icon">
-                            <i class="bi bi-person-fill m-2" id="login-icon" onclick="location.href = 'user/login'"></i>
+                            <i class="bi bi-person-fill m-2" id="login-icon"
+                               onclick="location.href = '/user/login'"></i>
                             <i class="bi bi-list-check m-2" id="register-icon"
-                               onclick="location.href = 'user/register'"></i>
+                               onclick="location.href = '/user/register'"></i>
                         </div>
                     </div>
                 </div>
@@ -286,18 +298,47 @@
                 style="font-family: DOSPilgiMedium, serif, white">category
             </ul>
         </nav>
-            <div class="d-flex justify-content-center text-light align-self-center m-5" id="register" style="font-family: NeoDunggeunmoPro-Regular, serif, white">
-                <c:forEach var="transaction" items="${transactions}">
-                    <div class = "m-5" >
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                ${transaction.productId}
-                                ${transaction.count}
-                            </label>
+        <div class="justify-content-center text-light align-self-center m-5" id="register"
+             style="font-family: NeoDunggeunmoPro-Regular, serif, white; display: grid">
+            <div class="d-grid align-items-center">
+                <div class="justify-content-center align-items-center">
+                    <h1 class="m-3" style="display: flex; align-items: center">타이틀</h1></div>
+                <form>
+                    <button class="display-5 m-2 btn btn-warning btn-lg" type="submit" location.href = "">전체 선택</button>
+                    <c:forEach var="nm" items="${productName}" varStatus="statusNm">
+                        <div class="m-3 d-flex align-items-center align-content-center justify-content-center">
+                            <div class="align-items-center m-3">
+                                <label>
+                                    <input type="checkbox">
+                                </label>
+                                <div class="d-flex align-content-center justify-content-evenly">
+                                    <i class="w-50 align-self-center m-3 bi bi-pencil"></i>
+                                </div>
+                                <div>
+                                    <div class="display-5 m-3">${nm.productName}</div>
+                                    <div class="align-items-center">
+                                        <div class="display-6 m-3">${basket[statusNm.index].totalPrice} 원</div>
+                                        <div class="display-6 m-3">${basket[statusNm.index].count} 개</div>
+                                        <div>
+                                            <button class="m-2 btn btn-success btn-lg" type="submit"
+                                                    onclick="location.href ='#'">개별 주문</button>
+                                            <button class="m-2 btn btn-danger btn-lg" type="submit"
+                                                    onclick="location.href = '/basket/delete/${basket[statusNm.index].basketId}'">삭제</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                </c:forEach>
+                    </c:forEach>
+                    <div></div>
+                    <div class="d-grid m-4 justify-content-center align-items-center" style="grid-auto-flow: column">
+                        <button class="display-5 m-2 btn btn-warning btn-lg" type="submit" location.href="'/basket/deleteAll/${userId}'">전체 삭제</button>
+                        <button class="display-5 m-2 btn btn-primary btn-lg" type="submit" action="">선택 주문</button>
+                        <button class="display-5 m-2 btn btn-success btn-lg" type="submit" action="">전체 주문</button>
+                    </div>
+                </form>
             </div>
+        </div>
     </section>
 </div>
 </body>

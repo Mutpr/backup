@@ -3,15 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.productMapper">
-    <select id = "selectAll" resultType="productDTO">
+    <select id="selectAll" resultType="productDTO">
         SELECT * FROM product;
     </select>
-    <select id = "selectOne" resultType="productDTO" parameterType="int">
+    <select id="selectOne" resultType="productDTO" parameterType="int">
         SELECT * FROM product where productId = #{productId}
     </select>
-
-    <insert id ="insert" parameterType="productDTO">
-        insert into product(productName, description, price, image, filedata) value (#{productName}, #{description}, #{price}, #{image}, #{filedata}) ;
+    <select id="selectName" resultType="productDTO" parameterType="int">
+        SELECT
+        *
+        FROM
+        basket, product
+        WHERE
+        basket.productId = product.productId
+        and userId = #{userId};
+    </select>
+    <insert id="insert" parameterType="productDTO">
+        insert into product(productName, description, price, image, filedata) value (#{productName}, #{description},
+        #{price}, #{image}, #{filedata}) ;
     </insert>
 
     <delete id="delete" parameterType="int">
