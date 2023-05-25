@@ -6,7 +6,7 @@
     <select id="selectAll" resultType="userDTO">
         SELECT * FROM user;
     </select>
-    <select id="selectOne" resultType="userDTO" parameterType="userDTO">
+    <select id="selectOne" resultType="userDTO" parameterType="String">
         SELECT userId, userName, userNickname, userRole FROM user where userName = #{userName} and userPassword = #{userPassword}
     </select>
 

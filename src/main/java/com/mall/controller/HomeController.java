@@ -23,8 +23,10 @@ public class HomeController {
         this.productService = productService;
     }
     @RequestMapping("/")
-    public String showIndex(Model model, @ModelAttribute("userRole") String role) {
+    public String showIndex(Model model, RedirectAttributes redirectAttributes, @ModelAttribute("userRole") String role) {
         List<ProductDTO> list = productService.selectAll();
+        redirectAttributes.addAttribute("userRole", role);
+        System.out.println("role = " + role);
         model.addAttribute("product", list);
         return "index";
     }

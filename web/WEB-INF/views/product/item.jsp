@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -273,6 +274,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 <div class="wrapper rounded-5">
     <div id="header-div">
@@ -303,6 +305,7 @@
                         <div class="justify-content-center m" id="login-register-icon">
                             <i class="bi bi-person-fill m-2" id="login-icon"></i>
                             <i class="bi bi-list-check m-2" id="register-icon"></i>
+                            <i class = "bi bi-bag-fill" onclick="location.href = '/basket/showBasket'"></i>
                         </div>
                     </div>
                 </div>
@@ -330,23 +333,31 @@
             <div id="detail-description" style="width: 400px">
                 <h6>${productDetail.description}</h6>
                 <div>
-                    <c:if test="${role eq 'general'}">
-                        <div class="input-group m-3">
-                            <label class="input-group-text" for="countOption">Options</label>
-                            <select class="form-select" id="countOption" name ="countOption">
-                                <option selected>수량</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                            </select>
-                            <div>
-                                <i class="bi bi-plus-square-fill" type="submit" onclick="location.href = '/basket/showBasket'">
-                                </i>
+                    <div class="row g-2">
+                        <c:if test="${userRole eq 'general'}">
+                        <div class="col-md">
+                            <div class="form-floating">
+                                <form class="countNumber m-4" action="/basket/addBasket" style="display: grid; grid-auto-flow: column">
+                                    <label for="count"></label>
+                                    <select class="form-select" id="count" name = "count">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <button class="btn btn-success" type="submit">장바구니에 추가</button>
+                                </form>
+
+
                             </div>
                         </div>
+                    </div>
                     </c:if>
                 </div>
                 <c:if test="${role eq 'market'}">

@@ -3,7 +3,6 @@ package com.mall.controller;
 import com.mall.model.UserDTO;
 import com.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,12 +32,13 @@ public class UserController {
 
    @GetMapping("login")
     public String login(UserDTO user, RedirectAttributes redirectAttributes, HttpSession session) {
-       System.out.println("userDTO = " + user);
        UserDTO result = userService.selectOne(user);
        System.out.println("result = " + result);
        if (result != null){
            redirectAttributes.addAttribute("userRole", result.getUserRole());
-           session.setAttribute("userId", result.getUserId());
+
+           session.setAttribute("userRole", result.getUserRole());
+           session.setAttribute("userId", result);
            return "redirect:/";
        }else{
            return "user/login";

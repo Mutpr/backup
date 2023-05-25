@@ -265,6 +265,7 @@
                                 <i class="bi bi-plus-square-fill m-2" id="plus-icon"
                                    onclick="location.href = 'product/create'"></i>
                             </c:if>
+
                         </div>
                     </div>
                 </div>
@@ -288,12 +289,12 @@
                          id="product-detail">
                         <div class="main-inner-grid">
                             <div></div>
-                            <a href="/product/item/${goods.productId}/${userRole}">
+                            <a href="/product/item/${goods.productId}">
                                 <img src="${pageContext.request.contextPath}/resources/img/2.png" alt="2"
                                 ></a>
                             <div></div>
                             <div></div>
-                            <h2><a href="/product/item/${goods.productId}/${userRole}">${goods.productName}</a>
+                            <h2><a href="/product/item/${goods.productId}">${goods.productName}</a>
                             </h2>
                             <div></div>
                             <div></div>

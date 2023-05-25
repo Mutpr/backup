@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,15 +28,17 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @RequestMapping(value = "item/{id}/{role}", method = RequestMethod.GET)
-    public String showOneProduct(HttpSession session,Model model, @PathVariable int id, @ModelAttribute("userRole") @PathVariable String role) {
+    @GetMapping(value = "item/{id}")
+    public String showOneProduct(HttpSession session, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request,
+                                 @PathVariable int id) {
         System.out.printf("dto:" + productService.selectOne(id));
         ProductDTO productDTO = productService.selectOne(id);
 
+        String role = (String) session.getAttribute("userRole");
+
         model.addAttribute("productDetail", productDTO);
-        model.addAttribute("role", role);
+        model.addAttribute("userRole", role);
         session.setAttribute("productId", productDTO.getProductId());
-        System.out.println("role = " + role);
         return "product/item";
     }
 

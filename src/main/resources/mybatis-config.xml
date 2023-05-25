@@ -9,13 +9,13 @@
     <typeAliases>
         <typeAlias type="com.mall.model.ProductDTO" alias="productDTO"/>
         <typeAlias type="com.mall.model.UserDTO" alias="userDTO"/>
+        <typeAlias type="com.mall.model.UserBasketDTO" alias="userBasketDTO"/>
         <typeAlias type="com.mall.model.BasketDTO" alias="basketDTO"/>
-        <typeAlias type="com.mall.model.TransactionDTO" alias="transactionDTO"/>
     </typeAliases>
     <mappers>
         <mapper resource="mapper/userMapper.xml"/>
         <mapper resource="mapper/productMapper.xml"/>
-        <mapper resource="mapper/transactionMapper.xml"/>
+        <mapper resource="mapper/userBasketMapper.xml"/>
         <mapper resource="mapper/basketMapper.xml"/>
     </mappers>
 </configuration>
