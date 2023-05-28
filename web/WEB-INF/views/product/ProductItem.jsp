@@ -224,7 +224,7 @@
             font-size: 30px;
         }
 
-        #login-icon, #register-icon {
+        #login-icon, #register-icon, #basket-icon {
             font-size: 40px;
         }
 
@@ -302,11 +302,18 @@
                                    aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
-                        <div class="justify-content-center m" id="login-register-icon">
-                            <i class="bi bi-person-fill m-2" id="login-icon"></i>
-                            <i class="bi bi-list-check m-2" id="register-icon"></i>
-                            <i class = "bi bi-bag-fill" onclick="location.href='/basket/showBasket/${userId}'">
+                        <div class="justify-content-center align-items-center" id="login-register-icon">
+                            <i class="bi bi-person-fill m-2" id="login-icon"
+                               onclick="location.href = '/user/login'"></i>
+                            <i class="bi bi-list-check m-2" id="register-icon"
+                               onclick="location.href = '/user/register'"></i>
+                            <i class="bi bi-bag-fill m-2" id="basket-icon"
+                               onclick="location.href='/basket/showBasket/${userId}'">
                             </i>
+                            <c:if test="${userRole eq 'market'}">
+                                <i class="bi bi-plus-square-fill m-2" id="plus-icon"
+                                   onclick="location.href = 'product/create'"></i>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -338,9 +345,10 @@
                         <c:if test="${userRole eq 'general'}">
                         <div class="col-md">
                             <div class="form-floating">
-                                <form class="countNumber m-4" action="/basket/addBasket" style="display: grid; grid-auto-flow: column">
+                                <form class="countNumber m-4" action="/basket/addBasket"
+                                      style="display: grid; grid-auto-flow: column">
                                     <label for="count"></label>
-                                    <select class="form-select" id="count" name = "count">
+                                    <select class="form-select" id="count" name="count">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>

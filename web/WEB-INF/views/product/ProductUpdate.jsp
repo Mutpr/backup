@@ -1,18 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>index</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-            crossorigin="anonymous"></script>
-    <script>
-    </script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <style>
         @font-face {
             font-family: 'NeoDunggeunmoPro-Regular';
@@ -125,6 +118,7 @@
             grid-auto-rows: minmax(50px, auto);
             grid-auto-columns: minmax(50px, auto);
             grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
         }
 
         .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
@@ -227,31 +221,114 @@
             color: inherit;
         }
 
+        img {
+            width: 75%;
+            height: 75%;
+        }
+
         #register {
             flex-wrap: wrap;
             font-size: 100%;
             border-radius: 30px;
             background-color: rgba(128, 128, 128, 0.3);
-            height: 80%;
+            height: 100%;
             width: 100%;
             display: flex;
         }
 
-        #basket-grid {
-            display: grid;
-            height: 100%;
-            width: 100%;
-            grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr;
-            align-content: center;
-            justify-items: center;
+        #create-div {
+            display: grid !important;
+            place-self: center;
+            width: 75%;
+            text-align: center;
         }
 
-        #productName {
-            font-size: 30px;
+        #description-bar {
+            height: 150px !important;
+        }
+
+        #create-div input {
+            height: 50px;
+        }
+
+        #create-div input::placeholder {
+            font-size: 20px
+        }
+
+        #create-div button {
+            font-size: 20px
+        }
+
+        #product-form {
+            display: inline-table;
+            width: 75%;
+            justify-self: center;
+        }
+
+        #photo {
+            justify-items: center;
+            display: grid;
+            grid-auto-flow: column;
+            justify-content: center;
         }
     </style>
 </head>
-<body>
+<body style="width: 100%;">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+    function clickNameBox() {
+        let nameBox = document.getElementById("nameBox");
+
+        if ($(nameBox).is(":checked") === true) {
+            console.log();
+            document.getElementById("productName").style.display = "flex";
+        } else if ($(nameBox).is(":checked") === false) {
+            console.log();
+            document.getElementById("productName").style.display = "none";
+        }
+    }
+
+    function clickPriceBox() {
+        let priceBox = document.getElementById("priceBox");
+
+        if ($(priceBox).is(":checked") === true) {
+            console.log();
+            document.getElementById("price").style.display = "flex";
+        } else if ($(priceBox).is(":checked") === false) {
+            console.log();
+            document.getElementById("price").style.display = "none";
+        }
+    }
+
+    function clickDescriptionBox() {
+        let descriptionBox = document.getElementById("descriptionBox");
+
+        if ($(descriptionBox).is(":checked") === true) {
+            console.log();
+            document.getElementById("description").style.display = "flex";
+        } else if ($(descriptionBox).is(":checked") === false) {
+            console.log();
+            document.getElementById("description").style.display = "none";
+        }
+    }
+
+    function clickPhotoBox() {
+        let photoBox = document.getElementById("photoBox");
+
+        if ($(photoBox).is(":checked") === true) {
+            console.log();
+            document.getElementById("photo").style.display = "flex";
+        } else if ($(photoBox).is(":checked") === false) {
+            console.log();
+            document.getElementById("photo").style.display = "none";
+        }
+    }
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 <div class="wrapper rounded-5" id="header">
     <div id="header-div">
         <div class="navbar navbar-dark bg-dark">
@@ -283,11 +360,12 @@
                                onclick="location.href = '/user/login'"></i>
                             <i class="bi bi-list-check m-2" id="register-icon"
                                onclick="location.href = '/user/register'"></i>
+                            <i class = "bi bi-bag-fill" onclick="location.href='/basket/showBasket/${userId}'">
+                            </i>
                         </div>
                     </div>
                 </div>
                 <div>
-
                 </div>
             </header>
         </div>
@@ -298,48 +376,56 @@
                 style="font-family: DOSPilgiMedium, serif, white">category
             </ul>
         </nav>
-        <div class="justify-content-center text-light align-self-center m-5" id="register"
-             style="font-family: NeoDunggeunmoPro-Regular, serif, white; display: grid">
-            <div class="d-grid align-items-center">
-                <div class="justify-content-center align-items-center">
-                    <h1 class="m-3" style="display: flex; align-items: center">타이틀</h1></div>
-                <form>
-                    <button class="display-5 m-2 btn btn-warning btn-lg" type="submit" location.href = "">전체 선택</button>
-                    <c:forEach var="nm" items="${productName}" varStatus="statusNm">
-                        <div class="m-3 d-flex align-items-center align-content-center justify-content-center">
-                            <div class="align-items-center m-3">
-                                <label>
-                                    <input type="checkbox">
-                                </label>
-                                <div class="d-flex align-content-center justify-content-evenly">
-                                    <i class="w-50 align-self-center m-3 bi bi-pencil"></i>
-                                </div>
-                                <div>
-                                    <div class="display-5 m-3">${nm.productName}</div>
-                                    <div class="align-items-center">
-                                        <div class="display-6 m-3">${basket[statusNm.index].totalPrice} 원</div>
-                                        <div class="display-6 m-3">${basket[statusNm.index].count} 개</div>
-                                        <div>
-                                            <button class="m-2 btn btn-success btn-lg" type="submit"
-                                                    onclick="location.href ='#'">개별 주문</button>
-                                            <button class="m-2 btn btn-danger btn-lg" type="submit"
-                                                    onclick="location.href = '/basket/delete/${basket[statusNm.index].basketId}'">삭제</button>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="d-flex justify-content-center text-light align-self-center m-5" id="register"
+             style="font-family: NeoDunggeunmoPro-Regular, serif, white">
+            <div class="grid-container align-content-center justify-items-center" id="create-div">
+                <h1 class="m-3 justify-content-center grid">상품 수정</h1>
+                <div class="m-2 w-75" style="display: grid; grid-auto-flow: column; justify-self: center">
+                    <div class="form-check-inline form-switch" onclick="clickNameBox()">
+                        <input class="form-check-input h-75" type="checkbox" id="nameBox" checked>
+                        <label class="form-check-label" for="nameBox">이름</label>
+                    </div>
+                    <div class="form-check-inline form-switch" onclick="clickPriceBox()">
+                        <input class="form-check-input h-75" type="checkbox" id="priceBox" checked>
+                        <label class="form-check-label" for="priceBox">가격</label>
+                    </div>
+                    <div class="form-check-inline form-switch" onclick="clickDescriptionBox()">
+                        <input class="form-check-input h-75" type="checkbox" id="descriptionBox" checked>
+                        <label class="form-check-label" for="descriptionBox">설명</label>
+                    </div>
+                    <div class="form-check-inline form-switch" onclick="clickPhotoBox()">
+                        <input class="form-check-input h-75" type="checkbox" id="photoBox" checked>
+                        <label class="form-check-label" for="photoBox">사진</label>
+                    </div>
+                </div>
+                <div style="display: grid;">
+                    <form class="m-3" id="product-form" action="/product/update/${productNumber}" method="get"
+                          enctype="multipart/form-data">
+                        <input class="form-control mb-3" name="productName" id="productName" type="search"
+                               placeholder="새로운 이름을 입력해주세요"
+                               aria-label="Search">
+                        <input class="form-control mb-3" name="price" id="price" type="search"
+                               placeholder="새로운 가격을 입력해주세요"
+                               aria-label="Search">
+                        <input class="form-control mb-3" name="description" id="description" type="search"
+                               placeholder="새로운 설명을 입력해주세요"
+                               aria-label="Search">
+                        <div class="align-items-center" id="photo" style="display: grid; grid-auto-flow: column">
+                            <button type="button" class="btn btn-warning" >
+                                이미지 등록
+                            </button>
+                            <h6 class="align-items-center m-3">파일 등록: </h6>
+                            <div class="justify-content-center">
+                                <input class="align-content-center" type="file" multiple="multiple" name="file">
                             </div>
                         </div>
-                    </c:forEach>
-                    <div></div>
-                    <div class="d-grid m-4 justify-content-center align-items-center" style="grid-auto-flow: column">
-                        <button class="display-5 m-2 btn btn-warning btn-lg" type="submit" location.href="'/basket/deleteAll/${userId}'">전체 삭제</button>
-                        <button class="display-5 m-2 btn btn-primary btn-lg" type="submit" action="">선택 주문</button>
-                        <button class="display-5 m-2 btn btn-success btn-lg" type="submit" action="">전체 주문</button>
-                    </div>
-                </form>
+                        <input class="btn btn-primary h-75" type="submit" value="전송">
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 </div>
 </body>
 </html>
+

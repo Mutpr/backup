@@ -10,6 +10,12 @@
         insert into basket(basketTime, userId, count, productId, totalPrice) value (#{basketTime}, #{userId}, #{count}, #{productId}, #{totalPrice})
     </insert>
     <delete id="delete" parameterType="int">
-        delete from basket where basketId = #{basketId}
+        delete from basket where productId = #{productId}
+    </delete>
+    <select id = "selectOne" parameterType="int" resultType="basketDTO">
+        select * from basket where basketId = #{basketId}
+    </select>
+    <delete id="deleteAll" parameterType="int">
+        delete from basket where userId = #{userId}
     </delete>
 </mapper>

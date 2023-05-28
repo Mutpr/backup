@@ -3,13 +3,8 @@ package com.mall.controller;
 import com.mall.model.BasketDTO;
 import com.mall.model.ProductDTO;
 import com.mall.model.UserDTO;
-import com.mall.service.BasketService;
-import com.mall.service.ProductService;
-import com.mall.service.UserBasketService;
-import com.mall.service.UserService;
-import org.apache.ibatis.session.SqlSession;
+import com.mall.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,24 +12,22 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/basket/", method = RequestMethod.GET)
 public class BasketController {
     BasketService basketService;
-    UserBasketService userBasketService;
     UserService userService;
     ProductService productService;
+    TransactionService transactionService;
 
     @Autowired
-    public BasketController(BasketService basketService, ProductService productService, UserService userService, UserBasketService userBasketService) {
+    public BasketController(BasketService basketService, ProductService productService, UserService userService, TransactionService transactionService) {
         this.basketService = basketService;
-        this.userBasketService = userBasketService;
         this.productService = productService;
         this.userService = userService;
+        this.transactionService = transactionService;
     }
 
     @PostMapping(value = "addBasket")
@@ -68,17 +61,13 @@ public class BasketController {
                 System.out.println("등록실패ㅠㅠ");
             }
         }
-        //basketService.insertTransaction();
         return "redirect:/product/item/" + productId;
     }
 
     @GetMapping(value = "showBasket/{id}")
     public String showBasket(@PathVariable int id, Model model, HttpSession session) {
         List<BasketDTO> basketList = basketService.showAllBasket(id);
-        System.out.println(basketList);
-
         List<ProductDTO> productNameList = productService.selectProductName(id);
-        System.out.println(productNameList);
 
         int userId = (int) session.getAttribute("userId");
         int user = userService.findUserId(userId);
@@ -89,18 +78,24 @@ public class BasketController {
         model.addAttribute("productName", productNameList);
         model.addAttribute("basket", basketList);
 
-        return "basket/show";
+        return "basket/BasketShow";
     }
 
-    @GetMapping("delete/{id}")
+    @PostMapping("delete/{id}")
     public String deleteBasket(@PathVariable int id){
         basketService.deleteOneBasket(id);
-        return "redirect:/basket/showBasket/";
+        return "redirect:/basket/BasketShow/";
     }
 
-    @GetMapping("deleteAll/{id}")
+    @PostMapping("deleteAll/{id}")
     public String deleteAllBasket(@PathVariable int id){
         basketService.deleteAllBasket(id);
         return "redirect:/";
+    }
+
+    @GetMapping("selectOne/{id}")
+    public String selectOneBasket(@PathVariable int id){
+        basketService.selectOneBasket(id);
+        return "redirect:/transaction/showAllTransaction";
     }
 }

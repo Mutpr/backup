@@ -40,4 +40,8 @@ public class BasketService {
     public void deleteAllBasket(int userId){
         session.delete(NAMESPACE +".deleteAll", userId);
     }
+
+    public BasketDTO selectOneBasket(int id){
+        return session.selectOne(NAMESPACE+".selectOne", id);
+    }
 }

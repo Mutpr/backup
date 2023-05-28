@@ -258,14 +258,16 @@
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                         <div class="justify-content-center align-content-center" id="login-register-icon">
-                            <i class="bi bi-person-fill m-2" id="login-icon" onclick="location.href = 'user/login'"></i>
+                            <i class="bi bi-person-fill m-2" id="login-icon"
+                               onclick="location.href = '/user/login'"></i>
                             <i class="bi bi-list-check m-2" id="register-icon"
-                               onclick="location.href = 'user/register'"></i>
+                               onclick="location.href = '/user/register'"></i>
+                            <i class = "bi bi-bag-fill" onclick="location.href='/basket/showBasket/'">
+                            </i>
                             <c:if test="${userRole eq 'market'}">
                                 <i class="bi bi-plus-square-fill m-2" id="plus-icon"
                                    onclick="location.href = 'product/create'"></i>
                             </c:if>
-
                         </div>
                     </div>
                 </div>

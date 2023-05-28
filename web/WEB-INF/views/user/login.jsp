@@ -307,9 +307,12 @@
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                         <div class="justify-content-center align-content-center" id="login-register-icon">
-                            <i class="bi bi-person-fill m-2" id="login-icon"></i>
-                            <i class="bi bi-list-check m-2" id="register-icon"></i>
-                            <i class="bi bi-plus-square-fill m-2" id="plus-icon">
+                            <i class="bi bi-person-fill m-2" id="login-icon"
+                               onclick="location.href = '/user/login'"></i>
+                            <i class="bi bi-list-check m-2" id="register-icon"
+                               onclick="location.href = '/user/register'"></i>
+                            <i class="bi bi-bag-fill m-2" id="basket-icon"
+                               onclick="location.href='/basket/showBasket/'">
                             </i>
                         </div>
                     </div>
