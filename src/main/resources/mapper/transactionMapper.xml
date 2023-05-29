@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.transactionMapper">
+    <insert id = "insertTransaction" parameterType="transactionDTO">
+        insert into transaction (productId, userId, count, price, address) values (#{productId}, #{userId}, #{count},
+        #{price}, #{address})
+    </insert>
+    <select id="selectAllTransaction" parameterType="int" resultType="transactionDTO">
+        select * from transaction where userId = #{userId}
+    </select>
+    <select id = "selectOneTransaction" parameterType="int" resultType="transactionDTO">
+        select * from transaction where transactionId = #{transactionId}
+    </select>
+</mapper>
