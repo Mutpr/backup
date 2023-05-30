@@ -5,19 +5,21 @@ import com.mall.model.ProductDTO;
 import com.mall.service.ProductService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.HashMap;
 import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/product/")
-@Log4j
 public class ProductController {
 
     ProductService productService;
@@ -28,19 +30,18 @@ public class ProductController {
     }
 
     @GetMapping(value = "item/{id}")
-    public String showOneProduct(HttpSession session, Model model,
-                                 @PathVariable int id) {
+    public String showOneProduct(HttpSession session, Model model, @PathVariable int id) {
         System.out.printf("dto:" + productService.selectOne(id));
         ProductDTO productDTO = productService.selectOne(id);
 
         String role = (String) session.getAttribute("userRole");
-        if(session.getAttribute("userId")!= null){
-            int userId = (Integer)session.getAttribute("userId");
-            if(userId == 0){
+        if (session.getAttribute("userId") != null) {
+            int userId = (Integer) session.getAttribute("userId");
+            if (userId == 0) {
                 String userIdToString = (String) session.getAttribute("userId");
                 String userIdToStringTrim = userIdToString.trim();
-                int userIdtoInt = Integer.parseInt(userIdToStringTrim);
-                model.addAttribute("userId", userIdtoInt);
+                int userIdToInt = Integer.parseInt(userIdToStringTrim);
+                model.addAttribute("userId", userIdToInt);
             }
         }
         model.addAttribute("userRole", role);
@@ -83,10 +84,27 @@ public class ProductController {
         productService.insert(productDTO);
         return "redirect:/";
     }
+
     @RequestMapping("delete/{id}")
     public String deleteProduct(@PathVariable int id) {
         productService.delete(id);
         return "redirect:/";
+    }
+
+    @GetMapping("showIndex/{pageNo}")
+    public String showIndexProduct(@PathVariable int pageNo, Model model, HttpServletRequest request, RedirectAttributes redirect, HttpSession session) {
+        String count = request.getParameter("count");
+        if(count != null){
+            String countTrim = count.trim();
+            int countToInt = Integer.parseInt(countTrim);
+            redirect.addAttribute(countToInt);
+            model.addAttribute("list", productService.selectAll(pageNo, countToInt));
+        }
+
+        System.out.println("request = " + request.getParameter("count"));
+        model.addAttribute("paging", setPages(pageNo, productService.selectLastPage()));
+        model.addAttribute("pagingAddr", "/product/showIndex");
+        return "/product/showIndex";
     }
 
     @GetMapping("update/{id}")
@@ -119,7 +137,33 @@ public class ProductController {
 
             return "redirect:/";
         }
-        System.out.println("update= "+productDTO);
+        System.out.println("update= " + productDTO);
         return "product/ProductUpdate";
+    }
+
+    public HashMap<String, Integer> setPages(int pageNo, int totalPage) {
+        HashMap<String, Integer> paging = new HashMap<>();
+        int start = 0;
+        int end = 0;
+
+        if (totalPage < 5) {
+            start = 1;
+            end = totalPage;
+        } else if (pageNo < 3) {
+            start = 1;
+            end = 5;
+        } else if (pageNo > totalPage - 3) {
+            start = totalPage - 4;
+            end = totalPage;
+        } else {
+            start = pageNo - 2;
+            end = pageNo + 2;
+        }
+        paging.put("start", start);
+        paging.put("end", end);
+        paging.put("totalPage", totalPage);
+        paging.put("current", pageNo);
+
+        return paging;
     }
 }

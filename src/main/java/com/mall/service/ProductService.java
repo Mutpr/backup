@@ -5,21 +5,32 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class ProductService {
+    private int PAGE_SIZE = 10;
     SqlSession session;
+    String NAMESPACE = "mapper.productMapper";
+    HttpSession httpSession;
     @Autowired
     public ProductService(SqlSession session) {
         this.session = session;
     }
-    String NAMESPACE = "mapper.productMapper";
-    public List<ProductDTO> selectAll() {
-        System.out.printf("session: " + session);
-        return session.selectList(NAMESPACE + ".selectAll");
+
+    public List<ProductDTO> selectAll(int pageNo, @RequestParam("countToInt")int count) {
+        HashMap<String, Integer> params = new HashMap<>();
+        if(count != 0){
+            PAGE_SIZE = count;
+            params.put("size", PAGE_SIZE);
+        }
+        params.put("start", (pageNo - 1) * PAGE_SIZE);
+
+        return session.selectList(NAMESPACE + ".selectAll", params);
     }
 
     public ProductDTO selectOne(int id) {
@@ -42,11 +53,21 @@ public class ProductService {
         session.delete(NAMESPACE + ".delete", id);
     }
 
-    public int update(ProductDTO productDTO){
-        return session.update(NAMESPACE+".update", productDTO);
+    public int update(ProductDTO productDTO) {
+        return session.update(NAMESPACE + ".update", productDTO);
     }
 
-    public List<ProductDTO> selectProductName(int userId){
-        return session.selectList(NAMESPACE+".selectName", userId);
+    public List<ProductDTO> selectProductName(int userId) {
+        return session.selectList(NAMESPACE + ".selectName", userId);
+    }
+
+    public int selectLastPage() {
+        int count = session.selectOne(NAMESPACE + ".count");
+        int total = count / PAGE_SIZE;
+        if(count % PAGE_SIZE != 0){
+            total++;
+        }
+
+        return total;
     }
 }

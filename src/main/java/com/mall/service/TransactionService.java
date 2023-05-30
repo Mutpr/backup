@@ -1,6 +1,7 @@
 package com.mall.service;
 
 import com.mall.controller.TransactionController;
+import com.mall.model.ProductDTO;
 import com.mall.model.TransactionDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,19 @@ public class TransactionService {
     }
 
     public List<TransactionDTO> selectAll(int userId){
-        return session.selectList(NAMESPACE+".selectAll", userId);
+        return session.selectList(NAMESPACE+".selectAllTransaction", userId);
     }
 
     public int addTransaction(TransactionDTO transactionDTO){
         return session.insert(NAMESPACE+".insertTransaction", transactionDTO);
+    }
+
+    public List<TransactionDTO> selectTransaction(int id){
+        return session.selectList(NAMESPACE+".selectName", id);
+    }
+
+    public void deleteAllTransaction(int userId){
+        session.delete(NAMESPACE +".deleteAll", userId);
     }
 
     public TransactionDTO selectOneTransaction(int id){

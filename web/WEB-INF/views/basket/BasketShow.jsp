@@ -274,11 +274,16 @@
                                    aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
-                        <div class="justify-content-center align-content-center" id="login-register-icon">
-                            <i class="bi bi-person-fill m-2" id="login-icon"
+                        <div class="justify-content-center align-items-center" id="login-register-icon" style="font-size: 40px">
+                            <i class="bi bi-person-fill m-2" id="login-icon" style="font-size: 40px"
                                onclick="location.href = '/user/login'"></i>
-                            <i class="bi bi-list-check m-2" id="register-icon"
+                            <i class="bi bi-list-check m-2" id="register-icon" style="font-size: 40px"
                                onclick="location.href = '/user/register'"></i>
+                            <i class="justify-content-center bi bi-bag-fill m-2" id="basket-icon" style="font-size: 40px"
+                               onclick="location.href='/basket/showBasket/${userId}'">
+                            </i>
+                            <i class="bi bi-cart-check-fill m-2" id = "checkout-icon" style="font-size: 40px"
+                            onclick="location.href = '/transaction/showTransaction/${userId}'"></i>
                         </div>
                     </div>
                 </div>
@@ -300,19 +305,21 @@
             <div class="d-grid align-items-center">
                 <div class="justify-content-center align-items-center">
                     <h1 class="m-3" style="display: flex; align-items: center">타이틀</h1></div>
-                <form>
-                    <div class="justify-content-center">
-                        <button class="display-6 m-2 btn btn-warning btn-lg">전체 선택
-                        </button>
-                    </div>
-                    <c:forEach var="nm" items="${productName}" varStatus="statusNm">
+
+                <div class="justify-content-center">
+                    <button class="display-6 m-2 btn btn-warning btn-lg">전체 선택
+                    </button>
+                </div>
+
+                <c:forEach var="nm" items="${productName}" varStatus="statusNm">
+                    <form>
                         <div class="m-3 d-flex align-items-center align-content-center justify-content-center">
                             <div class="align-items-center">
                                 <label>
-                                    <input type="checkbox" name="product-check" id="product-check"
+                                    <input type="checkbox" name="product" id="product"
                                            value= ${nm.productId}>
                                 </label>
-                                ${nm.productId}
+                                    ${nm.productId}
                                 <div class="d-flex align-content-center justify-content-evenly">
                                     <i class="w-50 align-self-center m-3 bi bi-pencil"></i>
                                 </div>
@@ -336,19 +343,26 @@
                                 </div>
                             </div>
                         </div>
-                    </c:forEach>
-                    <div></div>
-                    <div class="d-grid m-4 justify-content-center align-items-center" style="grid-auto-flow: column">
-                        <button class="display-5 m-2 btn btn-warning btn-lg" type="submit"
-                                location.href="'/basket/deleteAll/${userId}'">선택 삭제
+                    </form>
+                </c:forEach>
+                <div class="d-grid m-4 justify-content-center align-items-center" style="grid-auto-flow: column">
+                    <form action="basket/deleteAll/${userId}">
+                        <button class="display-5 m-2 btn btn-danger btn-lg" type="submit">전체 삭제
                         </button>
-                        <button class="m-2 btn btn-primary btn-lg" TYPE="submit"
-                                onclick="location.href ='/transaction/transferSelectedTransaction'">
+                    </form>
+                    <form action="#">
+                        <button class="display-5 m-2 btn btn-warning btn-lg" type="submit">선택 삭제
+                        </button>
+                    </form>
+                    <form>
+                        <button class="display-5 m-2 btn btn-success btn-lg" type="submit" action="">전체 주문</button>
+                    </form>
+                    <form action="/transaction/transferSelectedTransaction/">
+                        <button class="m-2 btn btn-primary btn-lg" type="submit">
                             선택 주문
                         </button>
-                        <button class="display-5 m-2 btn btn-success btn-lg" type="submit" action="">전체 주문</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

@@ -13,4 +13,16 @@
     <select id = "selectOneTransaction" parameterType="int" resultType="transactionDTO">
         select * from transaction where transactionId = #{transactionId}
     </select>
+    <select id="selectName" resultType="transactionDTO" parameterType="int">
+        SELECT
+        *
+        FROM
+        transaction, product
+        WHERE
+        transaction.productId = product.productId
+        and userId = #{userId};
+    </select>
+    <delete id = "deleteAll" parameterType="int">
+        delete from transaction where userId = #{userId}
+    </delete>
 </mapper>
