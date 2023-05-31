@@ -1,11 +1,10 @@
 package com.mall.controller;
 
 
+import com.google.gson.*;
 import com.mall.model.ProductDTO;
 import com.mall.service.ProductService;
-import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -29,11 +29,10 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(value = "item/{id}")
+    @PostMapping(value = "item/{id}")
     public String showOneProduct(HttpSession session, Model model, @PathVariable int id) {
         System.out.printf("dto:" + productService.selectOne(id));
         ProductDTO productDTO = productService.selectOne(id);
-
         String role = (String) session.getAttribute("userRole");
         if (session.getAttribute("userId") != null) {
             int userId = (Integer) session.getAttribute("userId");
@@ -49,6 +48,28 @@ public class ProductController {
 
         session.setAttribute("productId", productDTO.getProductId());
         return "product/ProductItem";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "pagination", method = RequestMethod.GET)
+    public JsonArray showIndex(String count, String pageNo) {
+        ControllerImpl controllerImpl = new ControllerImpl();
+        JsonObject jsonObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        System.out.println("count = " + count);
+        System.out.println("size = " + pageNo);
+
+        List<ProductDTO> list = productService.selectAll(count, pageNo);
+        int countInt = controllerImpl.StringToInt(count);
+        int pageNoInt = controllerImpl.StringToInt(pageNo);
+        System.out.println("list = " + list);
+
+        for (int i=0;i <list.size(); i++){
+            ProductDTO productList = list.get(i);
+            jsonObject.addProperty("name", list.get(i));
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray;
     }
 
     @GetMapping("create")
@@ -91,26 +112,16 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("showIndex/{pageNo}")
-    public String showIndexProduct(@PathVariable int pageNo, Model model, HttpServletRequest request, RedirectAttributes redirect, HttpSession session) {
-        String count = request.getParameter("count");
-        if(count != null){
-            String countTrim = count.trim();
-            int countToInt = Integer.parseInt(countTrim);
-            redirect.addAttribute(countToInt);
-            model.addAttribute("list", productService.selectAll(pageNo, countToInt));
-        }
-
-        System.out.println("request = " + request.getParameter("count"));
-        model.addAttribute("paging", setPages(pageNo, productService.selectLastPage()));
-        model.addAttribute("pagingAddr", "/product/showIndex");
-        return "/product/showIndex";
+    @GetMapping("showIndex")
+    public String showIndexProduct() {
+        return "product/showIndex";
     }
 
     @GetMapping("update/{id}")
     public String updateProduct(@PathVariable int id, HttpServletRequest request, Model model, MultipartFile file) {
         model.addAttribute("productNumber", id);
         ProductDTO productDTO = productService.selectOne(id);
+
         System.out.println("before productDTO = " + productDTO);
 
         String name = request.getParameter("productName");
@@ -141,29 +152,5 @@ public class ProductController {
         return "product/ProductUpdate";
     }
 
-    public HashMap<String, Integer> setPages(int pageNo, int totalPage) {
-        HashMap<String, Integer> paging = new HashMap<>();
-        int start = 0;
-        int end = 0;
 
-        if (totalPage < 5) {
-            start = 1;
-            end = totalPage;
-        } else if (pageNo < 3) {
-            start = 1;
-            end = 5;
-        } else if (pageNo > totalPage - 3) {
-            start = totalPage - 4;
-            end = totalPage;
-        } else {
-            start = pageNo - 2;
-            end = pageNo + 2;
-        }
-        paging.put("start", start);
-        paging.put("end", end);
-        paging.put("totalPage", totalPage);
-        paging.put("current", pageNo);
-
-        return paging;
-    }
 }

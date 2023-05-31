@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.productMapper">
     <select id="selectAll" resultType="productDTO" parameterType="hashMap">
-        SELECT * FROM product order by product.productId DESC Limit ${start}, ${size}
+        SELECT * FROM product order by product.productId Limit ${start}, ${size}
     </select>
     <select id="selectOne" resultType="productDTO" parameterType="int">
         SELECT * FROM product where productId = #{productId}

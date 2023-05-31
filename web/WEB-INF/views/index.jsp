@@ -267,7 +267,8 @@
                             <c:if test="${userRole eq 'market'}">
                                 <i class="bi bi-plus-square-fill m-2" id="plus-icon"
                                    onclick="location.href = 'product/create'"></i>
-                            </c:if>
+                            </c:if> <i class="bi bi-file-break" onclick="location.href='product/showIndex/1'" style="color: whitesmoke"></i>
+
                         </div>
                     </div>
                 </div>

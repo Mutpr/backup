@@ -13,23 +13,31 @@ import java.util.List;
 
 @Service
 public class ProductService {
-    private int PAGE_SIZE = 10;
     SqlSession session;
     String NAMESPACE = "mapper.productMapper";
     HttpSession httpSession;
+
     @Autowired
     public ProductService(SqlSession session) {
         this.session = session;
     }
 
-    public List<ProductDTO> selectAll(int pageNo, @RequestParam("countToInt")int count) {
+    public List<ProductDTO> selectAll(@RequestParam("count") String size, @RequestParam("pageNo") String start) {
         HashMap<String, Integer> params = new HashMap<>();
-        if(count != 0){
-            PAGE_SIZE = count;
-            params.put("size", PAGE_SIZE);
-        }
-        params.put("start", (pageNo - 1) * PAGE_SIZE);
+        if (size != null && start != null) {
+            System.out.println("count = " + size);
+            System.out.println("pageNo = " + start);
+            String countTrim = size.trim();
+            String pageNoTrim = size.trim();
 
+            int countInt = Integer.parseInt(countTrim);
+            int pageNoInt = Integer.parseInt(pageNoTrim);
+
+            params.put("start", (pageNoInt - 1) * countInt);
+            params.put("size", countInt);
+        }
+        System.out.println("params = " + params);
+        System.out.println("session.selectList(NAMESPACE+\".selectAll\"),params = " + session.selectList(NAMESPACE+".selectAll", params));
         return session.selectList(NAMESPACE + ".selectAll", params);
     }
 
@@ -42,6 +50,7 @@ public class ProductService {
         if (productDTO.getProductName() != null) {
             System.out.println("ProductService.insert");
             System.out.println("productDTO = " + productDTO);
+
             session.insert(NAMESPACE + ".insert", productDTO);
             return true;
         } else {
@@ -61,13 +70,17 @@ public class ProductService {
         return session.selectList(NAMESPACE + ".selectName", userId);
     }
 
-    public int selectLastPage() {
-        int count = session.selectOne(NAMESPACE + ".count");
-        int total = count / PAGE_SIZE;
-        if(count % PAGE_SIZE != 0){
-            total++;
-        }
-
-        return total;
+    public int countAll(){
+        return session.selectOne(NAMESPACE+"count");
     }
+
+//    public int selectLastPage() {
+//        int count = session.selectOne(NAMESPACE + ".count");
+//        int total = count / PAGE_SIZE;
+//        if (count % PAGE_SIZE != 0) {
+//            total++;
+//        }
+//
+//        return total;
+//    }
 }
