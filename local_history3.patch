@@ -1,0 +1,17 @@
+Index: web/WEB-INF/views/product/showIndex.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/web/WEB-INF/views/product/showIndex.jsp b/web/WEB-INF/views/product/showIndex.jsp
+--- a/web/WEB-INF/views/product/showIndex.jsp	
++++ b/web/WEB-INF/views/product/showIndex.jsp	(date 1685605056128)
+@@ -351,7 +351,7 @@
+                 </tr>
+             </div>
+             <label for="count"></label>
+-            <select class="form-select" id="count" name="count">
++            <select class="form-select" id="count" name="count" onclick="a()">
+                 <option value="5" selected onclick="a()">5
+                 </option>
+                 <option value="10" onclick="a()">10

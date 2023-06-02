@@ -12,23 +12,8 @@
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
             crossorigin="anonymous"></script>
     <script>
-        function a() {
-            $('.pagination li').on('click', function (e) {
-                let option = ($(this).val());
-                console.log(option);
-                $.ajax({
-                    url: '/product/pagination',
-                    method: 'GET',
-                    data: {"pageNo": option},
-                    success: function (data) {
-                        console.log(data);
-                        console.log(option);
-                        console.log("successsss!")
-                        return data;
-                    }
-                });
-            })
-        }
+
+
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -130,7 +115,7 @@
         .main-inner-grid {
             display: grid;
             grid-template-rows: 6fr 1fr 1fr;
-            grid-template-columns: 1fr 4fr 1fr;
+            grid-template-columns: 1fr 1fr;
             grid-auto-rows: minmax(50px, auto);
             grid-auto-columns: minmax(50px, auto);
             justify-content: center;
@@ -302,44 +287,67 @@
             </ul>
         </nav>
         <main class="main-outer-grid" id="main-item">
-            <c:forEach var="goods" items="${list}">
-                <div class="m-3 justify-content-center">
-                    <div class="card border-4"
-                         style="width: fit-content; height: fit-content; font-family: NeoDunggeunmoPro-Regular,serif"
-                         id="product-detail">
-                        <div class="main-inner-grid">
-                            <div></div>
-                            <a href="/product/item/${goods.productId}" id="image">
-                                <img src="${pageContext.request.contextPath}/resources/img/2.png" alt="2"></a>
-                            <div></div>
-                            <div></div>
-                            <h2><a href="/product/item/${goods.productId}" id="productName">${goods.productName}</a>
-                            </h2>
-                            <div></div>
-                            <div></div>
-                            <p class="card-text" id="productPrice">${goods.price}</p>
-                            <div></div>
-                        </div>
+            <div class="m-3 justify-content-center" id="item-grid">
+                <div class="card border-4" id="product-detail">
+                    <div class="main-inner-grid">
+                        <a id="image">
+                            <img src="${pageContext.request.contextPath}/resources/img/2.png" alt="2"></a>
+                        <h1 id="name"></h1>
+                        <h3 id="price"></h3>
+                        <script>
+                            function a() {
+                                $('.pagination li').on('click', function (e) {
+                                        let option = ($(this).val());
+                                        console.log(option);
+                                        $.ajax({
+                                            url: '/product/pagination',
+                                            method: 'GET',
+                                            type: 'application/JSON',
+                                            data: {"pageNo": option},
+                                            success: function (data) {
+                                                console.log(data);
+                                                $('#product-detail').append(
+
+                                                    $("<div>").prop({
+                                                        id: 'main-inner-grid',
+                                                        //innerHTML: data[i].name + data[i].price
+                                                    })
+                                                )
+                                                return data;
+                                            }
+                                        });
+                                    }
+                                )
+                            }
+                        </script>
                     </div>
                 </div>
-            </c:forEach>
-            <tr>
-                <td colspan="5">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#">&laquo</a>
-                        </li>
-                        <c:forEach var="i" begin="${paging.start}" end="${paging.end}">
-                            <li class="page-item" value= ${i}>
-                                <a class="page-link" href="${pagingAddr}" onclick="a()">${i}</a>
-                            </li>
-                        </c:forEach>
-                        <li class="page-item">
-                            <a class="page-link" href="${pagingAddr}/${paging.totalPage}">&raquo</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+            </div>
+            <div class="w-100 h-25">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#">&laquo</a>
+                    </li>
+                    <li class="page-item" value=1>
+                        <a class="page-link" onclick="a()">1</a>
+                    </li>
+                    <li class="page-item" value=2>
+                        <a class="page-link" onclick="a()">2</a>
+                    </li>
+                    <li class="page-item" value=3>
+                        <a class="page-link" onclick="a()">3</a>
+                    </li>
+                    <li class="page-item" value=4>
+                        <a class="page-link" onclick="a()">4</a>
+                    </li>
+                    <li class="page-item" value=5>
+                        <a class="page-link" onclick="a()">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link">&raquo</a>
+                    </li>
+                </ul>
+            </div>
         </main>
     </section>
 </div>

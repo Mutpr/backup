@@ -1,7 +1,11 @@
 package com.mall.controller;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.MalformedJsonException;
 import com.mall.model.ProductDTO;
 import com.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -50,16 +56,33 @@ public class ProductController {
 
     @ResponseBody
     @RequestMapping(value = "pagination")
-    public JsonObject showIndex(@RequestParam("pageNo") String pageNo) {
+    public JsonArray showIndex(@RequestParam("pageNo") String pageNo, RedirectAttributes redirectAttributes, HttpSession session) {
+        JsonArray object = new JsonArray();
+        JsonObject jsonObject;
         System.out.println("pageNo = " + pageNo);
-        if(pageNo != null){
+        if (pageNo != null) {
             int page = Integer.parseInt(pageNo);
             System.out.println("pageNo = " + page);
-            JsonObject object = new JsonObject();
-            object.addProperty("pageNo", page);
+            List<ProductDTO> list = productService.selectAll(page);
+            for (ProductDTO productDTO : list) {
+                jsonObject = new JsonObject();
+                String name = list.get(productDTO.getProductId() - 1).getProductName();
+                Integer price = list.get(productDTO.getProductId() - 1).getPrice();
+                try {
+                    JsonParser jsonParser = new JsonParser();
+                    JsonElement jsonName = jsonParser.parse(name);
+                    JsonElement jsonPrice = jsonParser.parse(String.valueOf(price));
+                    jsonObject.add("name", jsonName);
+                    jsonObject.add("price", jsonPrice);
+                    object.add(jsonObject);
+                    System.out.println("object = " + object);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             return object;
         }
-        return null;
+        return object;
     }
 
     @GetMapping("create")
@@ -102,22 +125,27 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("showAll")
-    public String showAll(Model model, HttpSession session) {
-        String pageNo = (String) session.getAttribute("pageNo");
-        System.out.println("pageNo = " + pageNo);
-        return "product/showAll";
-    }
 
-    @
-    public String showIndex(Model model, HttpSession session){
+    public String showAll(RedirectAttributes redirectAttributes, HttpSession session) {
         String pageNo = (String) session.getAttribute("pageNo");
         ControllerImpl controller = new ControllerImpl();
         int page = controller.StringToInt(pageNo);
-        model.addAttribute("list", productService.selectAll(page));
-        model.addAttribute("paging", setPages(page, productService.selectLastPage()));
-        model.addAttribute("pagingAddr", "/product/showAll");
+
+        redirectAttributes.addAttribute("list", productService.selectAll(page));
+        redirectAttributes.addAttribute("paging", setPages(page, productService.selectLastPage()));
+        redirectAttributes.addAttribute("pagingAddr", "/product/showAll");
+        return "product/showAll";
     }
+
+    @GetMapping("showAll")
+    public String showIndex(Model model, HttpSession session) {
+        String pageNo = (String) session.getAttribute("pageNo");
+        ControllerImpl controller = new ControllerImpl();
+        int page = controller.StringToInt(pageNo);
+
+        return "product/showAll";
+    }
+
     @GetMapping("update/{id}")
     public String updateProduct(@PathVariable int id, HttpServletRequest request, Model model, MultipartFile file) {
         model.addAttribute("productNumber", id);
