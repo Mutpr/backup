@@ -12,23 +12,22 @@
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
             crossorigin="anonymous"></script>
     <script>
-
         function a() {
-            let option = document.querySelector('#count').value;
-            let text = '{"count":'+ option+ ', "pageNo":'+2+'}';
-            let obj = JSON.parse(text);
-            console.log(encodeURI(JSON.stringify(obj)))
-            console.log(obj['count']);
-            $.ajax({
-                url: '/product/pagination',
-                method: 'GET',
-                data: obj,
-                success: function(data){
-                    console.log(data);
-                    console.log("successsss!")
-
-                }
-            });
+            $('.pagination li').on('click', function (e) {
+                let option = ($(this).val());
+                console.log(option);
+                $.ajax({
+                    url: '/product/pagination',
+                    method: 'GET',
+                    data: {"pageNo": option},
+                    success: function (data) {
+                        console.log(data);
+                        console.log(option);
+                        console.log("successsss!")
+                        return data;
+                    }
+                });
+            })
         }
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
@@ -120,7 +119,6 @@
         div {
             display: flex;
         }
-
 
         #search-bar {
             display: grid;
@@ -216,7 +214,6 @@
             color: antiquewhite;
         }
 
-
         #login-register-icon {
             color: white;
             opacity: 0.5;
@@ -247,7 +244,6 @@
             text-decoration: none;
             color: inherit;
         }
-
     </style>
 </head>
 <body>
@@ -305,7 +301,7 @@
                 style="font-family: DOSPilgiMedium, serif, white">category
             </ul>
         </nav>
-        <main class="main-outer-grid" id = "main-item">
+        <main class="main-outer-grid" id="main-item">
             <c:forEach var="goods" items="${list}">
                 <div class="m-3 justify-content-center">
                     <div class="card border-4"
@@ -313,15 +309,15 @@
                          id="product-detail">
                         <div class="main-inner-grid">
                             <div></div>
-                            <a href="/product/item/${goods.productId}">
+                            <a href="/product/item/${goods.productId}" id="image">
                                 <img src="${pageContext.request.contextPath}/resources/img/2.png" alt="2"></a>
                             <div></div>
                             <div></div>
-                            <h2><a href="/product/item/${goods.productId}">${goods.productName}</a>
+                            <h2><a href="/product/item/${goods.productId}" id="productName">${goods.productName}</a>
                             </h2>
                             <div></div>
                             <div></div>
-                            <p class="card-text">${goods.price}</p>
+                            <p class="card-text" id="productPrice">${goods.price}</p>
                             <div></div>
                         </div>
                     </div>
@@ -331,22 +327,17 @@
                 <td colspan="5">
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="">&laquo</a>
+                            <a class="page-link" href="#">&laquo</a>
                         </li>
+                        <c:forEach var="i" begin="${paging.start}" end="${paging.end}">
+                            <li class="page-item" value= ${i}>
+                                <a class="page-link" href="${pagingAddr}" onclick="a()">${i}</a>
+                            </li>
+                        </c:forEach>
                         <li class="page-item">
-                            <a class="page-link" href="">&raquo</a>
+                            <a class="page-link" href="${pagingAddr}/${paging.totalPage}">&raquo</a>
                         </li>
                     </ul>
-                    <label for="count"></label>
-                    <select class="form-select" id="count" name="count">
-                        <option value="5" selected>5
-                        </option>
-                        <option value="10">10
-                        </option>
-                        <option value="15">15
-                        </option>
-                    </select>
-                    <button id="submit-btn" class="btn btn-success" onclick="a()">변경</button>
                 </td>
             </tr>
         </main>

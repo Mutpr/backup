@@ -1,7 +1,7 @@
 package com.mall.controller;
 
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
 import com.mall.model.ProductDTO;
 import com.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -51,25 +49,17 @@ public class ProductController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "pagination", method = RequestMethod.GET)
-    public JsonArray showIndex(String count, String pageNo) {
-        ControllerImpl controllerImpl = new ControllerImpl();
-        JsonObject jsonObject = new JsonObject();
-        JsonArray jsonArray = new JsonArray();
-        System.out.println("count = " + count);
-        System.out.println("size = " + pageNo);
-
-        List<ProductDTO> list = productService.selectAll(count, pageNo);
-        int countInt = controllerImpl.StringToInt(count);
-        int pageNoInt = controllerImpl.StringToInt(pageNo);
-        System.out.println("list = " + list);
-
-        for (int i=0;i <list.size(); i++){
-            ProductDTO productList = list.get(i);
-            jsonObject.addProperty("name", list.get(i));
-            jsonArray.add(jsonObject);
+    @RequestMapping(value = "pagination")
+    public JsonObject showIndex(@RequestParam("pageNo") String pageNo) {
+        System.out.println("pageNo = " + pageNo);
+        if(pageNo != null){
+            int page = Integer.parseInt(pageNo);
+            System.out.println("pageNo = " + page);
+            JsonObject object = new JsonObject();
+            object.addProperty("pageNo", page);
+            return object;
         }
-        return jsonArray;
+        return null;
     }
 
     @GetMapping("create")
@@ -112,11 +102,22 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("showIndex")
-    public String showIndexProduct() {
-        return "product/showIndex";
+    @GetMapping("showAll")
+    public String showAll(Model model, HttpSession session) {
+        String pageNo = (String) session.getAttribute("pageNo");
+        System.out.println("pageNo = " + pageNo);
+        return "product/showAll";
     }
 
+    @
+    public String showIndex(Model model, HttpSession session){
+        String pageNo = (String) session.getAttribute("pageNo");
+        ControllerImpl controller = new ControllerImpl();
+        int page = controller.StringToInt(pageNo);
+        model.addAttribute("list", productService.selectAll(page));
+        model.addAttribute("paging", setPages(page, productService.selectLastPage()));
+        model.addAttribute("pagingAddr", "/product/showAll");
+    }
     @GetMapping("update/{id}")
     public String updateProduct(@PathVariable int id, HttpServletRequest request, Model model, MultipartFile file) {
         model.addAttribute("productNumber", id);
@@ -152,5 +153,30 @@ public class ProductController {
         return "product/ProductUpdate";
     }
 
+    private HashMap<String, Integer> setPages(int pageNo, int totalPage) {
+        HashMap<String, Integer> paging = new HashMap();
+        int start = 0;
+        int end = 0;
 
+        if (totalPage < 5) {
+            start = 1;
+            end = totalPage;
+        } else if (pageNo < 3) {
+            start = 1;
+            end = 5;
+        } else if (pageNo > totalPage - 3) {
+            start = totalPage - 4;
+            end = totalPage;
+        } else {
+            start = pageNo - 2;
+            end = pageNo + 2;
+        }
+
+        paging.put("start", start);
+        paging.put("end", end);
+        paging.put("totalPage", totalPage);
+        paging.put("current", pageNo);
+
+        return paging;
+    }
 }

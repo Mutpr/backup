@@ -17,6 +17,8 @@ public class ControllerImpl {
         }
     }
 
+
+
     public int countPage(int countList){
         countList = productService.countAll();
         System.out.println("countList = " + countList);
