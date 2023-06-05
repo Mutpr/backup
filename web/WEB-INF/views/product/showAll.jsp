@@ -123,6 +123,7 @@
         }
 
         .main-outer-grid {
+            justify-items: center;
             display: grid;
             grid-auto-rows: minmax(50px, auto);
             grid-auto-columns: minmax(50px, auto);
@@ -286,8 +287,7 @@
                 style="font-family: DOSPilgiMedium, serif, white">category
             </ul>
         </nav>
-        <main class="main-outer-grid" id="main-item">
-            <div>
+        <main class="main-outer-grid justify-content-center" id="main-item">
                 <script>
                     $(document).ready(function () {
                         // 페이지 로드 시 첫 페이지 데이터 로딩
@@ -306,9 +306,10 @@
                             type: 'application/JSON',
                             data: {"pageNo": pageNo},
                             success: function (data) {
-
+                                console.log(data)
                                 // 기존에 생성된 카드 요소들 삭제
                                 $('.card').remove();
+                                let paginationDiv = document.getElementById('pagination'); // pagination 요소 선택
                                 for (let i in data) {
                                     const div = document.createElement('div');
                                     div.classList.add('m-3', 'card', 'border-4', 'justify-content-center', 'align-items-center', 'd-grid'); // 클래스 추가
@@ -332,36 +333,39 @@
                                     if (data.length === 0) {
                                         $('.pagination li').remove(); // 값이 없으면 페이지네이션 li 요소 제거
                                     }
+                                    paginationDiv.insertAdjacentElement('beforebegin', div);
                                 }
+
+                                // 기존의 pagination 요소 위에 새로 생성된 요소들 추가
+
                             }
                         })
                     }
                 </script>
-                <div class="w-100 h-25">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#">&laquo</a>
-                        </li>
-                        <li class="page-item" value=1>
-                            <a class="page-link">1</a>
-                        </li>
-                        <li class="page-item" value=2>
-                            <a class="page-link">2</a>
-                        </li>
-                        <li class="page-item" value=3>
-                            <a class="page-link">3</a>
-                        </li>
-                        <li class="page-item" value=4>
-                            <a class="page-link">4</a>
-                        </li>
-                        <li class="page-item" value=5>
-                            <a class="page-link">5</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link">&raquo</a>
-                        </li>
-                    </ul>
-                </div>
+            <div id = "pagination" class="justify-content-center align-items-center align-self-center self w-100 h-25">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#">&laquo</a>
+                    </li>
+                    <li class="page-item" value=1>
+                        <a class="page-link">1</a>
+                    </li>
+                    <li class="page-item" value=2>
+                        <a class="page-link">2</a>
+                    </li>
+                    <li class="page-item" value=3>
+                        <a class="page-link">3</a>
+                    </li>
+                    <li class="page-item" value=4>
+                        <a class="page-link">4</a>
+                    </li>
+                    <li class="page-item" value=5>
+                        <a class="page-link">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link">&raquo</a>
+                    </li>
+                </ul>
             </div>
         </main>
     </section>

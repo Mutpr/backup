@@ -20,7 +20,10 @@ web/WEB-INF/views/lib
 pom.xml
 web/WEB-INF/spring
 src/main/resources/db.properties
-web/resources
+web/resources/css
+web/resources/img
+web/resources/lib
+web/resources/scss
 web/views/lib
 ### Eclipse ###
 .apt_generated

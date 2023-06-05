@@ -30,7 +30,7 @@ public class ProductService {
         params.put("start", (pageNo - 1) * PAGE_SIZE);
         params.put("size", PAGE_SIZE);
 
-        return session.selectList(NAMESPACE + ".selectAll", params);
+        return session.selectList(NAMESPACE + ".selectAsPagination", params);
     }
 
     public ProductDTO selectOne(int id) {

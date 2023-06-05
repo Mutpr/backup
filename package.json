@@ -1,0 +1,7 @@
+{
+  "name": "mall2",
+  "version": "1.0.0",
+  "devDependencies": {
+    "chart.js": "^4.3.0"
+  }
+}
