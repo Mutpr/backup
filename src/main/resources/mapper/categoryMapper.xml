@@ -10,5 +10,7 @@
     <select id = "categoryCount" resultType="int">
         select count(*) from category
     </select>
-
+    <select id = "categoryName" resultType="String" parameterType="int">
+        select categoryName from category where categoryId = #{categoryId}
+    </select>
 </mapper>

@@ -51,11 +51,22 @@ public class ChartController {
         for(int i =1; i<=id; i++) {
             jsonObject = new JsonObject();
             int countProduct = categoryService.countCategoryProduct(i);
-            JsonReader jsonReader = new JsonReader(new StringReader(String.valueOf(countProduct)));
-            jsonReader.setLenient(true);
-            JsonElement jsonElement = JsonParser.parseReader(jsonReader);
-            jsonObject.add("count", jsonElement);
+            String category = categoryService.getName(i);
+
+            JsonReader jsonCountReader = new JsonReader(new StringReader(String.valueOf(countProduct)));
+            JsonReader jsonNameReader = new JsonReader(new StringReader(category));
+
+            jsonCountReader.setLenient(true);
+            jsonNameReader.setLenient(true);
+
+            JsonElement jsonCount = JsonParser.parseReader(jsonCountReader);
+            JsonElement jsonName = JsonParser.parseReader(jsonNameReader);
+
+            jsonObject.add("count", jsonCount);
+            jsonObject.add("name", jsonName);
+
             jsonArray.add(jsonObject);
+            System.out.println("countProduct = " + countProduct);
         }return jsonArray;
     }
 }

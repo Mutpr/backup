@@ -23,4 +23,8 @@ public class CategoryService {
         return session.selectOne(NAMESPACE+".categoryCount");
     }
 
+    public String getName(int id){
+        return session.selectOne(NAMESPACE+".categoryName", id);
+    }
+
 }

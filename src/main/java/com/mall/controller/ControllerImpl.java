@@ -1,8 +1,6 @@
 package com.mall.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.MalformedJsonException;
 import com.mall.service.ProductService;
@@ -51,5 +49,6 @@ public class ControllerImpl {
             return 0;
         }
     }
+
 
 }
