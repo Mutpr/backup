@@ -13,7 +13,6 @@
             crossorigin="anonymous"></script>
     <script>
 
-
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -280,6 +279,7 @@
             </header>
         </div>
     </div>
+
     <section class="bg-dark" id="main">
         <nav class="mb-4 ms-4 rounded-5 d-flex justify-content-center" id="menu-bar">
             <ul class="d-flex justify-content-center text-light" id="category-bar"
@@ -287,66 +287,93 @@
             </ul>
         </nav>
         <main class="main-outer-grid" id="main-item">
-            <div class="m-3 justify-content-center" id="item-grid">
-                <div class="card border-4" id="product-detail">
-                    <div class="main-inner-grid">
-                        <a id="image">
-                            <img src="${pageContext.request.contextPath}/resources/img/2.png" alt="2"></a>
-                        <h1 id="name"></h1>
-                        <h3 id="price"></h3>
-                        <script>
-                            function a() {
-                                $('.pagination li').on('click', function (e) {
-                                        let option = ($(this).val());
-                                        console.log(option);
-                                        $.ajax({
-                                            url: '/product/pagination',
-                                            method: 'GET',
-                                            type: 'application/JSON',
-                                            data: {"pageNo": option},
-                                            success: function (data) {
-                                                console.log(data);
-                                                $('#product-detail').append(
+            <div>
+                <script>
+                    $(document).ready(function () {
+                        // 페이지 로드 시 첫 페이지 데이터 로딩
+                        loadPage(1);
 
-                                                    $("<div>").prop({
-                                                        id: 'main-inner-grid',
-                                                        //innerHTML: data[i].name + data[i].price
-                                                    })
-                                                )
-                                                return data;
-                                            }
-                                        });
+                        // 페이지네이션 클릭 이벤트 처리
+                        $('.pagination li').on('click', function (e) {
+                            let option = $(this).val();
+                            loadPage(option);
+                        });
+                    });
+
+                    function loadPage(pageNo) {
+                        $.ajax({
+                            url: '/product/pagination',
+                            method: 'GET',
+                            type: 'application/JSON',
+                            data: {"pageNo": pageNo},
+                            success: function (data) {
+                                // 기존에 생성된 카드 요소들 삭제
+                                $('.card').remove();
+                                for (let i in data) {
+                                    const div = document.createElement('div');
+                                    div.classList.add('m-3', 'card', 'border-4', 'justify-content-center', 'align-items-center', 'd-grid'); // 클래스 추가
+                                    div.id = 'product-detail'; // id 추가
+
+                                    let image = document.createElement('img'); // img 요소 생성
+                                    image.classList.add('m-3'); // 클래스 추가
+                                    image.alt = ''; // alt 속성 추가
+                                    image.src = '${pageContext.request.contextPath}/resources/img/2.png'; // 이미지 경로 설정
+                                    div.appendChild(image); // div에 이미지 추가
+
+                                    let nameText = document.createTextNode(data[i].name); // 변경할 텍스트 노드 생성
+                                    div.appendChild(nameText); // div에 텍스트 노드 추가
+                                    div.style.display = 'grid'; // 그리드 레이아웃으로 설정
+                                    div.style.fontFamily = 'NeoDunggeunmoPro-Regular'; // 글꼴 설정
+                                    div.style.color = 'white'; // 텍스트 색상 설정
+
+                                    let main = document.querySelector('main'); // main 요소 선택
+                                    main.appendChild(div); // main 요소의 하위 요소로 추가
+
+                                    if (data.length === 0) {
+                                        $('.pagination li').remove(); // 값이 없으면 페이지네이션 li 요소 제거
                                     }
-                                )
+
+                                }
                             }
-                        </script>
-                    </div>
+                        })
+                    }
+
+                    function pagination(pageNo){
+                        const div = document.createElement("div");
+                        div.classList.add('w-100', 'h-25')
+
+                        let ul = document.createElement("ul");
+                        ul.classList.add('pagination', 'justify-content-center');
+
+                        let li = document.createElement("li");
+                        li.classList.add('page-item')
+                    }
+                </script>
+                <div class="w-100 h-25">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#">&laquo</a>
+                        </li>
+                        <li class="page-item" value=1>
+                            <a class="page-link">1</a>
+                        </li>
+                        <li class="page-item" value=2>
+                            <a class="page-link">2</a>
+                        </li>
+                        <li class="page-item" value=3>
+                            <a class="page-link">3</a>
+                        </li>
+                        <li class="page-item" value=4>
+                            <a class="page-link">4</a>
+                        </li>
+                        <li class="page-item" value=5>
+                            <a class="page-link">5</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link">&raquo</a>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-            <div class="w-100 h-25">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#">&laquo</a>
-                    </li>
-                    <li class="page-item" value=1>
-                        <a class="page-link" onclick="a()">1</a>
-                    </li>
-                    <li class="page-item" value=2>
-                        <a class="page-link" onclick="a()">2</a>
-                    </li>
-                    <li class="page-item" value=3>
-                        <a class="page-link" onclick="a()">3</a>
-                    </li>
-                    <li class="page-item" value=4>
-                        <a class="page-link" onclick="a()">4</a>
-                    </li>
-                    <li class="page-item" value=5>
-                        <a class="page-link" onclick="a()">5</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link">&raquo</a>
-                    </li>
-                </ul>
             </div>
         </main>
     </section>

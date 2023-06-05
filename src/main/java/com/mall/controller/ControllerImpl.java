@@ -1,5 +1,6 @@
 package com.mall.controller;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
@@ -8,6 +9,7 @@ import com.mall.service.ProductService;
 
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
+import java.io.CharArrayReader;
 import java.io.StringReader;
 
 public class ControllerImpl {
@@ -49,4 +51,5 @@ public class ControllerImpl {
             return 0;
         }
     }
+
 }

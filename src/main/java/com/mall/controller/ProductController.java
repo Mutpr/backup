@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.MalformedJsonException;
+import com.google.gson.stream.JsonReader;
 import com.mall.model.ProductDTO;
 import com.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -56,34 +56,27 @@ public class ProductController {
 
     @ResponseBody
     @RequestMapping(value = "pagination")
-    public JsonArray showIndex(@RequestParam("pageNo") String pageNo, RedirectAttributes redirectAttributes, HttpSession session) {
+    public JsonArray showIndex(@RequestParam("pageNo") String pageNo) {
         JsonArray object = new JsonArray();
-        JsonObject jsonObject;
+        JsonObject jsonObject = null;
         System.out.println("pageNo = " + pageNo);
         if (pageNo != null) {
             int page = Integer.parseInt(pageNo);
             System.out.println("pageNo = " + page);
             List<ProductDTO> list = productService.selectAll(page);
-            for (ProductDTO productDTO : list) {
-                jsonObject = new JsonObject();
-                String name = list.get(productDTO.getProductId() - 1).getProductName();
-                Integer price = list.get(productDTO.getProductId() - 1).getPrice();
-                try {
-                    JsonParser jsonParser = new JsonParser();
-                    JsonElement jsonName = jsonParser.parse(name);
-                    JsonElement jsonPrice = jsonParser.parse(String.valueOf(price));
-                    jsonObject.add("name", jsonName);
-                    jsonObject.add("price", jsonPrice);
+                for (int i = 0; i < list.size(); i++) {
+                    jsonObject = new JsonObject();
+                    String name = list.get(i).getProductName();
+                    JsonReader reader = new JsonReader(new StringReader(name));
+                    reader.setLenient(true);
+                    JsonElement json = JsonParser.parseReader(reader);
+                    jsonObject.add("name", json);
                     object.add(jsonObject);
                     System.out.println("object = " + object);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
             return object;
         }
-        return object;
-    }
 
     @GetMapping("create")
     public String productRegister(ProductDTO product) {
@@ -125,17 +118,6 @@ public class ProductController {
         return "redirect:/";
     }
 
-
-    public String showAll(RedirectAttributes redirectAttributes, HttpSession session) {
-        String pageNo = (String) session.getAttribute("pageNo");
-        ControllerImpl controller = new ControllerImpl();
-        int page = controller.StringToInt(pageNo);
-
-        redirectAttributes.addAttribute("list", productService.selectAll(page));
-        redirectAttributes.addAttribute("paging", setPages(page, productService.selectLastPage()));
-        redirectAttributes.addAttribute("pagingAddr", "/product/showAll");
-        return "product/showAll";
-    }
 
     @GetMapping("showAll")
     public String showIndex(Model model, HttpSession session) {
