@@ -2,12 +2,15 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+node_modules
+node_modules/@kurkle
+node_modules/chart.js
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+
 *.iws
 *.iml
 *.ipr
