@@ -1,0 +1,17 @@
+Index: src/main/java/com/mall/service/ProductService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/mall/service/ProductService.java b/src/main/java/com/mall/service/ProductService.java
+--- a/src/main/java/com/mall/service/ProductService.java	
++++ b/src/main/java/com/mall/service/ProductService.java	(date 1685604014820)
+@@ -17,7 +17,7 @@
+     SqlSession session;
+     String NAMESPACE = "mapper.productMapper";
+     HttpSession httpSession;
+-    private int PAGE_SIZE = 10;
++    private int PAGE_SIZE = 5;
+     @Autowired
+     public ProductService(SqlSession session) {
+         this.session = session;

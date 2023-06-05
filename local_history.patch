@@ -1,0 +1,84 @@
+Index: src/main/java/com/mall/controller/ProductController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/mall/controller/ProductController.java b/src/main/java/com/mall/controller/ProductController.java
+--- a/src/main/java/com/mall/controller/ProductController.java	
++++ b/src/main/java/com/mall/controller/ProductController.java	(date 1685604710204)
+@@ -5,6 +5,7 @@
+ import com.mall.model.ProductDTO;
+ import com.mall.service.ProductService;
+ import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.security.core.Authentication;
+ import org.springframework.stereotype.Controller;
+ import org.springframework.ui.Model;
+ import org.springframework.web.bind.annotation.*;
+@@ -52,15 +53,13 @@
+ 
+     @ResponseBody
+     @RequestMapping(value = "pagination", method = RequestMethod.GET)
+-    public JsonArray showIndex(String count, String pageNo) {
++    public JsonArray showIndex(int count, int pageNo) {
+         ControllerImpl controllerImpl = new ControllerImpl();
+         JsonArray jsonArray = new JsonArray();
+         System.out.println("count = " + count);
+         System.out.println("size = " + pageNo);
+ 
+-        List<ProductDTO> list = productService.selectAll(count, pageNo);
+-        int countInt = controllerImpl.StringToInt(count);
+-        int pageNoInt = controllerImpl.StringToInt(pageNo);
++        List<ProductDTO> list = productService.selectAll(pageNo);
+         System.out.println("list = " + list);
+ 
+         for (int i=0;i <list.size(); i++){
+@@ -115,9 +114,14 @@
+         return "redirect:/";
+     }
+ 
+-    @GetMapping("showIndex")
+-    public String showIndexProduct() {
+-        return "product/showIndex";
++    @GetMapping("showAll/{pageNo}")
++    public String showAll(Model model, @PathVariable int pageNo) {
++
++        model.addAttribute("list", productService.selectAll(pageNo));
++        model.addAttribute("paging", setPages(pageNo, productService.selectLastPage()));
++        model.addAttribute("pagingAddr", "/product/showAll");
++
++        return "product/showAll";
+     }
+ 
+     @GetMapping("update/{id}")
+@@ -154,6 +158,31 @@
+         System.out.println("update= " + productDTO);
+         return "product/ProductUpdate";
+     }
++    private HashMap<String, Integer> setPages(int pageNo, int totalPage) {
++        HashMap<String, Integer> paging = new HashMap();
++        int start = 0;
++        int end = 0;
++
++        if (totalPage < 5) {
++            start = 1;
++            end = totalPage;
++        } else if (pageNo < 3) {
++            start = 1;
++            end = 5;
++        } else if (pageNo > totalPage - 3) {
++            start = totalPage - 4;
++            end = totalPage;
++        } else {
++            start = pageNo - 2;
++            end = pageNo + 2;
++        }
+ 
++        paging.put("start", start);
++        paging.put("end", end);
++        paging.put("totalPage", totalPage);
++        paging.put("current", pageNo);
++
++        return paging;
++    }
+ 
+ }
