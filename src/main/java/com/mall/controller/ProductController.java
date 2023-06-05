@@ -189,4 +189,12 @@ public class ProductController {
 
         return paging;
     }
+
+    @ResponseBody
+    @GetMapping(value = "countAll")
+    public JsonObject countAll(){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("count", productService.countAll());
+        return jsonObject;
+    }
 }

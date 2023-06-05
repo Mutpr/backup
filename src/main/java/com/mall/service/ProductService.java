@@ -63,7 +63,7 @@ public class ProductService {
     }
 
     public int countAll(){
-        return session.selectOne(NAMESPACE+"count");
+        return session.selectOne(NAMESPACE+".count");
     }
 
     public int selectLastPage() {

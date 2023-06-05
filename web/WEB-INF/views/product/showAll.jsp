@@ -292,7 +292,6 @@
                     $(document).ready(function () {
                         // 페이지 로드 시 첫 페이지 데이터 로딩
                         loadPage(1);
-
                         // 페이지네이션 클릭 이벤트 처리
                         $('.pagination li').on('click', function (e) {
                             let option = $(this).val();
@@ -307,6 +306,7 @@
                             type: 'application/JSON',
                             data: {"pageNo": pageNo},
                             success: function (data) {
+
                                 // 기존에 생성된 카드 요소들 삭제
                                 $('.card').remove();
                                 for (let i in data) {
@@ -332,21 +332,9 @@
                                     if (data.length === 0) {
                                         $('.pagination li').remove(); // 값이 없으면 페이지네이션 li 요소 제거
                                     }
-
                                 }
                             }
                         })
-                    }
-
-                    function pagination(pageNo){
-                        const div = document.createElement("div");
-                        div.classList.add('w-100', 'h-25')
-
-                        let ul = document.createElement("ul");
-                        ul.classList.add('pagination', 'justify-content-center');
-
-                        let li = document.createElement("li");
-                        li.classList.add('page-item')
                     }
                 </script>
                 <div class="w-100 h-25">
