@@ -228,6 +228,13 @@
             color: inherit;
         }
 
+        .chart-wrap canvas {
+            width: 100px;
+        !important;
+            height: 100px;
+        !important;
+        }
+
     </style>
 </head>
 <body>
@@ -262,12 +269,13 @@
                                onclick="location.href = '/user/login'"></i>
                             <i class="bi bi-list-check m-2" id="register-icon"
                                onclick="location.href = '/user/register'"></i>
-                            <i class = "bi bi-bag-fill" onclick="location.href='/basket/showBasket/'">
+                            <i class="bi bi-bag-fill" onclick="location.href='/basket/showBasket/'">
                             </i>
                             <c:if test="${userRole eq 'market'}">
                                 <i class="bi bi-plus-square-fill m-2" id="plus-icon"
                                    onclick="location.href = 'product/create'"></i>
-                            </c:if> <i class="bi bi-file-break" onclick="location.href='product/showIndex/1'" style="color: whitesmoke"></i>
+                            </c:if> <i class="bi bi-file-break" onclick="location.href='product/showIndex/1'"
+                                       style="color: whitesmoke"></i>
 
                         </div>
                     </div>
@@ -285,76 +293,118 @@
             </ul>
         </nav>
         <main class="main-outer-grid">
-            <%--
-  Created by IntelliJ IDEA.
-  User: HYEN
-  Date: 2023-06-06
-  Time: 오전 2:16
-  To change this template use File | Settings | File Templates.
---%>
             <%@ page contentType="text/html;charset=UTF-8" language="java" %>
             <html>
             <head>
                 <title>Title</title>
             </head>
             <body>
-            <div>
-                <canvas id= "myChart"></canvas>
-                <canvas id = "myChart1"></canvas>
+            <div class="d-grid chart-wrap">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="d-grid chart-wrap">
+                <canvas id="myChart1"></canvas>
+            </div>
+            <div class="d-grid chart-wrap">
+                <canvas id="myChart2"></canvas>
+            </div>
+            <div class="d-grid chart-wrap">
+                <canvas id="myChart3"></canvas>
+            </div>
+            <div class="d-grid chart-wrap">
+                <canvas id="myChart4"></canvas>
+            </div>
+            <div class="d-grid chart-wrap">
+                <canvas id="myChart5"></canvas>
             </div>
             <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
             <script>
+                $(document).ready(function () {
+                    pieDoughnutChart();
+                    stackBubbleChart();
+                });
                 const ctx = document.getElementById('myChart');
                 const ctx1 = document.getElementById('myChart1');
-                $.ajax({
-                    url:'/chart/categoryCountDoughnut',
-                    success:function(data){
-                        let x =[];
-                        let y = [];
-                        for(let i in data){
-                            console.log(data)
-                            console.log(data[i].count);
-                            x.push(data[i].count)
-                            y.push(data[i].name)
+                const ctx2 = document.getElementById("myChart2");
+                const ctx3 = document.getElementById("myChart3");
+                const ctx4 = document.getElementById("myChart4");
+                const ctx5 = document.getElementById("myChart5");
+
+                function pieDoughnutChart() {
+                    $.ajax({
+                        url: '/chart/categoryCountDoughnut',
+                        success: function (data) {
+                            let x = [];
+                            let y = [];
+                            for (let i in data) {
+                                console.log(data)
+                                console.log(data[i].count);
+                                x.push(data[i].count)
+                                y.push(data[i].name)
+                            }
+                            new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    borderWidth: 10,
+                                    hoverBorderWidth: 0,
+                                    labels: y,
+                                    datasets: [{
+                                        data: x,
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    },
+                                    responsive: true,
+                                    cutoutPercentage: 65
+                                }
+                            });
+                            new Chart(ctx1, {
+                                type: 'pie',
+                                data: {
+                                    labels: y,
+                                    datasets: [{
+                                        data: x,
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    hoverBackgroundColor: [
+                                        "#5c0afc",
+                                    ],
+                                }
+                            });
                         }
-                        new Chart(ctx, {
-                            type: 'doughnut',
-                            data: {
-                                labels: y,
-                                datasets: [{
-                                    data: x,
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
+                    })
+                }
+                function stackBubbleChart(){
+                    new Chart(ctx2, {
+                        type: 'doughnut',
+                        data: {
+                            borderWidth: 10,
+                            hoverBorderWidth: 0,
+                            labels: y,
+                            datasets: [{
+                                data: x,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
                                 }
-                            }
-                        });
-                        new Chart(ctx1, {
-                            type: 'pie',
-                            data: {
-                                labels: y,
-                                datasets: [{
-                                    data: x,
-                                    borderWidth: 1
-                                }]
                             },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        });
-                    }
-                })
+                            responsive: true,
+                            cutoutPercentage: 65
+                        }
+                    });
+                }
             </script>
             </body>
             </html>

@@ -2,6 +2,8 @@ package com.mall.model;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
 public class TransactionDTO {
     private int transactionId;
@@ -11,4 +13,5 @@ public class TransactionDTO {
     private int price;
     private String address;
     private int status;
+    private Timestamp transactionAddDate;
 }

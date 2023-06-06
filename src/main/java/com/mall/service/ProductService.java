@@ -25,13 +25,17 @@ public class ProductService {
         this.session = session;
     }
 
-    public List<ProductDTO> selectAll(int pageNo) {
+    public List<ProductDTO> selectAll(){
+        return session.selectList(NAMESPACE+".selectAll");
+    }
+    public List<ProductDTO> selectAsPagination(int pageNo) {
         HashMap<String, Integer> params = new HashMap<>();
         params.put("start", (pageNo - 1) * PAGE_SIZE);
         params.put("size", PAGE_SIZE);
 
         return session.selectList(NAMESPACE + ".selectAsPagination", params);
     }
+
 
     public ProductDTO selectOne(int id) {
         return session.selectOne(NAMESPACE + ".selectOne", id);

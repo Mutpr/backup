@@ -7,7 +7,7 @@
         select * from basket where userId = #{userId};
     </select>
     <insert id="insert" parameterType="basketDTO">
-        insert into basket(basketTime, userId, count, productId, totalPrice) value (#{basketTime}, #{userId}, #{count}, #{productId}, #{totalPrice})
+        insert into basket(basketAddDate, userId, count, productId, totalPrice) value (#{basketAddDate}, #{userId}, #{count}, #{productId}, #{totalPrice})
     </insert>
     <delete id="delete" parameterType="int">
         delete from basket where productId = #{productId}

@@ -329,10 +329,11 @@
                                         <div class="display-6 m-3">${basket[statusNm.index].totalPrice}원</div>
                                         <div class="display-6 m-3">${basket[statusNm.index].count} 개</div>
                                         <div>
-                                            <button class="m-2 btn btn-success btn-lg" TYPE="submit"
-                                                    onclick="location.href ='/transaction/addOneTransaction/${userId}/${basket[statusNm.index].productId}/${basket[statusNm.index].basketId}/${basket[statusNm.index].count}'">
+                                            <form action = "'/transaction/addOneTransaction/${userId}/${basket[statusNm.index].productId}/${basket[statusNm.index].basketId}/${basket[statusNm.index].count}'">
+                                            <button class="m-2 btn btn-success btn-lg" type="submit" action="'/transaction/addOneTransaction/${userId}/${basket[statusNm.index].productId}/${basket[statusNm.index].basketId}/${basket[statusNm.index].count}'">
                                                 개별 주문
                                             </button>
+                                            </form>
                                         </div>
                                         <div>
                                             <button class="m-2 btn btn-danger btn-lg" type="submit"

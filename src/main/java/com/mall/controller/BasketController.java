@@ -52,7 +52,7 @@ public class BasketController {
 
             basketDTO.setProductId(product.getProductId());
             basketDTO.setCount(countIntParsing);
-            basketDTO.setBasketTime(time);
+            basketDTO.setBasketAddDate(time);
             basketDTO.setUserId(userDTO.getUserId());
             basketDTO.setTotalPrice(totalCount);
 

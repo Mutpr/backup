@@ -24,8 +24,8 @@ public class TransactionService {
         return session.selectList(NAMESPACE+".selectAllTransaction", userId);
     }
 
-    public int addTransaction(TransactionDTO transactionDTO){
-        return session.insert(NAMESPACE+".insertTransaction", transactionDTO);
+    public void addTransaction(TransactionDTO transactionDTO){
+        session.insert(NAMESPACE+".insertTransaction", transactionDTO);
     }
 
     public List<TransactionDTO> selectTransaction(int id){

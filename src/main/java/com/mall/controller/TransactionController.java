@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static java.time.LocalTime.now;
 
 @Controller
 @RequestMapping(value = "/transaction/")
@@ -89,6 +92,7 @@ public class TransactionController {
 
         System.out.println("productId = " + productId + ", user = " + userId + ", basketId = " + basketId + ", count = " + count);
         TransactionDTO transaction = new TransactionDTO();
+        Timestamp time = new Timestamp(System.currentTimeMillis());
         ProductDTO productDTO = productService.selectOne(productId);
 
         int price = productDTO.getPrice();
@@ -97,6 +101,7 @@ public class TransactionController {
         transaction.setUserId(userId);
         transaction.setCount(count);
         transaction.setPrice(price * count);
+        transaction.setTransactionAddDate(time);
 
         System.out.println("transactionDTO = " + transaction);
 

@@ -33,7 +33,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping(value = "item/{id}")
+    @GetMapping(value = "item/{id}")
     public String showOneProduct(HttpSession session, Model model, @PathVariable int id) {
         System.out.printf("dto:" + productService.selectOne(id));
         ProductDTO productDTO = productService.selectOne(id);
@@ -63,7 +63,7 @@ public class ProductController {
         if (pageNo != null) {
             int page = Integer.parseInt(pageNo);
             System.out.println("pageNo = " + page);
-            List<ProductDTO> list = productService.selectAll(page);
+            List<ProductDTO> list = productService.selectAsPagination(page);
                 for (int i = 0; i < list.size(); i++) {
                     jsonObject = new JsonObject();
                     String name = list.get(i).getProductName();

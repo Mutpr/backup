@@ -4,8 +4,8 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.transactionMapper">
     <insert id = "insertTransaction" parameterType="transactionDTO">
-        insert into transaction (productId, userId, count, price, address) values (#{productId}, #{userId}, #{count},
-        #{price}, #{address})
+        insert into transaction (productId, userId, count, price, transactionAddDate) values (#{productId}, #{userId}, #{count},
+        #{price}, #{transactionAddDate})
     </insert>
     <select id="selectAllTransaction" parameterType="int" resultType="transactionDTO">
         select * from transaction where userId = #{userId}
