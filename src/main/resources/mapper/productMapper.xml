@@ -47,4 +47,7 @@
     <select id="count" resultType="int">
         select count(*) from product;
     </select>
+    <select id = "categoryPrice" resultType="int" parameterType="map">
+        select count(*) from product where price between #{start} and #{limit} and category = #{category};
+    </select>
 </mapper>

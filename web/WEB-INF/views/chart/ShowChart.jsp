@@ -306,12 +306,12 @@
                 <canvas id="myChart1"></canvas>
             </div>
             <div class="d-grid chart-wrap">
-                <canvas id="myChart2"></canvas>
+                <canvas id="myChart2" style="width: 500px"></canvas>
             </div>
             <div class="d-grid chart-wrap">
                 <canvas id="myChart3"></canvas>
             </div>
-            <div class="d-grid chart-wrap">
+            <div class="d-grid chart-wrap" style="width: 1000px; height: 1000px">
                 <canvas id="myChart4"></canvas>
             </div>
             <div class="d-grid chart-wrap">
@@ -320,10 +320,12 @@
             <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script>
+
                 $(document).ready(function () {
                     pieDoughnutChart();
-                    stackBubbleChart();
+                    bubbleChart();
                 });
+
                 const ctx = document.getElementById('myChart');
                 const ctx1 = document.getElementById('myChart1');
                 const ctx2 = document.getElementById("myChart2");
@@ -336,19 +338,33 @@
                         url: '/chart/categoryCountDoughnut',
                         success: function (data) {
                             let x = [];
-                            let y = [];
+                            let y1 = []; let y2 = []; let y3 = []; let y4 = []; let y5 = []; let y6 = []; let y7 = [];
                             for (let i in data) {
-                                console.log(data)
-                                console.log(data[i].count);
                                 x.push(data[i].count)
-                                y.push(data[i].name)
+                                switch (data[i].category){
+                                    case 1:y1.push(data[i].result)
+                                        break;
+                                    case 2:y2.push(data[i].result)
+                                        break;
+                                    case 3:y3.push(data[i].result)
+                                        break;
+                                    case 4:y4.push(data[i].result)
+                                        break;
+                                    case 5:y5.push(data[i].result)
+                                        break;
+                                    case 6:y6.push(data[i].result)
+                                        break;
+                                    case 7:y7.push(data[i].result)
+                                        break;
+
+                                }
                             }
                             new Chart(ctx, {
                                 type: 'doughnut',
                                 data: {
                                     borderWidth: 10,
                                     hoverBorderWidth: 0,
-                                    labels: y,
+                                    labels: [y1, y2, y3, y4, y5, y6, y7],
                                     datasets: [{
                                         data: x,
                                         borderWidth: 1
@@ -377,34 +393,88 @@
                                     hoverBackgroundColor: [
                                         "#5c0afc",
                                     ],
+
                                 }
                             });
                         }
                     })
                 }
-                function stackBubbleChart(){
-                    new Chart(ctx2, {
-                        type: 'doughnut',
-                        data: {
-                            borderWidth: 10,
-                            hoverBorderWidth: 0,
-                            labels: y,
-                            datasets: [{
-                                data: x,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
+
+                function bubbleChart() {
+                    let start = [0, 5000, 10000, 15000, 20000]
+                    let limit = [5000, 10000, 15000, 20000]
+                    let category = [1, 2, 3, 4, 5, 6, 7];
+                    let startI = [];
+                    let limitJ = [];
+                    let categoryK = [];
+                    for (let i in start) {
+                        startI.push(start[i]);
+                    }
+                    for (let j in limit) {
+                        limitJ.push(limit[j])
+                    }
+                    for (let k in category) {
+                        categoryK.push(category[k]);
+                    }
+                    let objectParam = {
+                        "start": startI,
+                        "limit": limitJ,
+                        "category": categoryK,
+                    }
+
+                    $.ajax({
+                        url: '/chart/countByPrice',
+                        data: objectParam,
+                        success: function (data) {
+                            let x = [];
+                            let y = [];
+                            for(let i in data){
+                                x.push(data[i].result);
+                                y.push(data[i].category);
+                            }
+                            const ctx = document.getElementById('myChart2');
+                            new Chart(ctx2, {
+                                type: 'bubble',
+                                data: {
+                                    labels: y,
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: x,
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
                                 }
+                            });
+
+                        const ctx4 = document.getElementById('myChart4');
+                        new Chart(ctx4, {
+                            type: 'bar',
+                            data: {
+                                labels: y,
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: x,
+                                    borderWidth: 1
+                                }]
                             },
-                            responsive: true,
-                            cutoutPercentage: 65
-                        }
-                    });
+                            options: {
+                                scales: {
+                                    x:{
+                                        stacked:true,
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    })
                 }
+
             </script>
             </body>
             </html>

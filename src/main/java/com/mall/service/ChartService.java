@@ -4,14 +4,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class CategoryService {
+public class ChartService {
     private final String NAMESPACE="mapper.categoryMapper";
     SqlSession session;
     @Autowired
-    public CategoryService(SqlSession session) {
+    public ChartService(SqlSession session) {
         this.session = session;
     }
 

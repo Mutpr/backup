@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class ProductService {
     SqlSession session;
     private final String NAMESPACE = "mapper.productMapper";
@@ -36,6 +35,14 @@ public class ProductService {
         return session.selectList(NAMESPACE + ".selectAsPagination", params);
     }
 
+    public int countByPrice(HashMap<String, Integer> list){
+        HashMap<String, Integer> params = new HashMap<>();
+        params.put("start", list.get("start"));
+        params.put("limit", list.get("limit"));
+        params.put("category", list.get("category"));
+        System.out.println("parmas = " + params);
+        return session.selectOne(NAMESPACE + ".categoryPrice", params);
+    }
 
     public ProductDTO selectOne(int id) {
         return session.selectOne(NAMESPACE + ".selectOne", id);
