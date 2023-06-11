@@ -300,6 +300,7 @@
                     });
 
                     function loadPage(pageNo) {
+
                         $.ajax({
                             url: '/product/pagination',
                             method: 'GET',

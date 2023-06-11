@@ -120,11 +120,7 @@ public class ProductController {
 
 
     @GetMapping("showAll")
-    public String showIndex(Model model, HttpSession session) {
-        String pageNo = (String) session.getAttribute("pageNo");
-        ControllerImpl controller = new ControllerImpl();
-        int page = controller.StringToInt(pageNo);
-
+    public String showIndex() {
         return "product/showAll";
     }
 
