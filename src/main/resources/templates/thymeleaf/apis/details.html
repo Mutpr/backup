@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}" th:lang="html">
+<head>
+    <meta charset="UTF-8">
+    <title>INFINITY MANAGER</title>
+    <th:block layout:fragment="css">
+        <link href="/images/logo_img.png" rel="shortcut icon" type="image/x-icon">
+        <link
+                href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+                rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="/css/sb-admin-2.min.css" rel="stylesheet"> <!-- 필수 -->
+
+    </th:block>
+
+    <th:block layout:fragment="script">
+        <script src="https://kit.fontawesome.com/24311b556d.js" crossorigin="anonymous"></script> <!-- 필수 -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- 필수 -->
+        <script src="/js/index.js"></script>
+    </th:block>
+
+<body>
+<div layout:fragment="content">
+    <div id="wrapper">
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <main class="main-outer-grid justify-content-center" id="main-item">
+                    <h1 id=apisId th:text="${apisId}" th:value="${apisId}"></h1>
+                    <div class="accordion-collapse collapse"
+                         data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <table class="table table-hover demo02">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Method</th>
+                                    <th scope="col">URI</th>
+                                    <th scope="col">Summary</th>
+                                    <th scope="col">Operation ID</th>
+                                    <th scope="col">Version</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">else</th>
+                                </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                <tr id="trDetailId">
+                                    <td id="tdMethod"></td>
+                                    <td id="tdURI"></td>
+                                    <td id="tdSummary"></td>
+                                    <td id="tdOper"></td>
+                                    <td id="tdVersion"></td>
+                                    <td id="tdStatus">
+                                        <label>
+                                            <select class="form-select">
+                                                <option selected>develop</option>
+                                                <option value="1">service</option>
+                                                <option value="2">deprecate</option>
+                                                <option value="3">out_of_service</option>
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <i class="fa-solid fa-arrows-rotate renew" data-toggle="tooltip"
+                                           title="리소스 갱신"
+                                           onclick="location.href='#'; event.stopPropagation()"></i>
+                                        <!-- <div id="tooltipRenew">리소스 갱신</div>-->
+                                        <i class="fa-solid fa-file-word doc" data-toggle="tooltip"
+                                           title="Swagger 문서"
+                                           onclick="location.href='#'; event.stopPropagation()"></i>
+                                        <!-- <div id="tooltipDoc">Swagger 문서</div>-->
+                                        <i onclick="location.href='#'" style="cursor: pointer;" data-toggle="tooltip"
+                                           title="Swagger UI"
+                                           class="fa-solid fa-globe ui"></i>
+                                        <!-- <div id="tooltipUI">Swagger UI</div>-->
+                                        <i
+                                                style="cursor: pointer;"
+                                                data-toggle="tooltip"
+                                                title="삭제"
+                                                class="fa-solid fa-trash-can delete"></i>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    <script>
+        let apisId = document.getElementById('apisId').textContent;
+        console.log(apisId);
+
+        $(document).ready(function () {
+            // 페이지 로드 시 첫 페이지 데이터 로딩
+            loadPage(1);
+            // 페이지네이션 클릭 이벤트 처리
+            $(document).on('click', '.pagination li', function (e) {
+                let option = $(this).attr('value');
+                loadPage(option);
+            });
+        });
+
+        function loadPage(pageNo) {
+            let key = ['method', 'uri', 'summary', 'security', 'operationId', 'version'];
+            $.ajax({
+                url: '/api/pagination/',
+                method: 'GET',
+                data: {
+                    "apisId": apisId,
+                    "pageNo": pageNo
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    // 데이터에서 필요한 값 추출
+                    let method = data[0].apis
+                    let uri = data[0].uri;
+                    let summary = data[0].summary;
+                    let operationId = data[0].tagId;
+                    let version = data[0].version;
+
+                    // td 값 변경
+                    let methodTd = document.getElementById("tdMethod");
+                    methodTd.textContent = method;
+
+                    let uriTd = document.getElementById("tdURI");
+                    uriTd.textContent = uri;
+
+                    let summaryTd = document.getElementById("tdSummary");
+                    summaryTd.textContent = summary;
+
+                    let operationTd = document.getElementById("tdOper");
+                    operationTd.textContent = operationId;
+
+                    let versionTd = document.getElementById("tdVersion");
+                    versionTd.textContent = version;
+
+                    let totalPages = data[0].pageCount;
+
+                    let pagination = document.querySelector('.pagination');
+                    pagination.innerHTML = '';
+
+                    let prevPage = document.createElement('li');
+                    prevPage.classList.add('page-item');
+                    prevPage.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
+                    pagination.appendChild(prevPage);
+
+                    for (let i = 1; i <= totalPages; i++) {
+                        let pageItem = document.createElement('li');
+                        pageItem.classList.add('page-item');
+                        pageItem.setAttribute('value', i);
+                        pageItem.innerHTML = `<a class="page-link">${i}</a>`;
+                        pagination.appendChild(pageItem);
+                    }
+
+                    let nextPage = document.createElement('li');
+                    nextPage.classList.add('page-item');
+                    nextPage.innerHTML = `<a class="page-link">&raquo;</a>`;
+                    pagination.appendChild(nextPage);
+                }
+            });
+        }
+
+
+    </script>
+    <div id="pagination"
+         class="justify-content-center align-items-center align-self-center self w-100 h-25">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="#">&laquo</a>
+            </li>
+            <li class="page-item" value=1>
+                <a class="page-link">1</a>
+            </li>
+            <li class="page-item" value=2>
+                <a class="page-link">2</a>
+            </li>
+            <li class="page-item" value=3>
+                <a class="page-link">3</a>
+            </li>
+            <li class="page-item" value=4>
+                <a class="page-link">4</a>
+            </li>
+            <li class="page-item" value=5>
+                <a class="page-link">5</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link">&raquo</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
