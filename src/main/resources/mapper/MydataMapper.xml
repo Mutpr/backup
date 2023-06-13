@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipa.openapi_inzent.dao.MydataDao">
+
+    <resultMap id="mdService" type="com.ipa.openapi_inzent.model.MdServiceDTO">
+        <result property="agencyId" column="agencyId"/>
+        <result property="callbackUrl" column="callbackUrl"/>
+        <result property="mdServiceName" column="mdServiceName"/>
+        <result property="clientId" column="clientId"/>
+        <result property="domainName" column="domainName"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <resultMap id="mdToken" type="com.ipa.openapi_inzent.model.MdTokenDTO">
+        <result property="tokenId" column="tokenId"/>
+        <result property="mdServiceId" column="mdServiceId"/>
+        <result property="consumerNum" column="consumerNum"/>
+        <result property="createDate" column="createDate"/>
+        <result property="endDate" column="endDate"/>
+        <result property="accessToken" column="accessToken"/>
+    </resultMap>
+
+    <!--mdAgency Table + mdServiceTable-->
+    <resultMap id="mdServiceAgency" type="com.ipa.openapi_inzent.model.MdAgencyDTO">
+        <!--property : 현재 DTO에서 사용하는 이름 column : DB에서 사용중인 이름-->
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="division" column="division"/>
+        <result property="name" column="name"/>
+        <result property="industry" column="industry"/>
+        <result property="address" column="address"/>
+        <result property="domainName" column="domainName"/>
+        <result property="publicApiIp" column="publicApiIp"/>
+        <result property="authenticationMethod" column="authenticationMethod"/>
+        <result property="TLSNum" column="TLSNum"/>
+        <result property="agencyIp" column="agencyIp"/>
+        <result property="agencyPort" column="agencyPort"/>
+        <collection property="mdServiceDTO" resultMap="mdService"/>
+    </resultMap>
+
+    <!--  mdAgency + mdService + mdToken  -->
+    <resultMap id="mdAST" type="com.ipa.openapi_inzent.model.MdAgencyDTO">
+        <!--property : 현재 DTO에서 사용하는 이름 column : DB에서 사용중인 이름-->
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="division" column="division"/>
+        <result property="name" column="name"/>
+        <result property="industry" column="industry"/>
+        <result property="address" column="address"/>
+        <result property="domainName" column="domainName"/>
+        <result property="publicApiIp" column="publicApiIp"/>
+        <result property="authenticationMethod" column="authenticationMethod"/>
+        <result property="TLSNum" column="TLSNum"/>
+        <result property="agencyIp" column="agencyIp"/>
+        <result property="agencyPort" column="agencyPort"/>
+        <collection property="mdServiceDTO" resultMap="mdService"/>
+        <collection property="mdTokenDTO" resultMap="mdToken"/>
+    </resultMap>
+
+    <!--mdProvider Table + mdReqInfo Table-->
+    <resultMap id="providerInfo" type="com.ipa.openapi_inzent.model.MdProviderDTO">
+        <result property="id" column="id"/>
+        <result property="reqInfoId" column="reqInfoId"/>
+        <result property="reqDate" column="reqDate"/>
+        <result property="runtime" column="runtime"/>
+        <result property="resCode" column="resCode"/>
+        <result property="apiCode" column="apiCode"/>
+        <result property="customerNum" column="customerNum"/>
+        <result property="regularTransmission" column="regularTransmission"/>
+        <result property="uniqueNum" column="uniqueNum"/>
+        <result property="statusInfo" column="statusInfo"/>
+        <result property="apiResources" column="apiResources"/>
+        <result property="reqHeader" column="reqHeader"/>
+        <result property="resMsg" column="resMsg"/>
+        <result property="resData" column="resData"/>
+        <collection property="mdReqInfoDTO" resultMap="mdReqInfo"></collection>
+
+    </resultMap>
+
+    <!--mdReqInfo table -->
+    <resultMap id="mdReqInfo" type="com.ipa.openapi_inzent.model.MdReqInfoDTO">
+        <result property="id" column="reqId"/>
+        <result property="code" column="code"/>
+        <result property="clientNum" column="clientNum"/>
+        <result property="agencyName" column="agencyName"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="reqSEQ" column="reqSEQ"/>
+        <result property="reqType" column="reqType"/>
+        <result property="tokenExpiryDate" column="tokenExpiryDate"/>
+    </resultMap>
+
+
+    <!-- mdAgency  -->
+    <select id="mdAgencySelectAll" resultType="com.ipa.openapi_inzent.model.MdAgencyDTO">
+        SELECT * FROM public."mdAgency";
+    </select>
+    <!-- 모달 - mdService 상세 -->
+    <select id="mdServiceSelectModal" parameterType="int" resultMap="mdService">
+        select ms.id, ms."agencyId",ms."clientId", ms.name as "mdServiceName" , ma.code,
+        ma.name,ms."callbackUrl"
+        from
+        "mdAgency" as ma join "mdService" as ms on ms."agencyId" = ma.id where ma.id = #{id}
+    </select>
+    <!--mydata service 목록 페이지 selectAll-->
+    <select id="mdServiceSelectList" resultMap="mdService">
+        select ms.id, ms."agencyId",ms."clientId", ms.name as "mdServiceName" , ma.code,
+        ma.name,ms."callbackUrl"
+        from
+        "mdAgency" as ma join "mdService" as ms on ms."agencyId" = ma.id
+    </select>
+
+    <!--mydata service 목록 페이지 selectAll-->
+    <select id="mdServiceSelectOne" resultMap="mdService" parameterType="int">
+        select ms.id, ms."agencyId",ms."clientId", ms.name as "mdServiceName" , ma.code,
+        ma.name,ms."callbackUrl"
+        from
+        "mdAgency" as ma join "mdService" as ms on ms."agencyId" = ma.id where ms.id = ${id};
+    </select>
+
+
+    <!-- 모달 - mdAgency 상세 -->
+    <select id="mdAgencySelectOne" parameterType="int" resultType="com.ipa.openapi_inzent.model.MdAgencyDTO">
+        SELECT id, code, division, name, industry, address, "domainName", "publicApiIp", "authenticationMethod",
+        "TLSNum", "agencyIp", "agencyPort"
+        FROM public."mdAgency" where id = #{id};
+    </select>
+
+    <!-- mdAgency 페이지 selectBox 출력물 -->
+    <select id="mdAgencySelectBox" parameterType="string" resultType="com.ipa.openapi_inzent.model.MdAgencyDTO">
+        SELECT id, code, division, name, industry, address, "domainName", "publicApiIp", "authenticationMethod",
+        "TLSNum", "agencyIp", "agencyPort"
+        FROM public."mdAgency" where division = #{division};
+    </select>
+
+    <!-- mdAgency 페이지 row 삭제 -->
+    <delete id="mdAgencyDelete" parameterType="int">
+        DELETE FROM public."mdAgency"
+        WHERE id= #{id};
+    </delete>
+
+    <select id="mdServiceSearchKeyword" parameterType="string" resultMap="mdService">
+        select ms.id, ms."agencyId",ms."clientId", ms.name as "mdServiceName" , ma.code,
+        ma.name,ms."callbackUrl"
+        from
+        "mdAgency" as ma join "mdService" as ms on ms."agencyId" = ma.id where ms.name ILIKE CONCAT('%', #{keyword},'%')
+        OR ma.name ILIKE CONCAT('%', #{keyword},'%')
+        OR ma.code ILIKE CONCAT('%', #{keyword},'%')
+        OR ms."clientId" ILIKE CONCAT('%', #{keyword},'%') ;
+    </select>
+
+    <!--    ///////////////////////////////////////////////////////////////////////////////////////////-->
+    <!--    //                            (oﾟvﾟ)ノ  Provider Page  (oﾟvﾟ)ノ                           //-->
+    <!--    ///////////////////////////////////////////////////////////////////////////////////////////-->
+
+    <select id="mdProviderSelectAll" resultType="com.ipa.openapi_inzent.model.MdProviderDTO">
+        SELECT id, "reqDate", runtime, "resCode", "apiCode", "customerNum", "regularTransmission", "uniqueNum",
+        "statusInfo", "apiResources", "reqHeader", "resMsg", "resData" , "reqInfoId"
+        FROM public."providerHistory";
+    </select>
+
+    <select id="mdReqList" resultMap="providerInfo">
+        SELECT res.id as "reqId", res.code, res."agencyName", res."serviceName", res."reqType",
+        res."reqSEQ", res."tokenExpiryDate", pro.id, pro."reqDate", pro.runtime, pro."resCode",
+        pro."apiCode", pro."customerNum", pro."regularTransmission", pro."uniqueNum", pro."statusInfo",
+        pro."apiResources", pro."reqHeader", pro."resMsg", pro."resData", pro."reqInfoId"
+        FROM public."providerHistory" as pro join public."reqInfo" as res on pro."reqInfoId" = res.id;
+    </select>
+
+    <select id="mdProviderSelectOne" parameterType="int" resultMap="providerInfo">
+        SELECT res.id as "reqId", res.code, res."agencyName", res."serviceName", res."reqType",
+        res."reqSEQ", res."tokenExpiryDate", pro.id, pro."reqDate", pro.runtime, pro."resCode",
+        pro."apiCode", pro."customerNum", pro."regularTransmission", pro."uniqueNum", pro."statusInfo",
+        pro."apiResources", pro."reqHeader", pro."resMsg", pro."resData", pro."reqInfoId"
+        FROM public."providerHistory" as pro join public."reqInfo" as res on pro."reqInfoId" = res.id where pro.id =
+        #{id}
+    </select>
+
+    <insert id="mdProviderInsert" parameterType="com.ipa.openapi_inzent.model.MdProviderDTO">
+        INSERT INTO public."providerHistory"(
+        "reqDate", runtime, "resCode", "apiCode", "customerNum", "regularTransmission", "uniqueNum", "statusInfo", "apiResources", "reqHeader", "resMsg", "resData", "reqInfoId")
+        VALUES (NOW(), #{runtime}, #{resCode}, #{apiCode}, #{customerNum}, #{regularTransmission}, #{uniqueNum}, #{statusInfo}, #{apiResources}, #{reqHeader}, #{resMsg}, #{resData} , #{reqInfoId});
+    </insert>
+
+    <select id="mdProviderCustomerList" parameterType="string" resultType="com.ipa.openapi_inzent.model.MdProviderDTO">
+        select * from public."providerHistory"
+        where "customerNum" = #{customerNum};
+    </select>
+
+    <select id="mdReqAll" resultType="com.ipa.openapi_inzent.model.MdReqInfoDTO">
+        select * from public."reqInfo";
+    </select>
+
+    <select id="mdReqSearch" parameterType="string" resultType="com.ipa.openapi_inzent.model.MdReqInfoDTO">
+        select * from public."reqInfo" as "req"
+        where req.code ILIKE CONCAT('%', #{keyword},'%')
+        OR req."agencyName" ILIKE CONCAT('%', #{keyword},'%')
+        OR req."serviceName" ILIKE CONCAT('%', #{keyword},'%')
+        OR req."clientNum" ILIKE CONCAT('%', #{keyword},'%') ;
+    </select>
+
+    <select id="mdProviderSearch" parameterType="string" resultType="com.ipa.openapi_inzent.model.MdProviderDTO">
+        select * from public."providerHistory" as "pro"
+        where pro."apiCode" ILIKE CONCAT('%', #{keyword},'%')
+        OR pro."uniqueNum" ILIKE CONCAT('%', #{keyword},'%')
+        OR pro."customerNum" ILIKE CONCAT('%', #{keyword},'%') ;
+    </select>
+
+    <!--    ///////////////////////////////////////////////////////////////////////////////////////////-->
+    <!--    //                            (oﾟvﾟ)ノ  Collector Page  (oﾟvﾟ)ノ                           //-->
+    <!--    ///////////////////////////////////////////////////////////////////////////////////////////-->
+
+    <select id="mdCollectorSelectAll" resultType="com.ipa.openapi_inzent.model.MdCollectorDTO">
+        select * from public."collectorHistory";
+    </select>
+
+    <select id="mdCollectorSelectOne" parameterType="int" resultType="com.ipa.openapi_inzent.model.MdCollectorDTO">
+        select * from public."collectorHistory"
+        where id = #{id};
+    </select>
+
+    <insert id="mdCollectorInsert" parameterType="com.ipa.openapi_inzent.model.MdCollectorDTO">
+        INSERT INTO public."collectorHistory"(
+        "reqDate", runtime, "resCode", "apiCode", "regularTransmission", "targetHost", "uniqueNum", "apiResources", "reqHeader", "resMsg", "resData")
+        VALUES (#{reqDate}, #{runtime}, #{resCode}, #{apiCode}, #{regularTransmission}, #{targetHost}, #{uniqueNum}, #{apiResources}, #{reqHeader}, #{resMsg}, #{resData});
+    </insert>
+
+    <!--    //////////////////////////////////-->
+    <!-- mydataToken   -->
+    <!-- mdAgency + mdService + mdToken list -->
+    <select id="mdAstList" resultMap="mdAST">
+        select mt.id as "tokenId", mt."mdServiceId", mt."mdServiceId", mt."consumerNum",mt."createDate",
+        mt."endDate", mt."accessToken", ms.id, ms."agencyId" ,ms."clientId", ms."name" as "mdServiceName"
+        , ms."callbackUrl", ma.code,ma.division, ma.name,ma.industry, ma.address, ma."domainName", ma."publicApiIp", ma."authenticationMethod",
+        ma."TLSNum", ma."agencyIp", ma."agencyPort"
+        from public."mdToken" as mt inner join public."mdService" as ms
+        on ms.id = mt."mdServiceId" inner join public."mdAgency" as ma on ma.id = ms."agencyId"
+    </select>
+    <!-- mdAgency + mdService + mdToken one  -->
+    <select id="mdAstOne" parameterType="int" resultMap="mdAST">
+        select mt.id as "tokenId", mt."mdServiceId", mt."mdServiceId", mt."consumerNum",mt."createDate",
+        mt."endDate", mt."accessToken", ms.id, ms."agencyId" ,ms."clientId", ms."name" as "mdServiceName"
+        , ms."callbackUrl", ma.code,ma.division, ma.name,ma.industry, ma.address, ma."domainName", ma."publicApiIp",
+        ma."authenticationMethod",
+        ma."TLSNum", ma."agencyIp", ma."agencyPort"
+        from public."mdToken" as mt inner join public."mdService" as ms
+        on ms.id = mt."mdServiceId" inner join public."mdAgency" as ma on ma.id = ms."agencyId"
+        where mt.id = #{id}
+    </select>
+    <select id="mdTokenSearch" parameterType="string" resultMap="mdAST">
+        select mt.id as "tokenId", mt."mdServiceId", mt."mdServiceId", mt."consumerNum",mt."createDate",
+        mt."endDate", mt."accessToken", ms.id, ms."agencyId" ,ms."clientId", ms."name" as "mdServiceName"
+        , ms."callbackUrl", ma.code,ma.division, ma.name,ma.industry, ma.address, ma."domainName", ma."publicApiIp", ma."authenticationMethod",
+        ma."TLSNum", ma."agencyIp", ma."agencyPort"
+        from public."mdToken" as mt inner join public."mdService" as ms
+        on ms.id = mt."mdServiceId" inner join public."mdAgency" as ma on ma.id = ms."agencyId"
+        where mt."consumerNum" ILIKE CONCAT('%', #{keyword},'%')
+        OR  ms.name ILIKE CONCAT('%', #{keyword},'%')
+        OR ma.code ILIKE CONCAT('%', #{keyword},'%')
+        OR ma.name ILIKE CONCAT('%', #{keyword},'%');
+    </select>
+
+
+</mapper>
+

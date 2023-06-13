@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipa.openapi_inzent.dao.UserDao">
+    <resultMap id="userRole" type="com.ipa.openapi_inzent.model.UserDTO">
+        <result property="userId" column="userId"/>
+        <result property="roleId" column="roleId"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <parameterMap id="userRole" type="com.ipa.openapi_inzent.model.UserDTO">
+        <parameter property="userId"/>
+        <parameter property="roleId"/>
+        <parameter property="code"/>
+        <parameter property="name"/>
+    </parameterMap>
+    <select id="userList" resultMap="userRole">
+        select * from public.user
+        order by id asc;
+    </select>
+    <insert id="register" parameterType="com.ipa.openapi_inzent.model.UserDTO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO public."user"(username,nickname, password, activate ,"createDate", email,approve,"ownNum")
+        VALUES (#{username},#{nickname} , #{password}, false ,NOW(),#{email}, false,${ownNum})
+    </insert>
+    <select id="findByUsername" parameterType="String" resultType="com.ipa.openapi_inzent.model.UserDTO">
+        SELECT
+        us.id,us.username,us.password,us.nickname,us.token,us.activate,us."createDate",us.email,us.approve,ro.code as
+        "role", us."ownNum"
+        FROM public."user" as us
+        join public."userRole" as ur on ur."userId" = us.id
+        join public.role as ro on ro.id = ur."roleId"
+        where username = #{username} order by us.id asc;
+    </select>
+    <select id="findByNickname" parameterType="String" resultType="com.ipa.openapi_inzent.model.UserDTO">
+        SELECT *
+        FROM public."user" where nickname = #{nickname};
+    </select>
+    <select id="userOne" parameterType="int" resultType="com.ipa.openapi_inzent.model.UserDTO">
+        select *
+        from public.user where id = #{id};
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM public."user"
+        WHERE id = #{id};
+    </delete>
+    <update id="update" parameterType="com.ipa.openapi_inzent.model.UserDTO">
+        UPDATE public.user SET
+        password = #{password},
+        nickname = #{nickname},
+        token = #{token},
+        activate = #{activate},
+        email = #{email},
+        approve = #{approve}
+        WHERE id = #{id}
+    </update>
+
+    <!-- userROLE -->
+    <insert id="insertRole" parameterType="com.ipa.openapi_inzent.model.UserRoleDTO">
+        INSERT INTO public."userRole"("userId", "roleId")
+        VALUES (#{userId}, #{roleId})
+    </insert>
+    <delete id="deleteRole" parameterType="int">
+        delete from public."userRole"
+        where "userId" = #{userId};
+    </delete>
+    <select id="selectOne" parameterType="int" resultMap="userRole">
+        select * from public.user as us
+        join public."userRole" as ur on ur."userId" = us.id
+        join public.role as ro on ro.id = ur."roleId"
+        where us.id = #{id};
+    </select>
+
+    <select id="selectAll" resultMap="userRole">
+        select * from public.user as us
+        join public."userRole" as ur on ur."userId" = us.id
+        join public.role as ro on ro.id = ur."roleId"
+        order by us.id asc;
+    </select>
+
+    <select id="userRoles" resultType="com.ipa.openapi_inzent.model.UserRoleDTO" parameterType="int">
+        select * from public."userRole"
+        where "userId" = #{userId}
+    </select>
+
+    <select id="roleName" resultType="com.ipa.openapi_inzent.model.UserRoleDTO" parameterType="int">
+        select * from public."userRole" as ur
+        join public.role as r on r.id = ur."roleId"
+        where ur."userId" = #{userId};
+    </select>
+
+    <!-- AccountList search  -->
+    <select id="accountListSearch" parameterType="string" resultType="com.ipa.openapi_inzent.model.UserDTO">
+        select * from public."user"
+        where nickname ILIKE CONCAT('%', #{keyword}, '%')
+        or username ILIKE CONCAT('%', #{keyword}, '%')
+        or email ILiKE CONCAT('%', #{keyword}, '%');
+    </select>
+    <select id="choiceActivate" parameterType="boolean" resultType="com.ipa.openapi_inzent.model.UserDTO">
+        select * from public.user
+        where activate = #{b};
+    </select>
+</mapper>
+

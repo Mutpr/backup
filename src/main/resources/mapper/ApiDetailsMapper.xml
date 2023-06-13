@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipa.openapi_inzent.dao.ApiDetailsDao">
+    <resultMap id="apisDetails" type="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        <result property="apisId" column="id"/>
+        <result property="context" column="context"/>
+        <result property="name" column="name"/>
+        <result property="disclosure" column="disclosure"/>
+        <result property="explanation" column="explanation"/>
+    </resultMap>
+
+    <resultMap id="adWithResource" type="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        <result property="apisId" column="apisId"/>
+        <result property="resourceId" column="id"/>
+    </resultMap>
+
+    <!-- 모든 apiDetails  -->
+    <select id="selectALl" resultType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        select * from public."apiDetails"
+        order by id asc
+    </select>
+    <select id="apisDetailsList" resultType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        select * from public."apiDetails"
+        order by id asc
+        limit #{size} offset #{start}
+    </select>
+    <!-- 모든 apiDetails  -->
+
+
+    <!-- 리소스 List  resultType: ResourceDTO-->
+    <select id="resourceListPaging" parameterType="map" resultType="com.ipa.openapi_inzent.model.ResourceDTO">
+        select DISTINCT res."apisId", res.id, res.garbage, res."tagId", ad.uri from public.resource as res join
+        public."apiDetails" as ad on ad."resourceId" = res.id
+        where res."apisId" = #{apisId}
+        order by res.id asc
+    </select>
+
+    <select id="resourceList" parameterType="int" resultType="com.ipa.openapi_inzent.model.ResourceDTO">
+        select DISTINCT res."apisId", res.id, res.garbage, res."tagId", ad.uri from public.resource as res join
+        public."apiDetails" as ad on ad."resourceId" = res.id
+        where res."apisId" = #{apisId}
+        order by res.id asc
+    </select>
+    <!-- 리소스 안에 있는 apiDetails   -->
+    <select id="resourceInAdList" parameterType="int" resultType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        select r."apisId", r.id as resource_id, ad.id, ad."resourceId", ad.method, ad.url, ad.uri, ad.summary,
+        r.garbage,
+        ad.security, ad.scope, ad."operationId", ad.version, ad.status, ad."authorization", r."tagId", ad.trash from
+        public.resource as r
+        join public."apiDetails" as ad
+        on ad."resourceId" = r."id"
+        where "apisId" = #{apisId};
+    </select>
+    <select id="selectOne" parameterType="int" resultType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        select r."apisId", r.id as resource_id, ad.id, ad."resourceId", ad.method, ad.url, ad.uri, ad.summary,
+        r.garbage,
+        ad.security, ad.scope, ad."operationId", ad.version, ad.status, ad."authorization", r."tagId", ad.trash from
+        public.resource as r
+        join public."apiDetails" as ad
+        on ad."resourceId" = r."id"
+        where ad.id = #{id};
+    </select>
+    <select id="resourceOne" parameterType="int" resultType="com.ipa.openapi_inzent.model.ResourceDTO">
+        select * from public.resource
+        where id = #{id};
+    </select>
+    <!--    <select id="apisDetails" parameterType="int" resultMap="apisDetails">-->
+    <!--        SELECT * FROM public.api as api-->
+    <!--        INNER JOIN public.apis as apis-->
+    <!--        ON api."apisId" = apis.id-->
+    <!--        INNER JOIN public."apiDetails" as ad-->
+    <!--        ON ad.id = api.id-->
+    <!--        WHERE apis.id = #{id}-->
+    <!--    </select>-->
+
+    <select id="detailsList" parameterType="int" resultType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        select * from public."apiDetails"
+        inner join public.resource
+        on public.resource.id = public."apiDetails"."resourceId"
+        where public.resource."apisId" = #{apisId};
+    </select>
+    <select id="goTrashDetail" resultType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        select public."apiDetails".id,"apisId", re.id as resource_id, garbage, method, url, uri, summary,
+        security, scope, "operationId", version, status, "authorization", re."tagId", trash, "resourceId" from
+        public."apiDetails"
+        inner join public.resource as re
+        on re.id = public."apiDetails"."resourceId"
+        order by public."apiDetails".id asc
+    </select>
+
+    <delete id="completeDelete" parameterType="int">
+        DELETE FROM public."apiDetails"
+        WHERE id = #{id};
+    </delete>
+    <delete id="resourceDelete" parameterType="int">
+        DELETE FROM public.resource
+        WHERE id = #{id};
+    </delete>
+    <update id="updateResource" parameterType="com.ipa.openapi_inzent.model.ResourceDTO">
+        UPDATE public.resource SET
+        "apisId"=#{apisId},
+        garbage=#{garbage}
+        WHERE id = #{id};
+    </update>
+    <update id="updateDetail" parameterType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        UPDATE public."apiDetails" SET
+        method=#{method},
+        url=#{url},
+        uri=#{uri},
+        summary=#{summary},
+        security=#{security},
+        scope=#{scope},
+        "operationId"=#{operationId},
+        version=#{version},
+        status=#{status},
+        "authorization"=#{authorization},
+        trash=#{trash},
+        "resourceId"=#{resourceId}
+        WHERE id = #{id};
+    </update>
+    <!-- tag select All 리소스 추가 할 때 select box   -->
+    <select id="selectAllTag" resultType="com.ipa.openapi_inzent.model.TagDTO">
+        SELECT *
+        FROM public.tag;
+    </select>
+
+    <select id="goTrashResource" resultType="com.ipa.openapi_inzent.model.ResourceDTO">
+        select DISTINCT re.id,re."apisId", re.garbage, ad.uri from public.resource as re join
+        public.apis as ap on ap.id = re."apisId" join public."apiDetails" as ad on ad."resourceId" = re.id
+        order by re.id asc
+    </select>
+    <select id="trashSearch" parameterType="string" resultType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        select r."apisId", r.id as resource_id, ad.id, ad."resourceId", ad.method, ad.url, ad.uri, ad.summary,
+        r.garbage,
+        ad.security, ad.scope, ad."operationId", ad.version, ad.status, ad."authorization", r."tagId", ad.trash from
+        public.resource as r
+        join public."apiDetails" as ad
+        on ad."resourceId" = r."id"
+        where ad.uri ILIKE CONCAT('%', #{keyword},'%')
+        OR ad.summary ILIKE CONCAT('%', #{keyword},'%');
+    </select>
+    <!--현재 들어온 api에 해당하는 resource 리스트 출력-->
+    <select id="searchPath" parameterType="hashmap" resultType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        <!-- uri,method 받아오면 된다. /v1/insu -->
+        SELECT ap.id, ap.method,ap.uri,ap."resourceId"
+        FROM public."apiDetails" as ap join public."resource" as res on res.id = ap."resourceId" where res."apisId" =
+        #{apisId} and ap.uri ILIKE CONCAT('%', #{keyword},'%') and ap.trash = false
+        and res."garbage" = false order by ap.id
+    </select>
+    <!-- 신규 리소스 등록   -->
+    <insert id="insertResource" parameterType="com.ipa.openapi_inzent.model.ResourceDTO" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id">
+        <if test='tagId > 0'>
+            INSERT INTO public.resource("apisId","tagId", garbage)
+            VALUES (#{apisId},#{tagId}, #{garbage});
+        </if>
+
+        <if test='tagId == 0'>
+            INSERT INTO public.resource("apisId", garbage)
+            VALUES (#{apisId}, #{garbage});
+        </if>
+
+    </insert>
+    <!--insertApiDetail 등록-->
+    <insert id="insertApiDetail" parameterType="com.ipa.openapi_inzent.model.ApiDetailsDTO" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id">
+        INSERT INTO public."apiDetails"(
+        method, url, uri, summary, security, scope, "operationId", version, status, "authorization", trash,
+        "resourceId")
+        VALUES (#{method}, #{url}, #{uri}, #{summary}, 'Bearer', #{scope}, #{operationId}, 'V1', 'develop',
+        #{authorization}, #{trash}, #{resourceId});
+    </insert>
+
+    <!--  detail클릭 했을 떄 나오는 모달에 전송할 정보  -->
+    <select id="searchDetail" parameterType="int" resultType="com.ipa.openapi_inzent.model.ApiDetailsDTO">
+        select * from public."apiDetails" where id = #{id}
+    </select>
+    <!--파라미터 등록-->
+    <insert id="insertParameter" parameterType="com.ipa.openapi_inzent.model.ParameterDTO" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO public.parameters(
+        "apiDetailsId", name, "transferMethod", explanation, type, required, sample)
+        VALUES (#{apiDetailsId},#{name},#{transferMethod},#{explanation},#{type},#{required},#{sample});
+    </insert>
+    <!-- apiDetails 모달에 넣을 파라미터 값 -->
+    <select id="searchParameter" parameterType="int" resultType="com.ipa.openapi_inzent.model.ParameterDTO">
+        SELECT id, "apiDetailsId", name, "transferMethod", explanation, type, required, sample
+        FROM public.parameters where "apiDetailsId" = #{id}
+    </select>
+    <!--응답 코드 설명 등록 쿼리-->
+    <insert id="insertResponse" parameterType="com.ipa.openapi_inzent.model.ResponseDTO" useGeneratedKeys="true"
+            keyColumn="id" keyProperty="id">
+        INSERT INTO public.response(
+        "apiDetailsId","respCode", "respMsg")
+        VALUES (#{apiDetailsId},#{respCode},#{respMsg});
+    </insert>
+
+    <!-- 응답코드 상세 파라미터 등록 쿼리   -->
+    <insert id="insertResParam" parameterType="com.ipa.openapi_inzent.model.ResParamDTO">
+        INSERT INTO public."resParam"(
+        "resId", key,value, type, sample)
+        VALUES (#{resId},#{key},#{value},#{type},#{sample});
+    </insert>
+
+    <!--    // details 아이디로 해당 응답 코드 출력-->
+    <select id="selectResponseList" parameterType="int" resultType="com.ipa.openapi_inzent.model.ResponseDTO">
+        select * from public."response" where "apiDetailsId" = #{id}
+    </select>
+
+    <!--    // 응답코드 아이디로 해당하는 파라미터들 출력-->
+    <select id="selectResParamList" parameterType="int" resultType="com.ipa.openapi_inzent.model.ResParamDTO">
+        select * from public."resParam" where "resId" = #{id}
+    </select>
+
+    <!-- 응답코드 삭제   -->
+    <select id="removeResCode" parameterType="int">
+        delete from public."response" where id = #{id}
+    </select>
+    <!-- 응답코드파라미터 삭제   -->
+    <select id="removeResParam" parameterType="int">
+        delete from public."resParam" where id = #{id}
+    </select>
+    <select id = "countAll" parameterType="int" resultType="int">
+        select count(*) from public."resource" where "apisId" = #{apisId}
+    </select>
+</mapper>

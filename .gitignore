@@ -1,0 +1,60 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### workspace ###
+*.idea/workspace.xml
+*.class
+*.iml
+*.idea
+src/main/resources/application.properties
+src/main/resources/static
+
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+src/main/resources/static/vendor
+
+/src/main/java/com/ipa/openapi_inzent/config/
+/src/main/java/com/ipa/openapi_inzent/config/!!includethis
+/src/main/java/com/ipa/openapi_inzent/controller
+/src/main/java/com/ipa/openapi_inzent/service
+/src/main/java/com/ipa/openapi_inzent/model
+/src/main/java/com/ipa/openapi_inzent/dao
+/src/main/java/com/ipa/openapi_inzent/handler
+/src/main/java/com/ipa/openapi_inzent/configuration
+/src/main/java/com/ipa/openapi_inzent/OpenApiInzentApplication.java
+/src/main/java/com/ipa/openapi_inzent/ServletInitializer.java
+src/main/resources/templates
+
+
+
+

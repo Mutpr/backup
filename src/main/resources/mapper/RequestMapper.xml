@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipa.openapi_inzent.dao.RequestDao">
+    <resultMap id="user" type="com.ipa.openapi_inzent.model.RequestDTO">
+        <result property="reqUsername" column="username"/>
+        <result property="reqNickname" column="nickname"/>
+        <result property="id" column="id"/>
+        <result property="entryDate" column="entryDate"/>
+        <result property="procUsername" column="procUsername"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="status" column="status"/>
+    </resultMap>
+    <select id="countAll">
+        select count(*) from public. "userReqList";
+    </select>
+    <select id="selectAll" resultType="com.ipa.openapi_inzent.model.RequestDTO" parameterType="map">
+        select * from public."userReqList"
+        limit #{size} offset #{start}
+    </select>
+    <select id="reqUserList" resultMap="user">
+        select * from public."userReqList" as ur
+        inner join public.user as u
+        on ur."userId" = u.id
+    </select>
+    <insert id="insert" parameterType="com.ipa.openapi_inzent.model.RequestDTO">
+        INSERT INTO public."userReqList"(
+        "entryDate", title, content, "userId", "reqUsername", "reqNickname")
+        VALUES (NOW(), #{title}, #{content}, #{userId}, #{reqUsername}, #{reqNickname});
+    </insert>
+    <select id="selectOne" parameterType="int" resultType="com.ipa.openapi_inzent.model.RequestDTO">
+        select * from public."userReqList"
+        where id = #{id}
+    </select>
+    <delete id="delete" parameterType="int">
+        delete from public."userReqList"
+        where id = #{id}
+    </delete>
+    <select id="selectUserId" parameterType="int" resultType="com.ipa.openapi_inzent.model.RequestDTO">
+        select * from public."userReqList"
+        where "userId" = #{userId}
+    </select>
+    <update id="updateRequest" parameterType="com.ipa.openapi_inzent.model.RequestDTO">
+        update public."userReqList" set
+        "procUsername" = #{procUsername},
+        "procDate" = #{procDate},
+        title = #{title},
+        content = #{content},
+        status = #{status}
+        where "userId" = #{userId}
+    </update>
+    <select id="requestSearch" parameterType="string" resultType="com.ipa.openapi_inzent.model.RequestDTO">
+        select * from public."userReqList"
+        where title ILIKE CONCAT('%', #{keyword}, '%')
+        or content ILIKE CONCAT('%', #{keyword}, '%');
+    </select>
+
+    <!--    -->
+</mapper>

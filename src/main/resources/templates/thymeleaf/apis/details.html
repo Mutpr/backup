@@ -38,6 +38,7 @@
                                     <th scope="col">Method</th>
                                     <th scope="col">URI</th>
                                     <th scope="col">Summary</th>
+                                    <th scope="col">security</th>
                                     <th scope="col">Operation ID</th>
                                     <th scope="col">Version</th>
                                     <th scope="col">Status</th>
@@ -49,6 +50,7 @@
                                     <td id="tdMethod"></td>
                                     <td id="tdURI"></td>
                                     <td id="tdSummary"></td>
+                                    <td id="tdSecurity"></td>
                                     <td id="tdOper"></td>
                                     <td id="tdVersion"></td>
                                     <td id="tdStatus">
@@ -101,7 +103,7 @@
         });
 
         function loadPage(pageNo) {
-            let key = ['method', 'uri', 'summary', 'security', 'operationId', 'version'];
+            console.log(pageNo)
             $.ajax({
                 url: '/api/pagination/',
                 method: 'GET',
@@ -116,8 +118,9 @@
                     let method = data[0].apis
                     let uri = data[0].uri;
                     let summary = data[0].summary;
-                    let operationId = data[0].tagId;
+                    let operationId = data[0].operationId;
                     let version = data[0].version;
+                    let security = data[0].security;
 
                     // td 값 변경
                     let methodTd = document.getElementById("tdMethod");
@@ -135,6 +138,9 @@
                     let versionTd = document.getElementById("tdVersion");
                     versionTd.textContent = version;
 
+                    let securityTd = document.getElementById("tdSecurity");
+                    securityTd.textContent = security;
+
                     let totalPages = data[0].pageCount;
 
                     let pagination = document.querySelector('.pagination');
@@ -145,18 +151,22 @@
                     prevPage.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
                     pagination.appendChild(prevPage);
 
-                    for (let i = 1; i <= totalPages; i++) {
-                        let pageItem = document.createElement('li');
-                        pageItem.classList.add('page-item');
-                        pageItem.setAttribute('value', i);
-                        pageItem.innerHTML = `<a class="page-link">${i}</a>`;
-                        pagination.appendChild(pageItem);
+                    if (totalPages === 0) {
+                        pagination.remove();
+                        console.log("nothing here")
+                    } else {
+                        for (let i = 1; i <= totalPages; i++) {
+                            let pageItem = document.createElement('li');
+                            pageItem.classList.add('page-item');
+                            pageItem.setAttribute('value', i);
+                            pageItem.innerHTML = `<a class="page-link">${i}</a>`;
+                            pagination.appendChild(pageItem);
+                        }
+                        let nextPage = document.createElement('li');
+                        nextPage.classList.add('page-item');
+                        nextPage.innerHTML = `<a class="page-link">&raquo;</a>`;
+                        pagination.appendChild(nextPage);
                     }
-
-                    let nextPage = document.createElement('li');
-                    nextPage.classList.add('page-item');
-                    nextPage.innerHTML = `<a class="page-link">&raquo;</a>`;
-                    pagination.appendChild(nextPage);
                 }
             });
         }
@@ -189,6 +199,7 @@
             </li>
         </ul>
     </div>
+
 </div>
 </body>
 </html>
