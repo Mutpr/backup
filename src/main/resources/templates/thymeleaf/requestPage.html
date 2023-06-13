@@ -44,130 +44,50 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script>
-            function removeAlert(reqId) {
-                let id = reqId.getAttribute("req_id");
-                Swal.fire({
-                    showCancelButton: true,
-                    cancelButtonText: "취소",
-                    confirmButtonText: "확인",
-                    icon: 'warning',
-                    text: "해당 요청을 삭제하시겠습니까?"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: '삭제 완료',
-                            icon: 'success'
-                        }).then(() => {
-                            location.href = '/delete/' + id;
-                        })
-                    }
-                });
-            }
 
-            // 승인
-            function approve(id) {
-                Swal.fire({
-                    icon: 'success',
-                    title: '승인 완료'
-                }).then(() => {
-                    location.href = '/approve/' + id;
-                })
-            }
-
-            // 거절
-            function refuse(id) {
-                Swal.fire({
-                    icon: 'success',
-                    title: '거절 완료'
-                }).then(() => {
-                    location.href = '/refuse/' + id;
-                })
-            }
-
-            // 요청 정보 모달에 넣을 데이터
-            function reqDetail(reqId) {
-
-                let id = reqId.getAttribute("req_id");
-                let data = {
-                    "id": id,
-                }
-                $.ajax({
-                    url: "/selectOne/" + id,
-                    data: data,
-                    method: "get",
-
-                    success: (message) => {
-                        document.getElementById('reqId').innerText = id;
-                        let title = document.getElementsByClassName('reqTitle');
-                        for (let i = 0; i < title.length; i++) {
-                            title[i].innerText = message.title;
-                        }
-                        document.getElementById('reqUsername').innerText = message.reqUsername;
-                        document.getElementById('reqNickname').innerText = message.reqNickname;
-                        document.getElementById('reqEntryDate').innerText = message.entryDate;
-                        document.getElementById('reqId').innerText = id;
-                        document.getElementById('reqContent').innerText = message.content;
-
-                        if (message.status == true) {
-                            document.getElementById('status').innerText = '승인';
-                        } else if (message.status == false) {
-                            document.getElementById('status').innerText = '거절';
-                        } else if (message.status == null) {
-                            document.getElementById('status').innerText = '요청';
-                            $('#approve').attr('onclick', 'approve(' + message.userId + ')').css("display", "block");
-                            $('#refuse').attr('onclick', 'refuse(' + message.userId + ')').css("display", "block");
-                        }
-                        if (message.status != null) {
-                            document.getElementById('statusNotNull').innerText = '성공';
-                            document.getElementById('reqProcDate').innerText = message.procDate;
-                            document.getElementById('reqProcUsername').innerText = message.procUsername;
-                            $('#approve').css("display", "none");
-                            $('#refuse').css("display", "none");
-                        }
-
-                    }
-                })
-            }
             $(document).ready(function () {
                 // 페이지 로드 시 첫 페이지 데이터 로딩
-                //loadPage(1);
+                setTR(1);
+                loadPageCount(1);
                 // 페이지네이션 클릭 이벤트 처리
                 $(document).on('click', '.pagination li', function (e) {
-                let option = $(this).attr('value');
-                console.log(option)
-                //loadPage(option);
-            });
+                    let option = $(this).attr('value');
+                    console.log(option)
+                    loadPageCount(option);
+                    setTR(option);
+                });
             });
 
-                function loadPage(pageNo) {
+            function loadPageCount(pageNo) {
                 $.ajax({
                     url: 'pagination',
                     data: {"pageNo": pageNo},
                     success: function (success) {
-                        console.log(pageNo)
-                        console.log(success);
-                        console.log(typeof success)
-                        for (let i in success) {
-                            let object = success[i];
-                            let DTO = object.DTO;
-                            console.log(DTO)
+                        console.log(success)
+                        for(let i in success){
+                            let data = success[i].DTO;
+                            console.log(data)
+                            let dataJson = JSON.parse(data);
+                            let id = dataJson.id;
 
                         }
+                        let totalPage = success[i].totalPage;
+                        //console.log(id)
+                        console.log(totalPage)
                         let pagination = document.querySelector('.pagination');
                         pagination.innerHTML = '';
-
-                        let totalPages =
 
                         let prevPage = document.createElement('li');
                         prevPage.classList.add('page-item');
                         prevPage.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
                         pagination.appendChild(prevPage);
 
-                        if (totalPages === 0) {
+                        if (totalPage === 1) {
                             pagination.remove();
                             console.log("nothing here")
                         } else {
-                            for (let i = 1; i <= totalPages; i++) {
+                            for (let i = 1; i <= totalPage; i++) {
+
                                 let pageItem = document.createElement('li');
                                 pageItem.classList.add('page-item');
                                 pageItem.setAttribute('value', i);
@@ -180,9 +100,96 @@
                             pagination.appendChild(nextPage);
                         }
                     }
+                })
+            }
+
+            function setTR(pageNo) {
+                $.ajax({
+                    url: 'pagination',
+                    data: {"pageNo": pageNo},
+                    success: function (data) {
+                        console.log(data);
+                        console.log(data.length);
+                        let tbody = document.querySelector("tbody");
+                        tbody.innerHTML = ''; // 기존의 내용을 초기화
+                        for (let i in data) {
+                            let DTO = JSON.parse(data[i].DTO);
+                            let id = DTO.id;
+                            let title = DTO.title;
+                            let content = DTO.content;
+                            let account = DTO.reqUsername;
+                            let entry = DTO.entryDate;
+                            let procDate = DTO.procDate;
+
+                            let tr = document.createElement('tr');
+                            tr.id = "request";
+                            tr.setAttribute("onclick", "reqDetail(this)");
+
+                            let tdId = document.createElement('td');
+                            tdId.id = "requestNumber";
+                            tdId.setAttribute("data-toggle", "modal");
+                            tdId.setAttribute("data-target", "#exampleModal");
+                            tdId.innerText = id;
+                            tr.appendChild(tdId);
+
+                            let tdTitle = document.createElement('td');
+                            tdTitle.id = "requestTitle";
+                            tdTitle.setAttribute("data-toggle", "modal");
+                            tdTitle.setAttribute("data-target", "#exampleModal");
+                            tdTitle.innerText = title;
+                            tr.appendChild(tdTitle);
+
+                            let tdContent = document.createElement('td');
+                            tdContent.id = "requestContents";
+                            tdContent.setAttribute("data-toggle", "modal");
+                            tdContent.setAttribute("data-target", "#exampleModal");
+                            tdContent.innerText = content;
+                            tr.appendChild(tdContent);
+
+                            let tdAccount = document.createElement('td');
+                            tdAccount.id = "requestAccount";
+                            tdAccount.setAttribute("data-toggle", "modal");
+                            tdAccount.setAttribute("data-target", "#exampleModal");
+                            tdAccount.innerText = account;
+                            tr.appendChild(tdAccount);
+
+                            let tdStatus = document.createElement('td');
+                            tdStatus.id = "requestStatus";
+                            tdStatus.setAttribute("data-toggle", "modal");
+                            tdStatus.setAttribute("data-target", "#exampleModal");
+                            tdStatus.innerText = "요청";
+                            tr.appendChild(tdStatus);
+
+                            let tdDate = document.createElement('td');
+                            tdDate.id = "requestDate";
+                            tdDate.setAttribute("data-toggle", "modal");
+                            tdDate.setAttribute("data-target", "#exampleModal");
+                            tdDate.innerText = entry;
+                            tr.appendChild(tdDate);
+
+                            let tdResponseDate = document.createElement('td');
+                            tdResponseDate.id = "responseDate";
+                            tdResponseDate.setAttribute("data-toggle", "modal");
+                            tdResponseDate.setAttribute("data-target", "#exampleModal");
+                            tdResponseDate.innerText = procDate;
+                            tr.appendChild(tdResponseDate);
+
+                            let tdDeletion = document.createElement('td');
+                            tdDeletion.id = "requestDeletion";
+                            let deletionIcon = document.createElement('i');
+                            deletionIcon.classList.add('fa-solid', 'fa-trash-can');
+                            deletionIcon.style.color = "#797a7c";
+                            deletionIcon.style.cursor = "pointer";
+                            deletionIcon.setAttribute("onclick", "removeAlert(this)");
+                            tdDeletion.appendChild(deletionIcon);
+                            tr.appendChild(tdDeletion);
+
+                            tbody.appendChild(tr);
+                        }
                     }
                 })
             }
+
         </script>
     </th:block>
 </head>
@@ -231,48 +238,31 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="reqList : ${list}" th:req_id="${reqList.id}" onclick="reqDetail(this)">
-                                        <td id="requestNumber"
-                                            data-toggle="modal" data-target="#exampleModal" th:text="${reqList.id}">
+                                    <tr id = "request"  data-bs-toggle="modal" data-toggle="modal" data-target="#exampleModal">
+                                        <td id="requestNumber">
                                         </td>
-                                        <td id="requestTitle" data-bs-toggle="modal"
-                                            data-toggle="modal" data-target="#exampleModal" th:text="${reqList.title}">
+                                        <td id="requestTitle">
                                         </td>
-                                        <td id="requestContents" data-bs-toggle="modal"
-                                            data-toggle="modal" data-target="#exampleModal"
-                                            th:text="${reqList.content}">
+                                        <td id="requestContents">
                                         </td>
-                                        <td id="requestAccount" data-bs-toggle="modal"
-                                            data-toggle="modal" data-target="#exampleModal"
-                                            th:text="${reqList.reqUsername}">
+                                        <td id="requestAccount">
                                         </td>
-                                        <td id="requestStatus" data-bs-toggle="modal"
-                                            data-toggle="modal" data-target="#exampleModal"
-                                            th:if="${reqList.status}==null">
+                                        <td id="requestStatus">
                                             요청
+<!--                                        </td>-->
+<!--                                        <td id="trueStatus" data-bs-toggle="modal"-->
+<!--                                            data-toggle="modal" data-target="#exampleModal"-->
+<!--                                        >-->
+<!--                                            승인-->
+<!--                                        </td>-->
+
+                                        <td id="requestDate">
                                         </td>
-                                        <td id="trueStatus" data-bs-toggle="modal"
-                                            data-toggle="modal" data-target="#exampleModal"
-                                            th:if="${reqList.status}==true">
-                                            승인
-                                        </td>
-                                        <td id="falseStatus" data-bs-toggle="modal"
-                                            data-toggle="modal" data-target="#exampleModal"
-                                            th:if="${reqList.status}==false">
-                                            거절
-                                        </td>
-                                        <td id="requestDate" data-bs-toggle="modal"
-                                            data-toggle="modal" data-target="#exampleModal"
-                                            th:text="${#dates.format(reqList.entryDate, 'yyyy-MM-dd')}">
-                                        </td>
-                                        <td id="responseDate" data-bs-toggle="modal"
-                                            data-toggle="modal" data-target="#exampleModal"
-                                            th:text="${reqList.procDate}">
+                                        <td id="responseDate">
                                         </td>
                                         <td id="requestDeletion">
                                             <i class="fa-solid fa-trash-can" style="color: #797a7c; cursor: pointer;"
-                                               th:req_id="${reqList.id}"
-                                               onclick="removeAlert(this)"/>
+                                               onclick="removeAlert(this)"></i>
                                         </td>
                                     </tr>
                                     </tbody>

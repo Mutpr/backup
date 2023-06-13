@@ -21,7 +21,7 @@ public class RequestService {
     public List<RequestDTO> selectAll(int pageNo) {
         HashMap<String, Integer> params = new HashMap<>();
 
-        int size = 5;
+        int size = 2;
         int start = ((pageNo - 1)*size);
 
         params.put("start", start);

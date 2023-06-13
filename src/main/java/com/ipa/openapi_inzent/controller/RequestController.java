@@ -41,17 +41,23 @@ public class RequestController {
         JsonArray jsonArray = new JsonArray();
         List<RequestDTO> list  = requestService.selectAll(pageNo);
         int totalPage = requestService.countAll();
-        int size = totalPage/5;
+        int size = 2;
+        int page = totalPage/size;
+        if(totalPage % size !=0){
+            page++;
+        }
         System.out.println("size = " + size);
+        System.out.println("list = " + list);
         for(RequestDTO requestDTO: list){
             jsonObject = new JsonObject();
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonString = objectMapper.writeValueAsString(requestDTO);
             jsonObject.addProperty("DTO",jsonString);
             jsonObject.addProperty("pageNo", pageNo);
-            jsonObject.addProperty("totalPage", totalPage);
+            jsonObject.addProperty("totalPage", page);
 
             jsonArray.add(jsonObject);
+            System.out.println("jsonArray = " + jsonArray);
         }
         return jsonArray;
     }

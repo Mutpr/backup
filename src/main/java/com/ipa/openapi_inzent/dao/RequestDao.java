@@ -11,7 +11,7 @@ import java.util.List;
 public interface RequestDao {
 
     List<RequestDTO> selectAll(HashMap<String, Integer> params) throws DataAccessException;
-    int countAll()throws DataAccessException;
+    int countAll() throws DataAccessException;
     List<RequestDTO> reqUserList() throws DataAccessException;
 
     void insert(RequestDTO requestDTO) throws DataAccessException;
