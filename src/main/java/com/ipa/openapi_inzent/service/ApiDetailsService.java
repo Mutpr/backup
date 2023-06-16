@@ -74,8 +74,6 @@ public class ApiDetailsService {
         return apiDetailsDao.countAll(apisId);
     }
 
-
-
     public List<ApiDetailsDTO> apiDetailsDTOListPaging(int pageNo, int apisId){
         HashMap<String, Integer> params = new HashMap<>();
 
@@ -88,7 +86,19 @@ public class ApiDetailsService {
 
         return apiDetailsDao.apisDetailsList(params);
     }
+    public List<ResourceDTO> selectAllPaging(int pageNo, int apisId){
+        HashMap<String, Integer> params = new HashMap<>();
 
+        int size = 1;
+        int start = ((pageNo - 1)*size);
+
+        params.put("start", start);
+        params.put("size", size);
+        params.put("apisId", apisId);
+        System.out.println("params = " + params);
+        System.out.println("apiDetailsDao.resourceListPaging() = " + apiDetailsDao.resourceListPaging(params));
+        return apiDetailsDao.resourceListPaging(params);
+    }
     public List<TagDTO> selectAllTag() {
         return apiDetailsDao.selectAllTag();
     }

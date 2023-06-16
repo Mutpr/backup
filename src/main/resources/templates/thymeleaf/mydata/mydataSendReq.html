@@ -44,7 +44,6 @@
                 rel="stylesheet">
         <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     </th:block>
-
     <th:block layout:fragment="script">
         <script src="https://kit.fontawesome.com/24311b556d.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -58,63 +57,224 @@
                 crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <script>
-
+        <script th:inline="javascript" type="text/javascript">
             $(document).ready(function () {
+
                 // 페이지 로드 시 첫 페이지 데이터 로딩
                 pagination(1);
                 setTotalPage(1);
                 // 페이지네이션 클릭 이벤트 처리
                 $(document).on('click', '.pagination li', function (e) {
                     let option = $(this).attr('value');
+                    // 이전 데이터 삭제
+                    $('#result td h5').remove();
+
+                    // 페이지 데이터 로딩
                     pagination(option);
-                    console.log(option)
+                    setTotalPage(option);
+
+                    // 현재 페이지 업데이트
                 });
             });
+
+            // 디테일 모달 누르면
+            function providerDetailModal(value) {
+                let tbody = document.getElementById("userNumTbody");
+                tbody.innerHTML = "";
+                console.log("providerDetailModal=========");
+                let clientNum = value.getAttribute("client_num");
+                console.log(clientNum);
+                // date 조회 할 때 고객번호 param으로 사용하기 위해
+                let forDate = document.getElementById("input_submit");
+                $(forDate).attr("cnum", clientNum);
+
+                let data = {
+                    "customerNum": clientNum,
+                };
+                $.ajax({
+                    url: "/mydata/provider/customerList",
+                    type: "get",
+                    data: data,
+
+                    success: (message) => {
+                        let plist = JSON.parse(message.providerList);
+                        console.log(plist);
+                        let col_cnt = Object.keys(plist[0]).length;
+                        for (let i = 0; i < plist.length; i++) {
+                            let tr = document.createElement("tr");
+                            tr.style.fontSize = '14px';
+
+                            // for (let data in plist[i]) {
+                            //     let td = document.createElement("td");
+                            //     td.id = plist[i]["id"];
+                            //     td.innerText = plist[i][data];
+                            //     tr.append(td);
+                            // }
+
+                            let keys = Object.keys(plist[i]);
+                            $(tr).attr({
+                                "data-bs-toggle": "modal",
+                                "data-bs-target": "#detailModal",
+                                "onclick": "providerDetailInfo(this)"
+                            });
+                            tr.id = plist[i]["id"];
+                            for (let j = 1; j < col_cnt; j++) {
+                                let key = keys[j];
+
+                                let td = document.createElement("td");
+                                td.innerText = plist[i][key];
+                                tr.append(td);
+                            }
+                            tbody.append(tr);
+                        }
+                    }
+                })
+            }
+
+            // 거래 이력별 만들어진 tr태그에 모달
+            function providerDetailInfo(value) {
+                let tbody = document.getElementById("userNumTbody");
+                tbody.innerHTML = "";
+                let id = value.getAttribute("id");
+                console.log("id=", id);
+                let data = {
+                    "id": id,
+                }
+                $.ajax({
+                    url: "/mydata/provider/selectOne",
+                    data: data,
+                    type: "get",
+
+                    success: (message) => {
+                        let cn = document.getElementsByClassName("inputClientNum");
+                        console.log(message)
+                        console.log("디테일인포들어옴")
+                        for (let i = 0; i < cn.length; i++) {
+                            $(cn).attr("client_num", message.consumerNum);
+
+                            document.getElementById("reqSEQ").innerText = message.reqSEQ;
+                            document.getElementById("uniqueNum").innerText = message.uniqueNum;
+                            document.getElementById("apiResources").innerText = message.apiResources;
+                            // 증권번호 ( 계좌 번호 ) resData에서 가져와야함 !!!(여기에요)
+                            document.getElementById("accountNum").innerText = "계좌번호가 들어가야함 자산목록에 뜨는"
+                            document.getElementById("resMsg").innerText = message.resMsg;
+                            document.getElementById("resdata").innerText = message.resData;
+
+                        }
+                    }
+                })
+            }
+
+            // 날짜 조회 할 때 거래 이력 list 만들기
+            function input(value) {
+                let tbody = document.getElementById("userNumTbody");
+                tbody.innerHTML = "";
+                let dday = document.getElementById("input_date").value;
+                let cnum = value.getAttribute("cnum");
+                console.log("!!!!!!!!!!!!!!!")
+                console.log(cnum);
+                console.log(dday);
+                let data = {
+                    "dday": dday,
+                    "customerNum": cnum,
+                }
+                $.ajax({
+                    url: "/mydata/calendarSend",
+                    type: "get",
+                    data: data,
+
+                    success: (message) => {
+
+                        console.log("calendar!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                        let plist = JSON.parse(message.providerList);
+                        console.log(plist);
+                        let col_cnt = Object.keys(plist[0]).length;
+                        console.log(col_cnt);
+                        for (let i = 0; i < plist.length; i++) {
+                            let tr = document.createElement("tr");
+                            tr.style.fontSize = '14px';
+
+                            let keys = Object.keys(plist[i]);
+                            $(tr).attr({
+                                "data-bs-toggle": "modal",
+                                "data-bs-target": "#detailModal",
+                                "onclick": "providerDetailInfo(this)"
+                            });
+                            tr.id = plist[i]["id"];
+                            for (let j = 1; j < col_cnt; j++) {
+                                let key = keys[j];
+
+                                let td = document.createElement("td");
+                                td.innerText = plist[i][key];
+                                tr.append(td);
+                            }
+                            tbody.append(tr);
+                        }
+                    }
+                })
+            }
 
             function setTotalPage(pageNo) {
                 $.ajax({
                     url: '/mydata/mydataSendReq/pagination',
                     data: {"pageNo": pageNo},
-                    success: function(data){
+                    success: function (data) {
                         console.log(data);
                         let totalPages = data[0].pageCount;
                         console.log(totalPages)
 
-                let pagination = document.querySelector('.pagination');
-                pagination.innerHTML = '';
+                        let pagination = document.querySelector('.pagination');
+                        pagination.innerHTML = '';
 
-                let prevPage = document.createElement('li');
-                prevPage.classList.add('page-item');
-                prevPage.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
-                pagination.appendChild(prevPage);
+                        let prevPage = document.createElement('li');
+                        prevPage.classList.add('page-item');
+                        prevPage.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
+                        pagination.appendChild(prevPage);
 
-                if (totalPages === 1) {
-                    pagination.remove();
-                    console.log("nothing here")
-                } else {
-                    for (let i = 1; i <= totalPages; i++) {
-                        let pageItem = document.createElement('li');
-                        pageItem.classList.add('page-item');
-                        pageItem.setAttribute('value', i);
-                        pageItem.innerHTML = `<a class="page-link">${i}</a>`;
-                        pagination.appendChild(pageItem);
-                    }
-                    let nextPage = document.createElement('li');
-                    nextPage.classList.add('page-item');
-                    nextPage.innerHTML = `<a class="page-link">&raquo;</a>`;
-                    pagination.appendChild(nextPage);
-                }
-            },
+                        if (totalPages === 1) {
+                            pagination.remove();
+                            console.log("nothing here")
+                        } else {
+                            for (let i = 1; i <= totalPages; i++) {
+                                let pageItem = document.createElement('li');
+                                pageItem.classList.add('page-item');
+                                pageItem.setAttribute('value', i);
+                                pageItem.innerHTML = `<a class="page-link">${i}</a>`;
+                                pagination.appendChild(pageItem);
+                            }
+                            let nextPage = document.createElement('li');
+                            nextPage.classList.add('page-item');
+                            nextPage.innerHTML = `<a class="page-link">&raquo;</a>`;
+                            pagination.appendChild(nextPage);
+                        }
+                    },
                 })
             }
 
-            function pagination(pageNo){
+            function pagination(pageNo) {
                 $.ajax({
                     url: '/mydata/mydataSendReq/pagination',
-                    data:{"pageNo":pageNo},
-                    success:function(data){
-                        console.log(data)
+                    data: {"pageNo": pageNo},
+                    success: function (data) {
+                        for (let i in data) {
+                            let keyword = ["id", "agencyName", "serviceName", "reqType", "reqSEQ", "tokenExpiryDate"];
+                            let dataList = data[i].list;
+                            let dataJson = JSON.parse(dataList);
+                            let idTr = $('#tdId');
+                            idTr.append('<h5>' + dataJson.id + '</h5>');
+                            console.log(idTr)
+                            let agencyTr = $('#tdAgencyName');
+                            agencyTr.append('<h5>' + dataJson.agencyName + '</h5>');
+                            let tdServiceName = $('#tdName');
+                            tdServiceName.append('<h5>' + dataJson.serviceName + '</h5>');
+                            let tdType = $('#tdType');
+                            tdType.append('<h5>' + dataJson.reqType + '</h5>');
+                            let tdSEQ = $('#tdSEQ');
+                            tdSEQ.append('<h5>' + dataJson.reqSEQ + '</h5>');
+                            let tdToken = $('#tdExpiryDate')
+                            tdToken.append('<h5>' + dataJson.tokenExpiryDate + '</h5>');
+                        }
+                        // console.log(dataJSON.id);
                         console.log("succcccccessssssss")
                     }
                 })
@@ -192,29 +352,17 @@
                                     </thead>
 
                                     <tbody>
-                                    <tr th:each="list:${list}" th:client_num="${list.clientNum}"
-                                        onclick="providerDetailModal(this)">
+                                    <tr id="result" onclick="providerDetailModal(this)">
+                                        <td data-bs-toggle="modal" data-bs-target="#providerModal" id="tdId"></td>
                                         <td data-bs-toggle="modal" data-bs-target="#providerModal"
-                                            th:text="${list.code}"></td>
-                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"
-                                            th:text="${list.agencyName}"></td>
+                                            id="tdAgencyName"></td>
                                         <td style="color: #0d6efd; font-weight: bold;" data-bs-toggle="modal"
-                                            data-bs-target="#providerModal"
-                                            th:text="${list.serviceName}"></td>
-                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"
-                                            th:text="${list.reqType}"></td>
+                                            data-bs-target="#providerModal" id="tdName"></td>
+                                        <td data-bs-toggle="modal" data-bs-target="#providerModal" id="tdType"></td>
                                         <td style="color: #0d6efd; font-weight: bold;" data-bs-toggle="modal"
-                                            data-bs-target="#providerModal" th:text="${list.clientNum}"></td>
-                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal">1/w,1/w</td>-->
-                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"-->
-                                        <!--                                            th:text="${list.statusInfo}"></td>-->
-                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"-->
-                                        <!--                                            th:text="|${list.reqDate} ${list.reqTime}|"></td>-->
-                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal">2021-11-15 17:09:52</td>-->
-                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"-->
-                                        <!--                                            th:text="${list.resDate}"></td>-->
+                                            data-bs-target="#providerModal" id="tdSEQ"></td>
                                         <td data-bs-toggle="modal" data-bs-target="#providerModal"
-                                            th:text="${#dates.format(list.tokenExpiryDate, 'yyyy-MM-dd')}"></td>
+                                            id="tdExpiryDate"></td>
                                         <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"></td>-->
                                         <td><i class="fa-solid fa-file-lines" style="cursor: pointer; margin-right: 5px"
                                                data-toggle="tooltip" data-bs-toggle="modal" data-bs-target="#assetModal"
@@ -223,6 +371,7 @@
                                                                     style="cursor: pointer" data-toggle="tooltip"
                                                                     title="발급 토큰 정보"></i></td>
                                     </tr>
+                                    </th:block>
                                     </tbody>
                                 </table>
 

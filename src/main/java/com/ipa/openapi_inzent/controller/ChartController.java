@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/chart/")
+@RequestMapping("/chart")
 public class ChartController {
     @Autowired
     public ChartController(){
     }
 
-    @GetMapping("showChart")
+    @GetMapping("/showChart")
     public String ShowChart(){
         return "chart/showChart";
     }
