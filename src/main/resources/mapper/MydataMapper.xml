@@ -193,6 +193,15 @@
         select * from public."reqInfo";
     </select>
 
+    <select id = "selectMdReqAllasPagination" resultType="com.ipa.openapi_inzent.model.MdReqInfoDTO" parameterType="map">
+        select * from public."reqInfo"
+        limit #{size} offset #{start};
+    </select>
+
+    <select id = "countAll" resultType="int" parameterType="String">
+        select count(*) from public."reqInfo"
+    </select>
+
     <select id="mdReqSearch" parameterType="string" resultType="com.ipa.openapi_inzent.model.MdReqInfoDTO">
         select * from public."reqInfo" as "req"
         where req.code ILIKE CONCAT('%', #{keyword},'%')

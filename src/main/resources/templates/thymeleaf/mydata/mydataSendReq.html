@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style>
+        .tdContent:hover {
+            background-color: #f5f6fb;
+        }
+
+        .tds {
+            font-size: 14px;
+        }
+
+        .trContent {
+            vertical-align: middle;
+        !important;
+        }
+
+        tr th {
+            background-color: #f5f5f5 !important;
+        }
+
+        .tdHead {
+            background-color: #f5f5f5 !important;
+            font-size: 14px;
+            width: 30% !important;
+
+        }
+    </style>
+
+    <title>전송요구내역</title>
+
+    <th:block layout:fragment="css">
+        <link
+                href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+                rel="stylesheet">
+        <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    </th:block>
+
+    <th:block layout:fragment="script">
+        <script src="https://kit.fontawesome.com/24311b556d.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+                integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+                crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script>
+
+            $(document).ready(function () {
+                // 페이지 로드 시 첫 페이지 데이터 로딩
+                pagination(1);
+                setTotalPage(1);
+                // 페이지네이션 클릭 이벤트 처리
+                $(document).on('click', '.pagination li', function (e) {
+                    let option = $(this).attr('value');
+                    pagination(option);
+                    console.log(option)
+                });
+            });
+
+            function setTotalPage(pageNo) {
+                $.ajax({
+                    url: '/mydata/mydataSendReq/pagination',
+                    data: {"pageNo": pageNo},
+                    success: function(data){
+                        console.log(data);
+                        let totalPages = data[0].pageCount;
+                        console.log(totalPages)
+
+                let pagination = document.querySelector('.pagination');
+                pagination.innerHTML = '';
+
+                let prevPage = document.createElement('li');
+                prevPage.classList.add('page-item');
+                prevPage.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
+                pagination.appendChild(prevPage);
+
+                if (totalPages === 1) {
+                    pagination.remove();
+                    console.log("nothing here")
+                } else {
+                    for (let i = 1; i <= totalPages; i++) {
+                        let pageItem = document.createElement('li');
+                        pageItem.classList.add('page-item');
+                        pageItem.setAttribute('value', i);
+                        pageItem.innerHTML = `<a class="page-link">${i}</a>`;
+                        pagination.appendChild(pageItem);
+                    }
+                    let nextPage = document.createElement('li');
+                    nextPage.classList.add('page-item');
+                    nextPage.innerHTML = `<a class="page-link">&raquo;</a>`;
+                    pagination.appendChild(nextPage);
+                }
+            },
+                })
+            }
+
+            function pagination(pageNo){
+                $.ajax({
+                    url: '/mydata/mydataSendReq/pagination',
+                    data:{"pageNo":pageNo},
+                    success:function(data){
+                        console.log(data)
+                        console.log("succcccccessssssss")
+                    }
+                })
+            }
+        </script>
+    </th:block>
+
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid p-0 pl-1">
+
+                    <!-- Page Heading -->
+                    <h3 class="h3 mb-2 text-gray-800">전송요구내역(전송이동권)</h3>
+                    <p class="mb-4"></p>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <!-- Topbar Search -->
+                        <!--                        <div class=" row" style="    display: flex;justify-content: space-between;">-->
+                        <!--                            <div class="col-md-7 m-3">-->
+                        <!--                                <div>상태정보 구분</div>-->
+                        <!--                                <select class="form-control" id="statusInfo" style="width: 50%;">-->
+                        <!--                                    <option selected>전체</option>-->
+                        <!--                                    <option>(통합인증)자산목록</option>-->
+                        <!--                                    <option>(통합인증)자산선택</option>-->
+                        <!--                                    <option>(개별인증)인가코드</option>-->
+                        <!--                                    <option>(개별인증)토큰발급</option>-->
+                        <!--                                    <option>[토큰준비]자산목록(통합) + 인가코드(개별)</option>-->
+                        <!--                                    <option>[토큰생성]자산목록(통합) + 토큰발급(개별)</option>-->
+                        <!--                                </select>-->
+                        <!--                            </div>-->
+                        <!-- Topbar Search -->
+                        <form action="/mydata/reqSearch" method="get" class="col input-group mt-3"
+                              style="width: 40%; align-self: end;">
+                            <input type="text" class="form-control m-0"
+                                   placeholder="검색어를 입력해주세요"
+                                   aria-label="Search" name="keyword">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <!--                        </div>-->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="dataTable"
+                                       style="text-align: center; font-size: 13px">
+                                    <thead>
+                                    <tr style=" width: -webkit-fill-available; font-weight: bold; background-color: #f5f6fb;">
+                                        <td>기관코드</td>
+                                        <td>기관명</td>
+                                        <td>서비스명</td>
+                                        <td>전송요구타입</td>
+                                        <td>정보주체번호</td>
+                                        <!--                                        <td>전송주기(기본,추가)</td>-->
+                                        <!--                                        <td>상태정보</td>-->
+                                        <!--                                        <td>전송준비일</td>-->
+                                        <!--                                        <td>전송요구일</td>-->
+                                        <!--                                        <td>전송요구 종료일</td>-->
+                                        <td>토큰 유효기간</td>
+                                        <!--                                        <td>토큰폐기일</td>-->
+                                        <td>자산|토큰</td>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr th:each="list:${list}" th:client_num="${list.clientNum}"
+                                        onclick="providerDetailModal(this)">
+                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"
+                                            th:text="${list.code}"></td>
+                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"
+                                            th:text="${list.agencyName}"></td>
+                                        <td style="color: #0d6efd; font-weight: bold;" data-bs-toggle="modal"
+                                            data-bs-target="#providerModal"
+                                            th:text="${list.serviceName}"></td>
+                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"
+                                            th:text="${list.reqType}"></td>
+                                        <td style="color: #0d6efd; font-weight: bold;" data-bs-toggle="modal"
+                                            data-bs-target="#providerModal" th:text="${list.clientNum}"></td>
+                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal">1/w,1/w</td>-->
+                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"-->
+                                        <!--                                            th:text="${list.statusInfo}"></td>-->
+                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"-->
+                                        <!--                                            th:text="|${list.reqDate} ${list.reqTime}|"></td>-->
+                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal">2021-11-15 17:09:52</td>-->
+                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"-->
+                                        <!--                                            th:text="${list.resDate}"></td>-->
+                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"
+                                            th:text="${#dates.format(list.tokenExpiryDate, 'yyyy-MM-dd')}"></td>
+                                        <!--                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"></td>-->
+                                        <td><i class="fa-solid fa-file-lines" style="cursor: pointer; margin-right: 5px"
+                                               data-toggle="tooltip" data-bs-toggle="modal" data-bs-target="#assetModal"
+                                               title="자산목록"></i> <i class="fa-solid fa-file-shield"
+                                                                    data-bs-toggle="modal" data-bs-target="#tokenModal"
+                                                                    style="cursor: pointer" data-toggle="tooltip"
+                                                                    title="발급 토큰 정보"></i></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <div>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+                <!-- Button trigger modal -->
+
+                <!-- details info Modal start -->
+                <div class="modal fade" id="providerModal" tabindex="-1" role="dialog"
+                     aria-labelledby="providerModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title font-weight-bold" id="providerModalLabel" style="color: black">
+                                    거래이력(제공자)</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="modalDark">
+                                <div class="w-100 border overflow-auto">
+                                    <div class="border-bottom p-3 font-weight-bold" style="color: black">거래이력</div>
+                                    <div class="mt-2">
+                                        <label for="input_date">&nbsp;&nbsp;조회날짜</label>
+                                        <input type="date" id="input_date" name="input_date"
+                                               style="width: 220px; text-align: center;">
+                                        <input type="submit" onclick="input(this)" id="input_submit" value="조회">
+                                    </div>
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr class="tdHead">
+                                            <td>요청일자</td>
+                                            <td>요청시간</td>
+                                            <td>응답일자</td>
+                                            <td>응답시간(sec)</td>
+                                            <td>응답 Code</td>
+                                            <td>요청API Code</td>
+                                            <td>통합고객번호</td>
+                                            <td>정기적 전송</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="userNumTbody">
+                                        <!-- createElement -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- details info Modal start -->
+                <div class="modal fade" id="detailModal" tabindex="-1" role="dialog"
+                     aria-labelledby="detailModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title font-weight-bold" style="color: black" id="detailModalLabel">
+                                    거래이력(제공자)-상세</h5>
+                                <button type="button" class="close inputClientNum" aria-label="Close"
+                                        data-bs-target="#providerModal"
+                                        data-bs-toggle="modal"
+                                        onclick="providerDetailModal(this)">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="overflow-x: hidden">
+                                <div class="w-100 border overflow-auto">
+                                    <div class="border-bottom p-3 font-weight-bold" style="color: black">거래이력</div>
+                                    <table class="table table-bordered align-middle"
+                                           style="width: -webkit-fill-available;font-size: 15px;">
+                                        <tbody>
+                                        <!--                                        <tr>-->
+                                        <!--                                            <td class="tdHead">거래이력 SEQ</td>-->
+                                        <!--                                            <td colspan="3" class="tdContent">TRH_1332035460658031120-->
+                                        <!--                                            </td>-->
+                                        <!--                                        </tr>-->
+                                        <tr>
+                                            <td class="tdHead">전송요구 SEQ</td>
+                                            <td class="tdContent" id="reqSEQ"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tdHead">거래 고유번호</td>
+                                            <td colspan="3" class="tdContent" id="uniqueNum">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tdHead">요청API Resource</td>
+                                            <td colspan="3" class="tdContent" id="apiResources"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tdHead">증권번호</td>
+                                            <td class="tdContent" id="accountNum">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tdHead">응답메시지</td>
+                                            <td class="tdContent" id="resMsg">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tdHead" style="vertical-align: middle">resdata
+                                            </td>
+                                            <td class="tdContent p-0">
+                                                <textarea style="height: 120px" class="w-100" id="resdata" disabled>
+
+                                                </textarea>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary inputClientNum" data-bs-toggle="modal"
+                                        data-bs-target="#providerModal"
+                                        onclick="providerDetailModal(this)">닫기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 자산 목록 모달 시작 -->
+                <div class="modal fade" id="assetModal" tabindex="-1" role="dialog"
+                     aria-labelledby="assetModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title font-weight-bold" style="color: black" id="assetModalLabel">
+                                    자산목록</h5>
+                                <button type="button" class="close" aria-label="Close" data-bs-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="overflow-x: hidden">
+                                <div class="border mb-3">
+                                    <div class="border-bottom">
+                                        <h5 class="text-muted p-3 m-0">&nbsp;&nbsp;보험계좌</h5>
+                                    </div>
+                                    <div class="p-4">
+                                        <table class="table table-borderless table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>보험계좌</th>
+                                                <th>전송요구 여부</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td id="insuAccount">1234123123</td>
+                                                <td><input type="checkbox" class="form-check" disabled checked></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="">1234sadfa23</td>
+                                                <td><input type="checkbox" class="form-check" disabled checked></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="border mb-3">
+                                    <div class="border-bottom">
+                                        <h5 class="text-muted p-3 m-0">&nbsp;&nbsp;IRP 계좌</h5>
+                                    </div>
+                                    <div class="p-4">
+                                        <table class="table table-borderless table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>IRP 계좌</th>
+                                                <th>전송요구 여부</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1234123123</td>
+                                                <td><input type="checkbox" class="form-check" disabled checked></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1234sadfa23</td>
+                                                <td><input type="checkbox" class="form-check" disabled checked></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="border mb-3">
+                                    <div class="border-bottom">
+                                        <h5 class="text-muted p-3 m-0">&nbsp;&nbsp;대출계좌</h5>
+                                    </div>
+                                    <div class="p-4">
+                                        <table class="table table-borderless table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>대출계좌</th>
+                                                <th>전송요구 여부</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1234123123</td>
+                                                <td><input type="checkbox" class="form-check" disabled checked></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1234sadfa23</td>
+                                                <td><input type="checkbox" class="form-check" disabled checked></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 자산 목록 모달 끝 -->
+
+                <!-- 발급 토큰 조회 모달 시작 -->
+                <div class="modal fade" id="tokenModal" tabindex="-1" role="dialog"
+                     aria-labelledby="tokenModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="tokenModalLabel">발급 토큰 정보</h5>
+                            </div>
+                            <div class="modal-body" style="overflow-x: hidden">
+                                <div class="w-100 p-2">
+                                    <div class="border mb-3">
+                                        <div class="border-bottom">
+                                            <h5 class="text-muted p-3 m-0">기본 정보</h5>
+                                        </div>
+                                        <div class="p-4">
+                                            <table class="table table-borderless">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="tdHead">
+                                                        클라이언트 ID
+                                                    </td>
+                                                    <td class="tdContent" id="clientId">
+
+                                                    </td>
+                                                </tr>
+                                                <tr style="border-top: 1px solid #dee2e6">
+                                                    <td class="tdHead">
+                                                        사용자 정보(CI)
+                                                    </td>
+                                                    <td class="tdContent" id="userInfo">
+
+                                                    </td>
+                                                </tr>
+                                                <tr style="border-top: 1px solid #dee2e6">
+                                                    <td class="tdHead">
+                                                        서비스명
+                                                    </td>
+                                                    <td class="tdContent" id="mdServiceName">
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="border-top: 1px solid #dee2e6">
+                                                    <td class="tdHead">
+                                                        기관명
+                                                    </td>
+                                                    <td class="tdContent" id="agencyName">
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="border-top: 1px solid #dee2e6">
+                                                    <td class="tdHead">
+                                                        기관코드
+                                                    </td>
+                                                    <td class="tdContent" id="agencyCode">
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="border mb-3">
+                                        <div class="border-bottom">
+                                            <h5 class="text-muted p-3 m-0">Access Token</h5>
+                                        </div>
+                                        <div class="p-4" style="overflow-x:auto;">
+                                            <table class="table table-borderless">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="tdHead">
+                                                        발급한 Access Token
+                                                    </td>
+                                                    <td class="tdContent" id="accessToken"
+                                                    >
+
+                                                    </td>
+                                                </tr>
+                                                <tr style="border-top: 1px solid #dee2e6">
+                                                    <td class="tdHead">
+                                                        발급시간
+                                                    </td>
+                                                    <td class="tdContent" id="entryTime">
+
+                                                    </td>
+                                                </tr>
+                                                <tr style="border-top: 1px solid #dee2e6">
+                                                    <td class="tdHead">
+                                                        Access Token 폐기일
+                                                    </td>
+                                                    <td class="tdContent" id="endTime">
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 발급 토큰 조회 모달 끝 -->
+
+            </div>
+            <!-- End of Main Content -->
+            <!-- details info Modal end -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+</div>
+</body>
+
+</html>
