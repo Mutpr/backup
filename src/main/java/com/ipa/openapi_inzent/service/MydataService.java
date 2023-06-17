@@ -177,9 +177,6 @@ public class MydataService {
         return list;
     }
 
-
-
-
     public List<MdTokenDTO> mdAstList() {
         return mydataDao.mdAstList();
     }

@@ -2,47 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
-
+      layout:decorate="~{layout/layout}" lang="html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <style>
-        .tdContent:hover {
-            background-color: #f5f6fb;
-        }
-
-        .tds {
-            font-size: 14px;
-        }
-
-        .trContent {
-            vertical-align: middle;
-        !important;
-        }
-
-        tr th {
-            background-color: #f5f5f5 !important;
-        }
-
-        .tdHead {
-            background-color: #f5f5f5 !important;
-            font-size: 14px;
-            width: 30% !important;
-
-        }
-    </style>
-
-    <title>chart</title>
-
+    <title>통계(1일)</title>
     <th:block layout:fragment="css">
         <link
                 href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
                 rel="stylesheet">
         <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="/css/mdTable.css" rel="stylesheet">
     </th:block>
     <th:block layout:fragment="script">
         <script src="https://kit.fontawesome.com/24311b556d.js" crossorigin="anonymous"></script>
@@ -55,15 +28,211 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
                 integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
                 crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </th:block>
+    <style>
+        #boxOne {
+            width: 100%;
+            margin-bottom: 30px;
+            height: 500px;
+        }
+        .boxTwo {
+            width: 49%;
+            height: 500px;
+            overflow-y: auto;
+        }
+        .backBox {
+            background-color: #12192C;
+            border-radius: 10px;
+            color: white;
+            padding: 10px 0 10px 20px
+        }
+        img {
+            width: 13%;
+            margin-right: 10px;
+        }
+        .fontStyle {
+            font-weight: bold;
+            color: #1B2C5E;
+        }
+    </style>
 </head>
-
 <body>
+<script>
+
+   // backgroundColor: ["#FD709F", "#9075E8","#35B7F5","#FDEB6C",
+    //     "#70FF77","#F19C71" , "#A1E7FF"],
+    //     data: [478,526,202,688,130,80,301]
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div layout:fragment="content">
-    <div></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper" style="height: 1400px">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column " style="overFlow-y:hidden">
+            <!-- Main Content -->
+            <div id="content">
+                <div class="container-fluid">
+                    <h1 class="h3 mb-4">API 통계</h1>
+                    <h5>2023-06-15</h5>
+                    <h5 class="d-flex align-items-center">
+                        총 API 호출 수 :&nbsp; <span style="color: #0C4128; font-weight: bolder">3517</span>
+                    </h5>
+                </div>
+                <div class="d-flex justify-content-around">
+                    <p class="mb-2 fontStyle">< API 호출 성공 실패 수 ></p>
+                    <p class="mb-2 fontStyle">< API 호출 RUNTIME ></p>
+                </div>
+                <div class="shadow-lg d-flex justify-content-around" id="boxOne">
+                    <!--차트가 그려질 부분-->
+                    <canvas id="line-chart" width="800" height="500"></canvas>
+                    <canvas id="run-chart" width="800" height="500"></canvas>
+                </div>
+                <div class="d-flex justify-content-around">
+                    <p class="mb-2 fontStyle">< API Resources 사용 빈도 ></p>
+                    <p class="mb-2 fontStyle">< 에러코드 빈도 ></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="shadow-lg boxTwo d-flex justify-content-around">
+                        <canvas id="pie-chart" width="400" height="400"></canvas>
+                        <script type = "application/json" src="/static/js/chart.js"></script>
+                    </div>
+                    <div class="shadow-lg boxTwo">
+                        <table class="table table-hover" id="dataTable"
+                               style="text-align: center; font-size: 14px">
+                            <thead>
+                            <tr style=" font-weight: bold; background-color: #F5F6FB;">
+                                <td>ERROR CODE</td>
+                                <td>Reasons</td>
+                                <td>Frequency</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>40101</td>
+                                <td>유효하지 않은 접근토큰</td>
+                                <td>92</td>
+                            </tr>
+                            <tr>
+                                <td>40001</td>
+                                <td>요청 파라미터 문제</td>
+                                <td>78</td>
+                            </tr>
+                            <tr>
+                                <td>40301</td>
+                                <td>올바르지 않은 API 호출</td>
+                                <td>51</td>
+                            </tr>
+                            <tr>
+                                <td>40405</td>
+                                <td>자산 정보조회 권한 없음</td>
+                                <td>48</td>
+                            </tr>
+                            <tr>
+                                <td>40401</td>
+                                <td>요청한 엔드포인트 미존재</td>
+                                <td>31</td>
+                            </tr>
+                            <tr>
+                                <td>40402</td>
+                                <td>유효한 자산이 아님</td>
+                                <td>26</td>
+                            </tr>
+                            <tr>
+                                <td>40403</td>
+                                <td>정보주체 미존재</td>
+                                <td>23</td>
+                            </tr>
+                            <tr>
+                                <td>40501</td>
+                                <td>허용되지 않은 HTTP Method</td>
+                                <td>11</td>
+                            </tr>
+                            <tr>
+                                <td>40203</td>
+                                <td>일시적 클라이언트 요청 제한</td>
+                                <td>8</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <script>
+        new Chart(document.getElementById("line-chart"), {
+            type : 'line',
+            data : {
+                labels : [ '00:00', '02:00', '04:00', '06:00', '08:00', '10:00',
+                    '12:00', '14:00', '16:00', '18:00', '20:00', '22:00' ],
+                datasets : [
+                    {
+                        data : [ 19, 14, 23, 151, 210,
+                            581, 313, 322, 478, 547, 399, 92 ],
+                        label : "API 호출 성공 ",
+                        borderColor : "#3CBA9F",
+                        fill : false
+                    },
+                    {
+                        data : [ 2, 0, 2, 11, 54,
+                            73, 13, 15, 53, 121, 22, 2 ],
+                        label : "API 호출 실패 ",
+                        borderColor : "#E43202",
+                        fill : false
+                    } ]
+            },
+            options : {
+                title : {
+                    display : true,
+                    text : 'API 호출 성공 실패 수'
+                }
+            }
+        });
+        new Chart(document.getElementById("run-chart"), {
+            type : 'bar',
+            data : {
+                labels : [ 40001, 40101, 40203, 40301, 40401, 40402,
+                    40403, 40405, 40501],
+                datasets : [
+                    {
+                        data : [ 78, 92, 8, 51, 26,
+                            11, 23, 48, 31 ],
+                        label : "에러코드 빈도",
+                        backgroundColor : 'rgba(224, 51, 57, 0.8)',
+                        borderColor : "#E4023E",
+                        fill : false
+                    }
+                ]
+            },
+            options : {
+                title : {
+                    display : true,
+                    text : 'API 호출 성공 실패 수'
+                }
+            }
+        });
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'pie',
+            data: {
+                labels: ["/accounts/deposit/detail", "/accounts/deposit/transactions", "/accounts/invest/basic", "/accounts/invest/transactions", "/irps"],
+                datasets: [{
+                    label: "API Resources 사용 빈도",
+                    backgroundColor: ["#E4023E", "#EB2F06","#E58E26", "#F6B93B","#F8C291"],
+                    data: [678,426,388,274,130],
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'API Resources (/v1/bank) 호출 수'
+                }
+            }
+        });
+    </script>
+    <!-- End of Page Wrapper -->
 </div>
 </body>
-
 </html>

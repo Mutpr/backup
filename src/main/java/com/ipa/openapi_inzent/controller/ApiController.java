@@ -1,5 +1,7 @@
 package com.ipa.openapi_inzent.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -136,7 +138,7 @@ public class ApiController {
     //pagination
     @ResponseBody
     @GetMapping(value = "/pagination")
-    public JsonArray selectAsPagination(@RequestParam("apisId") int apisId ,@RequestParam("pageNo") int pageNo) {
+    public JsonArray selectAsPagination(@RequestParam("apisId") int apisId ,@RequestParam("pageNo") int pageNo) throws JsonProcessingException {
         System.out.println("apisId = " + apisId);
         System.out.println("pageNo = " + pageNo);
         JsonObject jsonObject = null;
@@ -150,22 +152,10 @@ public class ApiController {
             for (ApiDetailsDTO apiDetailsDTO: resourcelist) {
                 array = new JsonArray();
                 jsonObject = new JsonObject();
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonString = objectMapper.writeValueAsString(apiDetailsDTO);
 
-                String uri = apiDetailsDTO.getUri();
-                String method = apiDetailsDTO.getMethod();
-                String summary = apiDetailsDTO.getSummary();
-                String version = apiDetailsDTO.getVersion();
-                String security = apiDetailsDTO.getSecurity();
-                String operationId = apiDetailsDTO.getOperationId();
-
-                jsonObject.addProperty("method", method);
-                jsonObject.addProperty("uri", uri);
-                jsonObject.addProperty("summary", summary);
-                jsonObject.addProperty("operationId", operationId);
-                jsonObject.addProperty("security", security);
-                jsonObject.addProperty("version", version);
-
-                jsonObject.addProperty("apis", apisId);
+                jsonObject.addProperty("DTO", jsonString);
                 jsonObject.addProperty("pageNo", pageNo);
                 jsonObject.addProperty("pageCount", pageCount);
                 System.out.println("jsonObject = " + jsonObject);

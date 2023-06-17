@@ -443,7 +443,7 @@ public class MydataController {
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonString = objectMapper.writeValueAsString(mdReqInfoDTO);
             jsonObject.addProperty("list", jsonString);
-            jsonObject.addProperty("pageCount", count);
+            jsonObject.addProperty("pageCount", pageCount);
 
             jsonArray.add(jsonObject);
             System.out.println("jsonObject = " + jsonObject);
@@ -464,35 +464,12 @@ public class MydataController {
 
     @GetMapping("/provider/customerList")
     @ResponseBody
-    public JsonObject customerList(String customerNum) {
+    public JsonObject customerList(String customerNum, @RequestParam("pageNo") String pageNo) {
         JsonObject object = new JsonObject();
-        List<MdProviderDTO> list = mydataService.mdProviderCustomerList(customerNum);
+//        List<MdProviderDTO> list = mydataService.
         System.out.println("customerNum = " + customerNum);
-        System.out.println("MydataController.customerList-=-=-=-=-");
-//        System.out.println("list = " + list);
 
-//        object.addProperty("");
-
-        JsonArray providerArray = new JsonArray();
-        for (MdProviderDTO mdProviderDTO : list) {
-            JsonObject r = new JsonObject();
-            r.addProperty("id", mdProviderDTO.getId());
-            r.addProperty("reqDate", mdProviderDTO.getReqDate());
-            r.addProperty("reqTime", mdProviderDTO.getReqTime());
-            r.addProperty("resDate", mdProviderDTO.getResDate());
-            r.addProperty("runtime", mdProviderDTO.getRuntime());
-            r.addProperty("code", mdProviderDTO.getResCode());
-            r.addProperty("apiCode", mdProviderDTO.getApiCode());
-            r.addProperty("customerNum", customerNum);
-            r.addProperty("regularTransmission", mdProviderDTO.getRegularTransmission());
-
-            providerArray.add(r);
-        }
-
-        object.addProperty("providerList", providerArray.toString());
-        System.out.println("object = " + object);
-
-        return object;
+        return new JsonObject();
     }
 
     @GetMapping("/reqSearch")

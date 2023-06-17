@@ -188,7 +188,11 @@
         select * from public."providerHistory"
         where "customerNum" = #{customerNum};
     </select>
-
+    <select id = "mdProviderAsPaging" parameterType="map" resultType="com.ipa.openapi_inzent.model.MdReqInfoDTO">
+        select * from public."providerHistory"
+        where "customerNum" = #{customerNum}
+        limit #{size} offset #{start};
+    </select>
     <select id="mdReqAll" resultType="com.ipa.openapi_inzent.model.MdReqInfoDTO">
         select * from public."reqInfo";
     </select>

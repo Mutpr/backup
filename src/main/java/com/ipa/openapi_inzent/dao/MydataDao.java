@@ -4,7 +4,6 @@ import com.ipa.openapi_inzent.model.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataAccessException;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public interface MydataDao {
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> mdProvider page
 
     List<MdProviderDTO> mdProviderSelectAll() throws DataAccessException;
-    List<MdProviderDTO> mdProviderSelectAllPagination(HashMap<String, Integer> params) throws DataAccessException;
+    List<MdProviderDTO> mdProviderSelectAllPagination(HashMap<String, String> params) throws DataAccessException;
     MdProviderDTO mdProviderSelectOne(int id) throws DataAccessException;
 
     List<MdTokenDTO> mdAstList() throws DataAccessException;
@@ -49,7 +48,7 @@ public interface MydataDao {
     List<MdReqInfoDTO> mdReqAll() throws DataAccessException;
     List<MdReqInfoDTO> selectMdReqAllasPagination(HashMap<String, Integer> params) throws DataAccessException;
     List<MdReqInfoDTO> mdReqSearch(String keyword) throws DataAccessException;
-
+    List<MdProviderDTO> mdProviderAsPaging(HashMap<String, String> params) throws DataAccessException;
     List<MdProviderDTO> mdProviderSearch(String keyword) throws DataAccessException;
 
 }

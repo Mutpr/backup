@@ -79,53 +79,28 @@
 
             // 디테일 모달 누르면
             function providerDetailModal(value) {
+                console.log(value)
                 let tbody = document.getElementById("userNumTbody");
                 tbody.innerHTML = "";
                 console.log("providerDetailModal=========");
-                let clientNum = value.getAttribute("client_num");
-                console.log(clientNum);
                 // date 조회 할 때 고객번호 param으로 사용하기 위해
                 let forDate = document.getElementById("input_submit");
-                $(forDate).attr("cnum", clientNum);
-
+                $(forDate).attr("cnum", value);
                 let data = {
-                    "customerNum": clientNum,
+                    "customerNum": value,
                 };
                 $.ajax({
                     url: "/mydata/provider/customerList",
                     type: "get",
                     data: data,
-
-                    success: (message) => {
-                        let plist = JSON.parse(message.providerList);
-                        console.log(plist);
-                        let col_cnt = Object.keys(plist[0]).length;
-                        for (let i = 0; i < plist.length; i++) {
-                            let tr = document.createElement("tr");
-                            tr.style.fontSize = '14px';
-
-                            // for (let data in plist[i]) {
-                            //     let td = document.createElement("td");
-                            //     td.id = plist[i]["id"];
-                            //     td.innerText = plist[i][data];
-                            //     tr.append(td);
-                            // }
-
-                            let keys = Object.keys(plist[i]);
-                            $(tr).attr({
-                                "data-bs-toggle": "modal",
-                                "data-bs-target": "#detailModal",
-                                "onclick": "providerDetailInfo(this)"
-                            });
-                            tr.id = plist[i]["id"];
-                            for (let j = 1; j < col_cnt; j++) {
-                                let key = keys[j];
-
-                                let td = document.createElement("td");
-                                td.innerText = plist[i][key];
-                                tr.append(td);
-                            }
-                            tbody.append(tr);
+                    async: false,
+                    setTimeout: 0,
+                    success: (data) => {
+                        console.log(data);
+                        for(let i in data){
+                            console.log(data[i])
+                            let list = JSON.parse(data[i]);
+                            console.log(list)
                         }
                     }
                 })
@@ -252,32 +227,22 @@
             }
 
             function pagination(pageNo) {
+                let DTO = [];
                 $.ajax({
                     url: '/mydata/mydataSendReq/pagination',
                     data: {"pageNo": pageNo},
                     success: function (data) {
-                        for (let i in data) {
-                            let keyword = ["id", "agencyName", "serviceName", "reqType", "reqSEQ", "tokenExpiryDate"];
-                            let dataList = data[i].list;
-                            let dataJson = JSON.parse(dataList);
-                            let idTr = $('#tdId');
-                            idTr.append('<h5>' + dataJson.id + '</h5>');
-                            console.log(idTr)
-                            let agencyTr = $('#tdAgencyName');
-                            agencyTr.append('<h5>' + dataJson.agencyName + '</h5>');
-                            let tdServiceName = $('#tdName');
-                            tdServiceName.append('<h5>' + dataJson.serviceName + '</h5>');
-                            let tdType = $('#tdType');
-                            tdType.append('<h5>' + dataJson.reqType + '</h5>');
-                            let tdSEQ = $('#tdSEQ');
-                            tdSEQ.append('<h5>' + dataJson.reqSEQ + '</h5>');
-                            let tdToken = $('#tdExpiryDate')
-                            tdToken.append('<h5>' + dataJson.tokenExpiryDate + '</h5>');
-                        }
                         // console.log(dataJSON.id);
                         console.log("succcccccessssssss")
+                        for (let i in data) {
+                            console.log(data[i].list);
+                            DTO = JSON.parse(data[i].list);
+                        }
+                        providerDetailModal(DTO.clientNum);
+                    }, fail: function () {
+                        console.log("faaaaaaaaaaiiiiiiiiiillllll")
                     }
-                })
+                });
             }
         </script>
     </th:block>
@@ -352,10 +317,9 @@
                                     </thead>
 
                                     <tbody>
-                                    <tr id="result" onclick="providerDetailModal(this)">
+                                    <tr id="result">
                                         <td data-bs-toggle="modal" data-bs-target="#providerModal" id="tdId"></td>
-                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"
-                                            id="tdAgencyName"></td>
+                                        <td data-bs-toggle="modal" data-bs-target="#providerModal"></td>
                                         <td style="color: #0d6efd; font-weight: bold;" data-bs-toggle="modal"
                                             data-bs-target="#providerModal" id="tdName"></td>
                                         <td data-bs-toggle="modal" data-bs-target="#providerModal" id="tdType"></td>
@@ -511,7 +475,6 @@
                                             </td>
                                             <td class="tdContent p-0">
                                                 <textarea style="height: 120px" class="w-100" id="resdata" disabled>
-
                                                 </textarea>
                                             </td>
                                         </tr>
@@ -724,7 +687,6 @@
                                                         Access Token 폐기일
                                                     </td>
                                                     <td class="tdContent" id="endTime">
-
                                                     </td>
                                                 </tr>
                                                 </tbody>

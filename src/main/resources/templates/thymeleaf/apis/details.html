@@ -113,33 +113,32 @@
                 },
                 success: function (data) {
                     console.log(data);
+                    for(let i in data){
+                        let DTO = data[i].DTO;
+                        let DTOJson = JSON.parse(DTO);
 
+                        let methodTd = document.getElementById("tdMethod");
+                        methodTd.textContent = DTOJson.method
+
+                        let uriTd = document.getElementById("tdURI");
+                        uriTd.textContent = DTOJson.uri
+
+                        let summaryTd = document.getElementById("tdSummary");
+                        summaryTd.textContent = DTOJson.summary
+
+                        let operationTd = document.getElementById("tdOper");
+                        operationTd.textContent = DTOJson.operationId
+
+                        let versionTd = document.getElementById("tdVersion");
+                        versionTd.textContent = DTOJson.version
+
+                        let securityTd = document.getElementById("tdSecurity");
+                        securityTd.textContent = DTOJson.security
+                    }
                     // 데이터에서 필요한 값 추출
-                    let method = data[0].apis
-                    let uri = data[0].uri;
-                    let summary = data[0].summary;
-                    let operationId = data[0].operationId;
-                    let version = data[0].version;
-                    let security = data[0].security;
 
                     // td 값 변경
-                    let methodTd = document.getElementById("tdMethod");
-                    methodTd.textContent = method;
 
-                    let uriTd = document.getElementById("tdURI");
-                    uriTd.textContent = uri;
-
-                    let summaryTd = document.getElementById("tdSummary");
-                    summaryTd.textContent = summary;
-
-                    let operationTd = document.getElementById("tdOper");
-                    operationTd.textContent = operationId;
-
-                    let versionTd = document.getElementById("tdVersion");
-                    versionTd.textContent = version;
-
-                    let securityTd = document.getElementById("tdSecurity");
-                    securityTd.textContent = security;
 
                     let totalPages = data[0].pageCount;
 
