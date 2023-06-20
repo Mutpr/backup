@@ -86,16 +86,7 @@ public class MydataService {
         return list;
     }
 
-    public List<MdProviderDTO> selectMdProviderAsPaging(int pageNo){
-        HashMap<String, Integer> params = new HashMap<>();
-        int size = 1;
-        int start = (pageNo-1)*size;
 
-        params.put("start", start);
-        params.put("size", size);
-
-        return mydataDao.mdProviderSelectAllPagination(params);
-    }
     public List<MdProviderDTO> mdReqList() {
         List<MdProviderDTO> list = mydataDao.mdReqList();
         SimpleDateFormat dfFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -214,7 +205,29 @@ public class MydataService {
     public List<MdReqInfoDTO> mdReqSearch(String keyword) {
         return mydataDao.mdReqSearch(keyword);
     }
+    public List<MdProviderDTO> selectMdProviderAsPaging(String customerNumber,int pageNo){
+        HashMap<String, Object> params = new HashMap<>();
+        int size = 2;
+        int start = (pageNo-1)*size;
 
+        params.put("start", start);
+        params.put("size",size);
+        params.put("customerNum", customerNumber);
+        System.out.println("params = " + params);
+        return mydataDao.mdProviderDetailAsPaging(params);
+    }
+
+    public int countProviderHistoryAll(){
+        return mydataDao.countProviderHistoryAll();
+    }
+
+    public int totalPage(int counting, int size){
+        int totalPage = counting/size;
+        if(counting%size == 1){
+            totalPage++;
+        }
+        return totalPage;
+    }
     public List<MdProviderDTO> mdProviderSearch(String keyword) {
         List<MdProviderDTO> list = mydataDao.mdProviderSearch(keyword);
         SimpleDateFormat dfFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");

@@ -188,10 +188,14 @@
         select * from public."providerHistory"
         where "customerNum" = #{customerNum};
     </select>
-    <select id = "mdProviderAsPaging" parameterType="map" resultType="com.ipa.openapi_inzent.model.MdReqInfoDTO">
+    <select id = "mdProviderDetailAsPaging" parameterType="map" resultType="com.ipa.openapi_inzent.model.MdProviderDTO">
         select * from public."providerHistory"
         where "customerNum" = #{customerNum}
-        limit #{size} offset #{start};
+        order by id
+        limit #{size} offset #{start}
+    </select>
+    <select id = "countProviderHistoryAll" resultType="int">
+        select count(*) from public."providerHistory" where ;
     </select>
     <select id="mdReqAll" resultType="com.ipa.openapi_inzent.model.MdReqInfoDTO">
         select * from public."reqInfo";

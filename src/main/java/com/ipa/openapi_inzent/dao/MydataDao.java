@@ -28,7 +28,7 @@ public interface MydataDao {
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> mdProvider page
 
     List<MdProviderDTO> mdProviderSelectAll() throws DataAccessException;
-    List<MdProviderDTO> mdProviderSelectAllPagination(HashMap<String, String> params) throws DataAccessException;
+    List<MdProviderDTO> mdDetailAllPaging(HashMap<String, String> params) throws DataAccessException;
     MdProviderDTO mdProviderSelectOne(int id) throws DataAccessException;
 
     List<MdTokenDTO> mdAstList() throws DataAccessException;
@@ -48,7 +48,9 @@ public interface MydataDao {
     List<MdReqInfoDTO> mdReqAll() throws DataAccessException;
     List<MdReqInfoDTO> selectMdReqAllasPagination(HashMap<String, Integer> params) throws DataAccessException;
     List<MdReqInfoDTO> mdReqSearch(String keyword) throws DataAccessException;
-    List<MdProviderDTO> mdProviderAsPaging(HashMap<String, String> params) throws DataAccessException;
+    List<MdProviderDTO> mdProviderDetailAsPaging(HashMap<String, Object> params) throws DataAccessException;
     List<MdProviderDTO> mdProviderSearch(String keyword) throws DataAccessException;
+    List<MdProviderDTO> mdProviderSelectAllPagination(HashMap<String, Object> params) throws DataAccessException;
 
+    int countProviderHistoryAll () throws DataAccessException;
 }

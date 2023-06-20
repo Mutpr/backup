@@ -8,18 +8,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ipa.openapi_inzent.model.*;
 import com.ipa.openapi_inzent.service.MydataService;
+import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.spring.web.json.Json;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -298,9 +298,9 @@ public class MydataController {
 
     @ResponseBody
     @GetMapping("/pagination")
-    public JsonObject selectAsPagination(@RequestParam("pageNo") int pageNo) {
+    public JsonObject selectAsPagination(@RequestParam("pageNo") int pageNo, @RequestParam("customerNumber") String customerNumber) {
         System.out.println("pageNo = " + pageNo);
-        List<MdProviderDTO> list = mydataService.selectMdProviderAsPaging(pageNo);
+        List<MdProviderDTO> list = mydataService.selectMdProviderAsPaging(customerNumber, pageNo);
         System.out.println("list = " + list);
 
         JsonObject jsonObject = null;
@@ -444,6 +444,7 @@ public class MydataController {
             String jsonString = objectMapper.writeValueAsString(mdReqInfoDTO);
             jsonObject.addProperty("list", jsonString);
             jsonObject.addProperty("pageCount", pageCount);
+            jsonObject.addProperty("customerNumber", mdReqInfoDTO.getClientNum());
 
             jsonArray.add(jsonObject);
             System.out.println("jsonObject = " + jsonObject);
@@ -462,16 +463,51 @@ public class MydataController {
         return "/mydata/mydataSendReq";
     }
 
-    @GetMapping("/provider/customerList")
+//    @GetMapping("/provider/customerList")
+//    @ResponseBody
+//    public JsonObject customerList(String customerNum, @RequestParam("pageNo") int pageNo) {
+//        JsonObject object = new JsonObject();
+//        List<MdProviderDTO> list = mydataService.mdProviderCustomerList(customerNum);
+//        System.out.println(list);
+//        System.out.println("customerNum = " + customerNum);
+//
+//        return new JsonObject();
+//    }
+
+    @GetMapping("/provider/customerList/pagination")
     @ResponseBody
-    public JsonObject customerList(String customerNum, @RequestParam("pageNo") String pageNo) {
-        JsonObject object = new JsonObject();
-//        List<MdProviderDTO> list = mydataService.
-        System.out.println("customerNum = " + customerNum);
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public JsonArray customerListAsPaging(@RequestParam("customerNum") String customerNumber, @RequestParam("pageNo") int pageNo) throws JsonProcessingException, StackOverflowError {
+        System.out.println("customerNumber = " + customerNumber);
+        System.out.println("pageNo = " + pageNo);
+        JsonObject jsonObject = null;
+        JsonArray jsonArray = new JsonArray();
+        List<MdProviderDTO> list = mydataService.selectMdProviderAsPaging(customerNumber,pageNo);
+        int countAll = mydataService.countProviderHistoryAll();
+        int size = 2;
+        int totalPage = mydataService.totalPage(countAll, size);
+        for (MdProviderDTO mdProviderDTO : list) {
+            jsonObject = new JsonObject();
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonString = objectMapper.writeValueAsString(mdProviderDTO);
+            try{
+                jsonObject.addProperty("list", jsonString);
+                jsonObject.addProperty("pageCount", totalPage);
+                jsonObject.addProperty("countAll", countAll);
+                jsonObject.addProperty("customerNumber", mdProviderDTO.getCustomerNum());
+                jsonObject.addProperty("size", size);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            System.out.println("jsonObject = " + jsonObject);
 
-        return new JsonObject();
+            jsonArray.add(jsonObject);
+        }
+        System.out.println("jsonObject = " + jsonObject);
+
+        System.out.println("jsonArray = " + jsonArray);
+        return jsonArray;
     }
-
     @GetMapping("/reqSearch")
     public String mdReqSearch(Model model, String keyword) {
         System.out.println("keyword = " + keyword);
