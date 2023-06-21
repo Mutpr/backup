@@ -217,8 +217,8 @@ public class MydataService {
         return mydataDao.mdProviderDetailAsPaging(params);
     }
 
-    public int countProviderHistoryAll(){
-        return mydataDao.countProviderHistoryAll();
+    public int countProviderHistoryAll(String customerNum){
+        return mydataDao.countProviderHistoryAll(customerNum);
     }
 
     public int totalPage(int counting, int size){

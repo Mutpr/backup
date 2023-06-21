@@ -483,7 +483,7 @@ public class MydataController {
         JsonObject jsonObject = null;
         JsonArray jsonArray = new JsonArray();
         List<MdProviderDTO> list = mydataService.selectMdProviderAsPaging(customerNumber,pageNo);
-        int countAll = mydataService.countProviderHistoryAll();
+        int countAll = mydataService.countProviderHistoryAll(customerNumber);
         int size = 2;
         int totalPage = mydataService.totalPage(countAll, size);
         for (MdProviderDTO mdProviderDTO : list) {

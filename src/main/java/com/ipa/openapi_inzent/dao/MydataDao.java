@@ -52,5 +52,5 @@ public interface MydataDao {
     List<MdProviderDTO> mdProviderSearch(String keyword) throws DataAccessException;
     List<MdProviderDTO> mdProviderSelectAllPagination(HashMap<String, Object> params) throws DataAccessException;
 
-    int countProviderHistoryAll () throws DataAccessException;
+    int countProviderHistoryAll(String customerNum) throws DataAccessException;
 }
