@@ -1,0 +1,45 @@
+From a50b282e2ff20685a1fd48f43ff881ff1993a78f Mon Sep 17 00:00:00 2001
+From: HYEN <honghyen47@gmail.com>
+Date: Fri, 9 Jun 2023 15:39:26 +0900
+Subject: [PATCH] =?UTF-8?q?=EC=BD=94=EB=93=9C=EC=A0=95=EB=A6=AC?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ src/main/java/com/mall/controller/ProductController.java | 6 +-----
+ web/WEB-INF/views/product/showAll.jsp                    | 1 +
+ 2 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/src/main/java/com/mall/controller/ProductController.java b/src/main/java/com/mall/controller/ProductController.java
+index 4e51ff1..d1242ed 100644
+--- a/src/main/java/com/mall/controller/ProductController.java
++++ b/src/main/java/com/mall/controller/ProductController.java
+@@ -120,11 +120,7 @@ public class ProductController {
+ 
+ 
+     @GetMapping("showAll")
+-    public String showIndex(Model model, HttpSession session) {
+-        String pageNo = (String) session.getAttribute("pageNo");
+-        ControllerImpl controller = new ControllerImpl();
+-        int page = controller.StringToInt(pageNo);
+-
++    public String showIndex() {
+         return "product/showAll";
+     }
+ 
+diff --git a/web/WEB-INF/views/product/showAll.jsp b/web/WEB-INF/views/product/showAll.jsp
+index 7525a33..8330d97 100644
+--- a/web/WEB-INF/views/product/showAll.jsp
++++ b/web/WEB-INF/views/product/showAll.jsp
+@@ -300,6 +300,7 @@
+                     });
+ 
+                     function loadPage(pageNo) {
++
+                         $.ajax({
+                             url: '/product/pagination',
+                             method: 'GET',
+-- 
+2.41.0.windows.3
+
