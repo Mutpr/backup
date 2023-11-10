@@ -14,7 +14,7 @@ node_modules/chart.js
 *.iws
 *.iml
 *.ipr
-web/WEB-INF/web.xml
+web/web.xml
 web/WEB-INF/classes
 out
 .idea
@@ -22,7 +22,7 @@ web/WEB-INF/lib
 web/WEB-INF/views/lib
 pom.xml
 web/WEB-INF/spring
-src/main/resources/db.properties
+web/resources/db.properties
 web/resources/css
 web/resources/img
 web/resources/lib
@@ -36,6 +36,8 @@ web/views/lib
 .settings
 .springBeans
 .sts4-cache
+
+
 
 ### NetBeans ###
 /nbproject/private/

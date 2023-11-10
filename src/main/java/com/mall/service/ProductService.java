@@ -2,14 +2,14 @@ package com.mall.service;
 
 import com.mall.controller.ControllerImpl;
 import com.mall.model.ProductDTO;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 

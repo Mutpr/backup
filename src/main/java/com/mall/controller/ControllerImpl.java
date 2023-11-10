@@ -5,7 +5,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.MalformedJsonException;
 import com.mall.service.ProductService;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.CharArrayReader;
 import java.io.StringReader;
